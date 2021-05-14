@@ -1,7 +1,7 @@
-package com.yosep.product.controller;
+package com.yosep.product.product.controller;
 
-import com.yosep.product.data.entity.ProductTest;
-import com.yosep.product.service.ProductTestService;
+import com.yosep.product.product.data.entity.ProductTest;
+import com.yosep.product.product.service.ProductTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;

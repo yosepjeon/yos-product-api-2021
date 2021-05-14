@@ -1,7 +1,7 @@
-package com.yosep.product.data.repository;
+package com.yosep.product.product.data.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.yosep.product.data.entity.ProductTest;
+import com.yosep.product.product.data.entity.ProductTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

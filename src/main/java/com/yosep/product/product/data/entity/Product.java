@@ -1,4 +1,4 @@
-package com.yosep.product.data.entity;
+package com.yosep.product.product.data.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,13 +15,13 @@ import javax.persistence.*;
 public abstract class Product {
     @Id
     @Column(length = 100)
-    private String id;
+    private String id = "";
 
     @Column(length = 50)
-    private String name;
+    private String name = "";
 
-    private int price;
-    private int stockQuantity;
+    private int price = 0;
+    private int stockQuantity = 0;
 
     
 }

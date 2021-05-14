@@ -1,4 +1,4 @@
-package com.yosep.product.common.config;
+package com.yosep.product.product.common.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;

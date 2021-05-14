@@ -1,4 +1,4 @@
-package com.yosep.product.data.entity;
+package com.yosep.product.product.data.entity;
 
 import lombok.*;
 

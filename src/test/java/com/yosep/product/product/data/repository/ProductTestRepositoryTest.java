@@ -1,6 +1,7 @@
-package com.yosep.product.data.repository;
+package com.yosep.product.product.data.repository;
 
-import com.yosep.product.data.entity.ProductTest;
+import com.yosep.product.product.data.entity.ProductTest;
+import com.yosep.product.product.data.repository.ProductTestRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
