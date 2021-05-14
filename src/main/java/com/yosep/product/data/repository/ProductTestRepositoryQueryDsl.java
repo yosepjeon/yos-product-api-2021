@@ -5,9 +5,10 @@ import com.yosep.product.data.entity.ProductTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import static com.yosep.product.data.entity.QProductTest.productTest;
 
 import java.util.Optional;
+
+import static com.yosep.product.data.entity.QProductTest.productTest;
 
 @Repository
 public class ProductTestRepositoryQueryDsl {

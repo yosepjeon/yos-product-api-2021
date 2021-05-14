@@ -20,5 +20,8 @@ public abstract class Product {
     @Column(length = 50)
     private String name;
 
+    private int price;
+    private int stockQuantity;
 
+    
 }
