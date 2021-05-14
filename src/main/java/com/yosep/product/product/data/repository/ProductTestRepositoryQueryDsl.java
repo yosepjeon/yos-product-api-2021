@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-import static com.yosep.product.data.entity.QProductTest.productTest;
+import static com.yosep.product.product.data.entity.QProductTest.productTest;
 
 @Repository
 public class ProductTestRepositoryQueryDsl {
