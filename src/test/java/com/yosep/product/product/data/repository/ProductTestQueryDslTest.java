@@ -16,7 +16,7 @@ import java.util.Optional;
 @Slf4j
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class ProductTestQueryDslTest {
-    private ProductTestRepositoryQueryDsl productTestRepositoryQueryDsl;
+    private final ProductTestRepositoryQueryDsl productTestRepositoryQueryDsl;
 
     @Autowired
     public ProductTestQueryDslTest(ProductTestRepositoryQueryDsl productTestRepositoryQueryDsl) {

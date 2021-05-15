@@ -18,5 +18,6 @@ public class CategoryEntityTest {
         log.info("Step1>> builder로 생성 시 parent=null Test");
         Assertions.assertEquals(true,category.getParent() == null);
         log.info("createdCategoryEntity: " + category.toString());
+        log.info("END");
     }
 }

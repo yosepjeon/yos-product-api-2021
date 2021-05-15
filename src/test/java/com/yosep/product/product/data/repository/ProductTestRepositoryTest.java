@@ -16,7 +16,7 @@ import java.util.Optional;
 @Slf4j
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class ProductTestRepositoryTest {
-    private ProductTestRepository productTestRepository;
+    private final ProductTestRepository productTestRepository;
 
     @Autowired
     public ProductTestRepositoryTest(ProductTestRepository productTestRepository) {

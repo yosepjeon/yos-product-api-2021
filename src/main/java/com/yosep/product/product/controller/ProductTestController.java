@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/products-test")
 @RestController
 public class ProductTestController {
-    private ProductTestService productTestService;
+    private final ProductTestService productTestService;
 
     @Autowired
     public ProductTestController(ProductTestService productTestService) {

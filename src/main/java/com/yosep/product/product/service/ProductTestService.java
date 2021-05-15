@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductTestService {
-    private ProductTestRepository productTestRepository;
+    private final ProductTestRepository productTestRepository;
 
     @Autowired
     public ProductTestService(ProductTestRepository productTestRepository) {
