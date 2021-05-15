@@ -28,6 +28,6 @@ public class ProductTestQueryDslTest {
     public void findByIdTest() {
         Optional<ProductTest> result = productTestRepositoryQueryDsl.findById("test");
 
-        Assertions.assertEquals(true, result.isPresent());
+        Assertions.assertEquals(true, result.isEmpty());
     }
 }

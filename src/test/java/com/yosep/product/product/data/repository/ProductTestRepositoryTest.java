@@ -28,6 +28,6 @@ public class ProductTestRepositoryTest {
     public void readEntityTest() {
         Optional<ProductTest> productTest = productTestRepository.findById("test");
 
-        Assertions.assertEquals(true,productTest.isPresent());
+        Assertions.assertEquals(true,productTest.isEmpty());
     }
 }

@@ -12,6 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "DTYPE")
+@Table(name = "yos_product")
 public abstract class Product {
     @Id
     @Column(length = 100)

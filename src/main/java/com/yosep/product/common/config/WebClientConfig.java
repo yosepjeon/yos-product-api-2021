@@ -1,4 +1,4 @@
-package com.yosep.product.product.common.config;
+package com.yosep.product.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

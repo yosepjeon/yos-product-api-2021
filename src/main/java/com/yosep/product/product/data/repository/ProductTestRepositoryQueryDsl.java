@@ -20,10 +20,12 @@ public class ProductTestRepositoryQueryDsl {
     }
 
     public Optional<ProductTest> findById(String name) {
-        return Optional.of(jpaQueryFactory
+        ProductTest result = jpaQueryFactory
                 .selectFrom(productTest)
                 .where(productTest.id.eq(name))
-                .fetchOne());
+                .fetchOne();
+
+        return result == null ? Optional.empty():Optional.of(result);
     }
 
 }
