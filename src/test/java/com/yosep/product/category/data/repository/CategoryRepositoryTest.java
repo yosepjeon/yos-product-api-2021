@@ -1,23 +1,15 @@
 package com.yosep.product.category.data.repository;
 
 import com.yosep.product.category.data.entity.Category;
+import com.yosep.product.common.BaseTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
 @Slf4j
-@Transactional
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class CategoryRepositoryTest {
+public class CategoryRepositoryTest extends BaseTest {
     private final CategoryRepository categoryRepository;
 
     @Autowired

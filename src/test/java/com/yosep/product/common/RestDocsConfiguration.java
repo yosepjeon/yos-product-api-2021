@@ -1,4 +1,4 @@
-package com.yosep.product.product.common;
+package com.yosep.product.common;
 
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 

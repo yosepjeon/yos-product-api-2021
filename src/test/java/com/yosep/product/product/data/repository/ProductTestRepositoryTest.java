@@ -1,21 +1,15 @@
 package com.yosep.product.product.data.repository;
 
+import com.yosep.product.common.BaseTest;
 import com.yosep.product.product.data.entity.ProductTest;
-import com.yosep.product.product.data.repository.ProductTestRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
 @Slf4j
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class ProductTestRepositoryTest {
+public class ProductTestRepositoryTest extends BaseTest {
     private final ProductTestRepository productTestRepository;
 
     @Autowired
