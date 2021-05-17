@@ -10,7 +10,6 @@ public class CategoryEntityTest {
     @DisplayName("Category Entity 검사 테스트")
     public void categoryEntityTest() {
         Category category = Category.builder()
-                .id("category-entity-test")
                 .name("category entity test")
                 .build();
 

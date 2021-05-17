@@ -1,6 +1,6 @@
 package com.yosep.product.product.data.repository;
 
-import com.yosep.product.common.BaseTest;
+import com.yosep.product.common.BaseIntegrationTest;
 import com.yosep.product.product.data.entity.ProductTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Optional;
 
 @Slf4j
-public class ProductTestRepositoryTest extends BaseTest {
+public class ProductTestRepositoryIntegrationTest extends BaseIntegrationTest {
     private final ProductTestRepository productTestRepository;
 
     @Autowired
-    public ProductTestRepositoryTest(ProductTestRepository productTestRepository) {
+    public ProductTestRepositoryIntegrationTest(ProductTestRepository productTestRepository) {
         this.productTestRepository = productTestRepository;
     }
 

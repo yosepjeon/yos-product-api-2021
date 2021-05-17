@@ -16,8 +16,9 @@ import java.util.List;
 @Table(name = "yos_product_category")
 public class Category {
     @Id
+    @GeneratedValue
     @Column(name = "category_id", length = 30)
-    private String id;
+    private long id;
 
     @Column(name = "category_name", length = 50, nullable = false)
     private String name;

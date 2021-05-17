@@ -14,5 +14,5 @@ public class CategoryDto {
     private String name;
 
     @NotNull
-    private String parentId;
+    private Long parentId;
 }

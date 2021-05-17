@@ -1,0 +1,33 @@
+package com.yosep.product.common;
+
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
+
+@Slf4j
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+public class CommonTest extends BaseUnitTest{
+
+    @Test
+    @DisplayName("")
+    public void createIdTest() {
+
+    }
+
+    @Test
+    @DisplayName("UUID 생성 테스트")
+    public void createUuidTest() {
+        log.info("UUID 생성 테스트");
+        String uuid = UUID.randomUUID().toString();
+        log.info("UUID: " + uuid);
+    }
+
+    @Test
+    public void la() {
+        LocalDateTime currentTime = LocalDateTime.now();
+        System.out.println(currentTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+    }
+}
