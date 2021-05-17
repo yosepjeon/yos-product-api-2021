@@ -1,38 +1,36 @@
 package com.yosep.product.category.data.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@Builder
+@Getter
+@Setter
+@ToString(exclude = "parentCategory")
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "yos_product_category")
 public class Category {
     @Id
-    @GeneratedValue
-    @Column(name = "category_id", length = 30)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "category_id")
+    private Long id;
 
     @Column(name = "category_name", length = 50, nullable = false)
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_parent_id", insertable = false, updatable = false)
-    private Category parent;
+    @JoinColumn(name = "parent_id")
+    private Category parentCategory;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
-    private List<Category> childs;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parentCategory")
+    private List<Category> childs = new ArrayList<>();
 
-    public void addChild(Category child) {
+    public void addChildCategory(Category child) {
         this.childs.add(child);
-        child.setParent(this);
+        child.setParentCategory(this);
     }
-
 }

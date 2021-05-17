@@ -1,6 +1,7 @@
 package com.yosep.product.product.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,7 @@ public class ProductTestControllerTest {
     }
 
     @Test
+    @DisplayName("Rest-Docs 잘 만들어지는지 Test")
     public void restDocTest() throws Exception {
         mockMvc
                 .perform(get("/products-test/rest-doc-test"))

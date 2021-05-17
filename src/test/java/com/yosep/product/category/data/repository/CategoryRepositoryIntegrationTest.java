@@ -20,9 +20,8 @@ public class CategoryRepositoryIntegrationTest extends BaseIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        Category category = Category.builder()
-                .name("test0")
-                .build();
+        Category category = new Category();
+        category.setName("test0");
 
         Category createdCategory = categoryRepository.save(category);
         categoryId = createdCategory.getId();
@@ -32,9 +31,11 @@ public class CategoryRepositoryIntegrationTest extends BaseIntegrationTest {
     @DisplayName("카테고리 생성 테스트")
     public void createCategoryTest() {
         log.info("카테고리 생성 테스트");
-        Category category = Category.builder()
-                .name("create-test1")
-                .build();
+//        Category category = Category.builder()
+//                .name("create-test1")
+//                .build();
+        Category category = new Category();
+        category.setName("create-test1");
 
         Category createdCategory = categoryRepository.save(category);
         log.info(createdCategory.toString());
@@ -59,5 +60,10 @@ public class CategoryRepositoryIntegrationTest extends BaseIntegrationTest {
 
         log.info(resultById.toString());
         Assertions.assertEquals(false, resultById.isPresent());
+    }
+
+    @Test
+    public void a() {
+        System.out.println(categoryRepository.findById(100000L));
     }
 }

@@ -25,9 +25,11 @@ public class CategoryQueryDslIntegrationTest extends BaseIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        Category category = Category.builder()
-                .name("test0")
-                .build();
+//        Category category = Category.builder()
+//                .name("test0")
+//                .build();
+        Category category = new Category();
+        category.setName("create-test1");
 
         Category createdCategory = categoryRepository.save(category);
         categoryId = createdCategory.getId();
@@ -37,9 +39,11 @@ public class CategoryQueryDslIntegrationTest extends BaseIntegrationTest {
     @DisplayName("카테고리 이름 기준 조회 성공 테스트")
     public void readCategoryByNameSuccessTest() {
         for (int i = 0; i < 3; i++) {
-            Category category = Category.builder()
-                    .name("test0")
-                    .build();
+//            Category category = Category.builder()
+//                    .name("test0")
+//                    .build();
+            Category category = new Category();
+            category.setName("create-test1");
 
             Category createdCategory = categoryRepository.save(category);
         }
@@ -56,9 +60,11 @@ public class CategoryQueryDslIntegrationTest extends BaseIntegrationTest {
     @DisplayName("카테고리 이름 기준 조회 실패 테스트")
     public void readCategoryByNameFailTest() {
         for (int i = 0; i < 3; i++) {
-            Category category = Category.builder()
-                    .name("test0")
-                    .build();
+//            Category category = Category.builder()
+//                    .name("test0")
+//                    .build();
+            Category category = new Category();
+            category.setName("create-test1");
 
             Category createdCategory = categoryRepository.save(category);
         }
