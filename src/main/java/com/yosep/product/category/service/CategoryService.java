@@ -1,6 +1,7 @@
 package com.yosep.product.category.service;
 
 import com.yosep.product.category.data.dto.request.CategoryDto;
+import com.yosep.product.category.data.dto.request.CategoryForUpdateDto;
 import com.yosep.product.category.data.dto.response.ReadedCategoryDto;
 import com.yosep.product.category.data.entity.Category;
 import com.yosep.product.category.data.repository.CategoryRepository;
@@ -79,6 +80,7 @@ public class CategoryService {
      * 2. 읽어온 Category Entity를 ReadedCategoryDto로 변환
      * 3. 반환
      */
+    @Transactional(readOnly = false)
     public Optional<ReadedCategoryDto> readCategoryById(Long id) {
         Optional<Category> result = categoryRepository.findById(id);
 
@@ -94,8 +96,31 @@ public class CategoryService {
 
     }
 
-    public void updateCategory() {
+    /*
+     * 특정 카테고리를 수정하기
+     * Logic:
+     * 1. 요청한 Id로 카테고리를 읽어온다.
+     * 1-1. 만약 존재하지 않는다면 Optional.Empty 반환
+     * 1-2. 존재한다면, 2로 진행
+     * 2. 읽어온 Category Entity의 값들을 수정.
+     * 3. 반환
+     */
+    public void updateCategory(CategoryForUpdateDto categoryDto) {
+        Optional<Category> optionalCategory = categoryRepository.findById(categoryDto.getId());
 
+        if(optionalCategory.isEmpty()) {
+
+        }else {
+            Category category = optionalCategory.get();
+            category.setName(categoryDto.getName());
+
+            Optional<Category> optionalParentCategory = categoryRepository.findById(categoryDto.getParentId());
+//            if(optionalParentCategory.isEmpty()) {
+//
+//            }else {
+//
+//            }
+        }
     }
 
     public void deleteCategory() {

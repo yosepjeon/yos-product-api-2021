@@ -34,7 +34,7 @@ public class CategoryServiceIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("Category 생성 테스트")
+    @DisplayName("[CategoryService] Category 생성 테스트")
     public void createCategoryTest() {
 
         log.info("카테고리 생성 테스트");
@@ -46,7 +46,7 @@ public class CategoryServiceIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("특정 카테고리를 읽어오되, 자식 카테고리들도 함께 읽어오기 테스트")
+    @DisplayName("[CategoryService] 특정 카테고리를 읽어오되, 자식 카테고리들도 함께 읽어오기 테스트")
     public void readCategoryByIdTest() {
         log.info("특정 카테고리를 읽어오되, 자식 카테고리들도 함께 읽어오기 테스트");
 

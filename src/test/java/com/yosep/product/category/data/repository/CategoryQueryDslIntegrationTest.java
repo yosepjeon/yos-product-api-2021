@@ -48,7 +48,7 @@ public class CategoryQueryDslIntegrationTest extends BaseIntegrationTest {
             Category createdCategory = categoryRepository.save(category);
         }
 
-        Optional<List<Category>> results = queryDsl.findByName("test0");
+        Optional<List<Category>> results = queryDsl.findByName("create-test1");
 
         log.info("카테고리 이름 기준 조회 성공 테스트");
         List<Category> categories = results.orElse(Collections.unmodifiableList(new ArrayList<>()));
