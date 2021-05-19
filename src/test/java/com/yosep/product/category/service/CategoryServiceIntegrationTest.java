@@ -1,14 +1,13 @@
 package com.yosep.product.category.service;
 
 import com.yosep.product.category.data.dto.request.CategoryDto;
-import com.yosep.product.category.data.dto.response.ReadedCategoryDto;
+import com.yosep.product.category.data.dto.response.SelectedCategoryDto;
 import com.yosep.product.category.data.entity.Category;
 import com.yosep.product.category.data.repository.CategoryRepository;
 import com.yosep.product.common.BaseIntegrationTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 
 import java.util.Optional;
 
@@ -62,7 +61,7 @@ public class CategoryServiceIntegrationTest extends BaseIntegrationTest {
         }
 
         log.info("특정 카테고리를 읽어오되, 자식 카테고리들도 함께 읽어오기");
-        Optional<ReadedCategoryDto> readedCategoryDto = categoryService.readCategoryById(parentCategory.getId());
+        Optional<SelectedCategoryDto> readedCategoryDto = categoryService.readCategoryById(parentCategory.getId());
         log.info(readedCategoryDto.toString());
         Assertions.assertEquals(true, readedCategoryDto.isPresent());
     }

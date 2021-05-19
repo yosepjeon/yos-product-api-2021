@@ -2,8 +2,12 @@ package com.yosep.product.category.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yosep.product.category.data.dto.request.CategoryDto;
+import com.yosep.product.category.data.entity.Category;
+import com.yosep.product.category.data.repository.CategoryRepository;
+import com.yosep.product.category.service.CategoryService;
 import com.yosep.product.common.BaseIntegrationTest;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,8 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -22,17 +28,38 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class CategoryControllerTest extends BaseIntegrationTest {
     private final MockMvc mockMvc;
     private final ObjectMapper objectMapper;
+    private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
+    private long categoryId;
 
     @Autowired
-    public CategoryControllerTest(MockMvc mockMvc, ObjectMapper objectMapper) {
+    public CategoryControllerTest(MockMvc mockMvc, ObjectMapper objectMapper, CategoryRepository categoryRepository, CategoryService categoryService) {
         this.mockMvc = mockMvc;
         this.objectMapper = objectMapper;
+        this.categoryRepository = categoryRepository;
+        this.categoryService = categoryService;
+    }
+
+    @BeforeEach
+    public void setUp() {
+        Category category = new Category();
+        category.setName("test0");
+
+        Category createdCategory = categoryRepository.save(category);
+        categoryId = createdCategory.getId();
+
+        log.info("parentId = " + categoryId);
+        log.info("자식 카테고리 생성");
+        for (int i = 0; i < 5; i++) {
+            CategoryDto categoryDto = new CategoryDto("create-category-test1", categoryId);
+            Optional<Category> result = categoryService.createCategory(categoryDto);
+        }
     }
 
     @Test
     @DisplayName("[Controller] Category 생성 테스트")
     public void createCategoryTest() throws Exception {
-        log.info("카테코리 컨트롤러 생성 테스트");
+        log.info("카테고리 컨트롤러 생성 테스트");
         CategoryDto categoryDto = CategoryDto.builder().name("create-test").build();
 //        CategoryDto categoryDto = new CategoryDto("create-test", null);
 
@@ -45,6 +72,31 @@ public class CategoryControllerTest extends BaseIntegrationTest {
                         .accept(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isCreated())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("[Controller] Category ID기준 조회 성공 테스트")
+    public void readCategoryByIdSuccessTest() throws Exception {
+        log.info("카테고리 컨트롤러 조회 테스트");
+
+        mockMvc
+                .perform(get("/categories/" + categoryId)
+                        .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("[Controller] Category ID기준 조회 실패 테스트")
+    public void readCategoryByIdFailTest() throws Exception {
+        log.info("카테고리 컨트롤러 조회 테스트");
+        mockMvc
+                .perform(get("/categories/-1")
+                        .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isNotFound())
                 .andDo(print());
     }
 }

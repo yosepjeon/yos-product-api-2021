@@ -2,7 +2,7 @@ package com.yosep.product.category.service;
 
 import com.yosep.product.category.data.dto.request.CategoryDto;
 import com.yosep.product.category.data.dto.request.CategoryForUpdateDto;
-import com.yosep.product.category.data.dto.response.ReadedCategoryDto;
+import com.yosep.product.category.data.dto.response.SelectedCategoryDto;
 import com.yosep.product.category.data.entity.Category;
 import com.yosep.product.category.data.repository.CategoryRepository;
 import com.yosep.product.category.data.repository.CategoryRepositoryQueryDsl;
@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -67,8 +69,17 @@ public class CategoryService {
 
     }
 
-    public void readAll() {
+    /*
+     * 부모 카테고리를 읽어오되, 자식 카테고리들도 부모별로 묶어서 읽어오기
+     * Logic:
+     * 1. 모든 카테고리를 읽어온다.
+     * 1-1. 카테고리가 한개도 없다면 EmptyList 반환
+     * 1-2. 카테고리가 존재하면 List에 담아서 반환
+     */
+    public List<Category> readAll() {
+        List<Category> categories = categoryRepository.findAll();
 
+        return categories.isEmpty() ? Collections.emptyList() : categories;
     }
 
     /*
@@ -80,16 +91,16 @@ public class CategoryService {
      * 2. 읽어온 Category Entity를 ReadedCategoryDto로 변환
      * 3. 반환
      */
-    @Transactional(readOnly = false)
-    public Optional<ReadedCategoryDto> readCategoryById(Long id) {
+    @Transactional
+    public Optional<SelectedCategoryDto> readCategoryById(Long id) {
         Optional<Category> result = categoryRepository.findById(id);
 
         if (result.isEmpty()) {
             return Optional.empty();
         }
 
-        ReadedCategoryDto readedCategoryDto = new ReadedCategoryDto(result.get());
-        return Optional.of(readedCategoryDto);
+        SelectedCategoryDto selectedCategoryDto = new SelectedCategoryDto(result.get());
+        return Optional.of(selectedCategoryDto);
     }
 
     public void readCategoriesByName() {
@@ -105,6 +116,7 @@ public class CategoryService {
      * 2. 읽어온 Category Entity의 값들을 수정.
      * 3. 반환
      */
+    @Transactional(readOnly = false)
     public void updateCategory(CategoryForUpdateDto categoryDto) {
         Optional<Category> optionalCategory = categoryRepository.findById(categoryDto.getId());
 
@@ -115,11 +127,14 @@ public class CategoryService {
             category.setName(categoryDto.getName());
 
             Optional<Category> optionalParentCategory = categoryRepository.findById(categoryDto.getParentId());
-//            if(optionalParentCategory.isEmpty()) {
-//
-//            }else {
-//
-//            }
+            if(optionalParentCategory.isEmpty()) {
+
+            }else {
+                Category parentCategory = optionalParentCategory.get();
+                parentCategory.addChildCategory(category);
+
+                categoryRepository.save(parentCategory);
+            }
         }
     }
 

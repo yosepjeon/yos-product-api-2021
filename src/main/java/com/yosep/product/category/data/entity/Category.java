@@ -1,5 +1,7 @@
 package com.yosep.product.category.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,10 +24,12 @@ public class Category {
     @Column(name = "category_name", length = 50, nullable = false)
     private String name;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_id")
     private Category parentCategory;
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parentCategory")
     private List<Category> childs = new ArrayList<>();
 

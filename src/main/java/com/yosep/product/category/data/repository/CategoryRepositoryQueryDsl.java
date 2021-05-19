@@ -1,6 +1,7 @@
 package com.yosep.product.category.data.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.yosep.product.category.data.dto.response.SelectedCategoryDto;
 import com.yosep.product.category.data.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -25,5 +26,11 @@ public class CategoryRepositoryQueryDsl {
                 .fetch();
 
         return categories.isEmpty() ? Optional.empty() : Optional.of(categories);
+    }
+
+    public Optional<List<SelectedCategoryDto>> findAllByParentIsNull() {
+        
+
+        return null;
     }
 }

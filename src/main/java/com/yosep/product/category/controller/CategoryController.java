@@ -2,6 +2,7 @@ package com.yosep.product.category.controller;
 
 import com.yosep.product.category.data.dto.request.CategoryDto;
 import com.yosep.product.category.data.dto.request.CreatedCategoryDto;
+import com.yosep.product.category.data.dto.response.SelectedCategoryDto;
 import com.yosep.product.category.data.entity.Category;
 import com.yosep.product.category.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,33 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    @GetMapping("/{category-id}")
+    public ResponseEntity<EntityModel<Optional<SelectedCategoryDto>>> readCategory(@PathVariable("category-id") long categoryId) {
+        Optional<SelectedCategoryDto> optionalReadedCategoryDto = categoryService.readCategoryById(categoryId);
+
+        EntityModel<Optional<SelectedCategoryDto>> readedCategoryDto;
+        ResponseEntity<EntityModel<Optional<SelectedCategoryDto>>> response;
+
+        if(optionalReadedCategoryDto.isEmpty()) {
+            response = ResponseEntity.notFound().build();
+        }else {
+            readedCategoryDto = EntityModel.of(optionalReadedCategoryDto);
+            response = ResponseEntity.ok().body(readedCategoryDto);
+        }
+
+        return response;
+    }
+
+    @GetMapping
+    public void readCategories() {
+
+    }
+
     @PostMapping
     public ResponseEntity<EntityModel<CreatedCategoryDto>> createCategory(@RequestBody CategoryDto categoryDto) {
-        Optional<Category> createdCategory = categoryService.createCategory(categoryDto);
+        Optional<Category> optionalCreatedCategory = categoryService.createCategory(categoryDto);
 
-        CreatedCategoryDto createdCategoryDto = createdCategory.isPresent() ? new CreatedCategoryDto(createdCategory.get()) : new CreatedCategoryDto();
+        CreatedCategoryDto createdCategoryDto = optionalCreatedCategory.isPresent() ? new CreatedCategoryDto(optionalCreatedCategory.get()) : new CreatedCategoryDto();
         EntityModel<CreatedCategoryDto> responseModel = EntityModel.of(createdCategoryDto);
 //        responseModel
 //                .add(linkTo(CategoryController.class).withSelfRel());
