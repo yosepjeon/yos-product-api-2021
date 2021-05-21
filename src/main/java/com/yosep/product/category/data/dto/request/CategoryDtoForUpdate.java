@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
-public class CategoryForUpdateDto {
+public class CategoryDtoForUpdate {
     @NotNull
     private long id;
 

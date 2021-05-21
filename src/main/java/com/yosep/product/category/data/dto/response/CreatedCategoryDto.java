@@ -1,4 +1,4 @@
-package com.yosep.product.category.data.dto.request;
+package com.yosep.product.category.data.dto.response;
 
 import com.yosep.product.category.data.entity.Category;
 import lombok.Data;

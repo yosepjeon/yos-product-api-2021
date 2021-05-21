@@ -1,13 +1,11 @@
 package com.yosep.product.category.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yosep.product.category.data.dto.request.CategoryDto;
-import com.yosep.product.category.data.entity.Category;
+import com.yosep.product.category.data.dto.request.CategoryDtoForCreation;
 import com.yosep.product.category.data.repository.CategoryRepository;
 import com.yosep.product.category.service.CategoryService;
-import com.yosep.product.common.BaseIntegrationTest;
+import com.yosep.product.common.BaseCategoryIntegrationTest;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +14,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Optional;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -25,48 +21,28 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @Slf4j
-public class CategoryControllerTest extends BaseIntegrationTest {
+public class CategoryControllerTestCategory extends BaseCategoryIntegrationTest {
     private final MockMvc mockMvc;
     private final ObjectMapper objectMapper;
-    private final CategoryRepository categoryRepository;
-    private final CategoryService categoryService;
-    private long categoryId;
 
     @Autowired
-    public CategoryControllerTest(MockMvc mockMvc, ObjectMapper objectMapper, CategoryRepository categoryRepository, CategoryService categoryService) {
+    public CategoryControllerTestCategory(MockMvc mockMvc, ObjectMapper objectMapper, CategoryRepository categoryRepository, CategoryService categoryService) {
         this.mockMvc = mockMvc;
         this.objectMapper = objectMapper;
         this.categoryRepository = categoryRepository;
         this.categoryService = categoryService;
     }
 
-    @BeforeEach
-    public void setUp() {
-        Category category = new Category();
-        category.setName("test0");
-
-        Category createdCategory = categoryRepository.save(category);
-        categoryId = createdCategory.getId();
-
-        log.info("parentId = " + categoryId);
-        log.info("자식 카테고리 생성");
-        for (int i = 0; i < 5; i++) {
-            CategoryDto categoryDto = new CategoryDto("create-category-test1", categoryId);
-            Optional<Category> result = categoryService.createCategory(categoryDto);
-        }
-    }
-
     @Test
     @DisplayName("[Controller] Category 생성 테스트")
     public void createCategoryTest() throws Exception {
         log.info("카테고리 컨트롤러 생성 테스트");
-        CategoryDto categoryDto = CategoryDto.builder().name("create-test").build();
-//        CategoryDto categoryDto = new CategoryDto("create-test", null);
+        CategoryDtoForCreation categoryDtoForCreation = CategoryDtoForCreation.builder().name("create-test").build();
 
-        String content = objectMapper.writeValueAsString(categoryDto);
+        String content = objectMapper.writeValueAsString(categoryDtoForCreation);
 
         mockMvc
-                .perform(post("/categories", categoryDto)
+                .perform(post("/categories", categoryDtoForCreation)
                         .content(content)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)

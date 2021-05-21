@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Builder
 @AllArgsConstructor
-public class CategoryDto {
+public class CategoryDtoForCreation {
     @NotNull
     private String name;
 

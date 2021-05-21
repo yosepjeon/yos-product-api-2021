@@ -1,11 +1,12 @@
 package com.yosep.product.category.controller;
 
-import com.yosep.product.category.data.dto.request.CategoryDto;
-import com.yosep.product.category.data.dto.request.CreatedCategoryDto;
+import com.yosep.product.category.data.dto.request.CategoryDtoForCreation;
+import com.yosep.product.category.data.dto.response.CreatedCategoryDto;
 import com.yosep.product.category.data.dto.response.SelectedCategoryDto;
 import com.yosep.product.category.data.entity.Category;
 import com.yosep.product.category.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{category-id}")
-    public ResponseEntity<EntityModel<Optional<SelectedCategoryDto>>> readCategory(@PathVariable("category-id") long categoryId) {
+    public ResponseEntity readCategory(@PathVariable("category-id") long categoryId) {
         Optional<SelectedCategoryDto> optionalReadedCategoryDto = categoryService.readCategoryById(categoryId);
 
         EntityModel<Optional<SelectedCategoryDto>> readedCategoryDto;
@@ -42,19 +43,26 @@ public class CategoryController {
         return response;
     }
 
+    @GetMapping("/parent-categories")
+    public ResponseEntity readCategoriesGroupByParent() {
+        Optional<CollectionModel<EntityModel<SelectedCategoryDto>>> categories = categoryService.readCategoriesByParentIsNullForUpdate();
+
+        return categories.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(categories);
+    }
+
     @GetMapping
-    public void readCategories() {
+    public void readAllCategories() {
 
     }
 
     @PostMapping
-    public ResponseEntity<EntityModel<CreatedCategoryDto>> createCategory(@RequestBody CategoryDto categoryDto) {
-        Optional<Category> optionalCreatedCategory = categoryService.createCategory(categoryDto);
+    public ResponseEntity<EntityModel<CreatedCategoryDto>> createCategory(@RequestBody CategoryDtoForCreation categoryDtoForCreation) {
+        Optional<Category> optionalCreatedCategory = categoryService.createCategory(categoryDtoForCreation);
 
         CreatedCategoryDto createdCategoryDto = optionalCreatedCategory.isPresent() ? new CreatedCategoryDto(optionalCreatedCategory.get()) : new CreatedCategoryDto();
         EntityModel<CreatedCategoryDto> responseModel = EntityModel.of(createdCategoryDto);
-//        responseModel
-//                .add(linkTo(CategoryController.class).withSelfRel());
+        responseModel
+                .add(linkTo(CategoryController.class).slash(createdCategoryDto.getId()).withSelfRel());
 
         ResponseEntity<EntityModel<CreatedCategoryDto>> response = ResponseEntity.created(URI.create("/categories")).body(responseModel);
 
@@ -63,6 +71,11 @@ public class CategoryController {
 
     @PatchMapping
     public void updateCategory() {
+
+    }
+
+    @DeleteMapping
+    public void deleteCategory() {
 
     }
 }

@@ -1,19 +1,26 @@
 package com.yosep.product.category.service;
 
-import com.yosep.product.category.data.dto.request.CategoryDto;
-import com.yosep.product.category.data.dto.request.CategoryForUpdateDto;
+import com.yosep.product.category.controller.CategoryController;
+import com.yosep.product.category.data.dto.request.CategoryDtoForCreation;
+import com.yosep.product.category.data.dto.request.CategoryDtoForUpdate;
 import com.yosep.product.category.data.dto.response.SelectedCategoryDto;
 import com.yosep.product.category.data.entity.Category;
 import com.yosep.product.category.data.repository.CategoryRepository;
 import com.yosep.product.category.data.repository.CategoryRepositoryQueryDsl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 @Transactional(readOnly = true)
@@ -41,16 +48,16 @@ public class CategoryService {
      *       3) 저장한 자식 카테고리 엔티티를 부모 카테고리의 childs 리스트에 저장(자동 영속화 및 외래키 등록)
      */
     @Transactional(readOnly = false)
-    public Optional<Category> createCategory(CategoryDto categoryDto) {
+    public Optional<Category> createCategory(CategoryDtoForCreation categoryDtoForCreation) {
         Category category = new Category();
-        category.setName(categoryDto.getName());
+        category.setName(categoryDtoForCreation.getName());
 
-        if (categoryDto.getParentId() == null) {
+        if (categoryDtoForCreation.getParentId() == null) {
             return Optional.of(categoryRepository.save(category));
-        } else if (categoryDto.getParentId() != null && categoryRepository.findById(categoryDto.getParentId()).isEmpty()) {
+        } else if (categoryDtoForCreation.getParentId() != null && categoryRepository.findById(categoryDtoForCreation.getParentId()).isEmpty()) {
             return Optional.of(categoryRepository.save(category));
         } else {
-            Category parent = categoryRepository.findById(categoryDto.getParentId()).get();
+            Category parent = categoryRepository.findById(categoryDtoForCreation.getParentId()).get();
             Category child = categoryRepository.save(category);
             parent.addChildCategory(child);
             categoryRepository.save(parent);
@@ -62,15 +69,56 @@ public class CategoryService {
     /*
      * 부모 카테고리를 읽어오되, 자식 카테고리들도 부모별로 묶어서 읽어오기
      * Logic:
-     * 1. parentId가 null인 카테고리들을 읽어온다.
-     * 2. 각 카테고리의
+     * 1. 모든 카테고리를 읽어온다.
+     * 1-1. 카테고리가 한개도 없다면 EmptyList 반환
+     * 1-2. 카테고리가 존재하면 List에 담아서 반환
      */
-    public void readCategoriesByParentIsNull(Long categoryId) {
+    public Optional<CollectionModel<EntityModel<SelectedCategoryDto>>> readCategoriesByParentIsNullForUpdate() {
+        Optional<List<Category>> categoryEntities = categoryRepositoryQueryDsl.findAllByParentIsNull();
 
+        if (categoryEntities.isEmpty()) {
+            return Optional.empty();
+        } else {
+            List<EntityModel<SelectedCategoryDto>> categoryDtos = new ArrayList<>();
+
+            categoryEntities.get().forEach(c -> {
+                EntityModel<SelectedCategoryDto> entityModel = EntityModel.of(new SelectedCategoryDto(c));
+                entityModel.add(linkTo(methodOn(CategoryController.class).readCategory(c.getId())).withRel("get-category"));
+
+                categoryDtos.add(entityModel);
+            });
+
+            CollectionModel<EntityModel<SelectedCategoryDto>> selectedCategories = CollectionModel.of(categoryDtos);
+            selectedCategories.add(linkTo(methodOn(CategoryController.class).readCategoriesGroupByParent()).withSelfRel());
+            return Optional.of(selectedCategories);
+        }
     }
 
     /*
      * 부모 카테고리를 읽어오되, 자식 카테고리들도 부모별로 묶어서 읽어오기
+     * Logic:
+     * 1. 모든 카테고리를 읽어온다.
+     * 1-1. 카테고리가 한개도 없다면 EmptyList 반환
+     * 1-2. 카테고리가 존재하면 List에 담아서 반환
+     */
+    public Optional<List<SelectedCategoryDto>> readCategoriesByParentIsNull() {
+        Optional<List<Category>> categoryEntities = categoryRepositoryQueryDsl.findAllByParentIsNull();
+
+        if (categoryEntities.isEmpty()) {
+            return Optional.empty();
+        } else {
+            List<SelectedCategoryDto> categoryDtos = new ArrayList<>();
+
+            categoryEntities.get().forEach(c -> {
+                categoryDtos.add(new SelectedCategoryDto(c));
+            });
+
+            return Optional.of(categoryDtos);
+        }
+    }
+
+    /*
+     * 모든 카테고리 읽어오기.
      * Logic:
      * 1. 모든 카테고리를 읽어온다.
      * 1-1. 카테고리가 한개도 없다면 EmptyList 반환
@@ -91,7 +139,6 @@ public class CategoryService {
      * 2. 읽어온 Category Entity를 ReadedCategoryDto로 변환
      * 3. 반환
      */
-    @Transactional
     public Optional<SelectedCategoryDto> readCategoryById(Long id) {
         Optional<Category> result = categoryRepository.findById(id);
 
@@ -100,6 +147,7 @@ public class CategoryService {
         }
 
         SelectedCategoryDto selectedCategoryDto = new SelectedCategoryDto(result.get());
+
         return Optional.of(selectedCategoryDto);
     }
 
@@ -117,19 +165,19 @@ public class CategoryService {
      * 3. 반환
      */
     @Transactional(readOnly = false)
-    public void updateCategory(CategoryForUpdateDto categoryDto) {
+    public void updateCategory(CategoryDtoForUpdate categoryDto) {
         Optional<Category> optionalCategory = categoryRepository.findById(categoryDto.getId());
 
-        if(optionalCategory.isEmpty()) {
+        if (optionalCategory.isEmpty()) {
 
-        }else {
+        } else {
             Category category = optionalCategory.get();
             category.setName(categoryDto.getName());
 
             Optional<Category> optionalParentCategory = categoryRepository.findById(categoryDto.getParentId());
-            if(optionalParentCategory.isEmpty()) {
+            if (optionalParentCategory.isEmpty()) {
 
-            }else {
+            } else {
                 Category parentCategory = optionalParentCategory.get();
                 parentCategory.addChildCategory(category);
 
@@ -142,8 +190,8 @@ public class CategoryService {
 
     }
 
-    public void deleteCategories() {
-
+    public void deleteAllCategories() {
+        categoryRepository.deleteAll();
     }
 
 }

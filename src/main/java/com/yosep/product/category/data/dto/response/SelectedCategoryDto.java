@@ -1,14 +1,14 @@
 package com.yosep.product.category.data.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.yosep.product.category.data.entity.Category;
 import lombok.Data;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.util.Collections;
 import java.util.List;
 
 @Data
-public class SelectedCategoryDto {
+public class SelectedCategoryDto extends RepresentationModel<SelectedCategoryDto> {
     private final long id;
     private final String name;
     private final List<Category> childs;

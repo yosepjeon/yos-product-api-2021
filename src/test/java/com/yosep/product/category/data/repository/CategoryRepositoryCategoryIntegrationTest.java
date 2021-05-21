@@ -2,43 +2,26 @@ package com.yosep.product.category.data.repository;
 
 import com.yosep.product.category.data.dto.response.SelectedCategoryDto;
 import com.yosep.product.category.data.entity.Category;
-import com.yosep.product.common.BaseIntegrationTest;
+import com.yosep.product.category.service.CategoryService;
+import com.yosep.product.common.BaseCategoryIntegrationTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-public class CategoryRepositoryIntegrationTest extends BaseIntegrationTest {
-    private final CategoryRepository categoryRepository;
-    private long categoryId;
+public class CategoryRepositoryCategoryIntegrationTest extends BaseCategoryIntegrationTest {
 
     @Autowired
-    public CategoryRepositoryIntegrationTest(CategoryRepository categoryRepository) {
+    public CategoryRepositoryCategoryIntegrationTest(CategoryRepository categoryRepository, CategoryService categoryService) {
         this.categoryRepository = categoryRepository;
-    }
-
-    @BeforeEach
-    public void setUp() {
-        Category category = new Category();
-        category.setName("test0");
-
-        Category createdCategory = categoryRepository.save(category);
-        categoryId = createdCategory.getId();
-
-        Category childCategory = new Category();
-        childCategory.setName("test0-child");
-
-        Category createdChildCategory = categoryRepository.save(childCategory);
-        createdCategory.addChildCategory(createdChildCategory);
-        categoryRepository.save(createdCategory);
+        this.categoryService = categoryService;
     }
 
     @Test
-    @DisplayName("카테고리 생성 테스트")
+    @DisplayName("[CategoryRepository] 카테고리 생성 테스트")
     public void createCategoryTest() {
         log.info("카테고리 생성 테스트");
 //        Category category = Category.builder()
@@ -53,7 +36,7 @@ public class CategoryRepositoryIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("카테고리 조회 성공 테스트")
+    @DisplayName("[CategoryRepository] 카테고리 조회 성공 테스트")
     public void readCategoryByIdSuccessTest() {
         log.info("카테고리 조회 성공 테스트");
         Optional<Category> resultById = categoryRepository.findById(categoryId);
@@ -65,7 +48,7 @@ public class CategoryRepositoryIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("카테고리 조회 실패 테스트")
+    @DisplayName("[CategoryRepository] 카테고리 조회 실패 테스트")
     public void readCategoryFailTest() {
         log.info("카테고리 조회 실패 테스트");
         Optional<Category> resultById = categoryRepository.findById(Long.valueOf(-1));
@@ -75,7 +58,7 @@ public class CategoryRepositoryIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("카테고리 전체 조회 테스트")
+    @DisplayName("[CategoryRepository] 카테고리 전체 조회 테스트")
     public void readAllCategoriesTest() {
         log.info("카테고리 전체 조회 테스트");
         List<Category> categories = categoryRepository.findAll();
