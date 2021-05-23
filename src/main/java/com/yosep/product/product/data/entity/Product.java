@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.yosep.product.category.data.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "DTYPE")
+@EqualsAndHashCode(of="productId")
 @Table(name = "yos_product")
 public abstract class Product {
     @Id
@@ -51,5 +53,5 @@ public abstract class Product {
 
     @JsonManagedReference
     @OneToMany(mappedBy="product",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-    private List<ProductProfileFile> productProfileImageURLs = new ArrayList<ProductProfileFile>();
+    private List<ProductImage> productProfileImageURLs = new ArrayList<ProductImage>();
 }

@@ -6,7 +6,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,6 +15,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(of="id")
 @ToString
 public class ProductDescription {
     @Id
@@ -35,4 +35,8 @@ public class ProductDescription {
 
     @Column(name="description")
     private String description;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "productDescription", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ProductImage> descriptionImages;
 }

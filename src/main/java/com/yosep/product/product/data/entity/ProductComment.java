@@ -16,6 +16,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(of="id")
 @ToString
 public class ProductComment {
     @Id
@@ -44,4 +45,9 @@ public class ProductComment {
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parentProductComment", cascade = CascadeType.ALL)
     private List<ProductComment> childs = new ArrayList<>();
+
+    public void addChildComment(ProductComment child) {
+        this.childs.add(child);
+        child.setParentProductComment(this);
+    }
 }
