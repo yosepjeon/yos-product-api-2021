@@ -46,6 +46,10 @@ public class ProductComment {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parentProductComment", cascade = CascadeType.ALL)
     private List<ProductComment> childs = new ArrayList<>();
 
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productComment", cascade = CascadeType.ALL)
+    private List<ProductCommentImage> commentImages = new ArrayList<>();
+
     public void addChildComment(ProductComment child) {
         this.childs.add(child);
         child.setParentProductComment(this);

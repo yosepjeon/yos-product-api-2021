@@ -38,5 +38,5 @@ public class ProductDescription {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "productDescription", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProductImage> descriptionImages;
+    private List<ProductDescriptionImage> descriptionImages;
 }

@@ -20,7 +20,7 @@ import static javax.persistence.FetchType.*;
 @ToString
 public class ProductImage {
     @Id
-    @Column(name="file_id",length=300)
+    @Column(length=300)
     private String id;
 
 //	@Column(name="file_name",length=100,nullable=false)

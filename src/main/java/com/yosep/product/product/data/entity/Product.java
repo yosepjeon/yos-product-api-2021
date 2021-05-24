@@ -37,8 +37,8 @@ public abstract class Product {
     @Column
     private String productDetail;
 
-    @Column(nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @Column
@@ -46,6 +46,10 @@ public abstract class Product {
 
     @Column
     private LocalDateTime productUdate;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ProductImage> productImages = new ArrayList<>();
 
     @JsonManagedReference
     @OneToMany(mappedBy="product",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
