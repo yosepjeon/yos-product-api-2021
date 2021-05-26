@@ -169,7 +169,7 @@ public class CategoryService {
         Optional<Category> optionalCategory = categoryRepository.findById(categoryDto.getId());
 
         if (optionalCategory.isEmpty()) {
-
+            
         } else {
             Category category = optionalCategory.get();
             category.setName(categoryDto.getName());

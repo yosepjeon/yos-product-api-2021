@@ -39,7 +39,7 @@ public class CategoryRepositoryCategoryIntegrationTest extends BaseCategoryInteg
     @DisplayName("[CategoryRepository] 카테고리 조회 성공 테스트")
     public void readCategoryByIdSuccessTest() {
         log.info("카테고리 조회 성공 테스트");
-        Optional<Category> resultById = categoryRepository.findById(categoryId);
+        Optional<Category> resultById = categoryRepository.findById(categoryId3);
         Category category = resultById.get();
         SelectedCategoryDto selectedCategoryDto = new SelectedCategoryDto(category);
 

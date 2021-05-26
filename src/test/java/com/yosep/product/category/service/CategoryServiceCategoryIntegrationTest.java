@@ -39,7 +39,7 @@ public class CategoryServiceCategoryIntegrationTest extends BaseCategoryIntegrat
     @DisplayName("[CategoryService] 특정 카테고리를 읽어오되, 자식 카테고리들도 함께 읽어오기 테스트")
     public void readCategoryByIdTest() {
         log.info("특정 카테고리를 읽어오되, 자식 카테고리들도 함께 읽어오기 테스트");
-        Optional<SelectedCategoryDto> readedCategoryDto = categoryService.readCategoryById(categoryId);
+        Optional<SelectedCategoryDto> readedCategoryDto = categoryService.readCategoryById(categoryId3);
         log.info(readedCategoryDto.toString());
         Assertions.assertEquals(true, readedCategoryDto.isPresent());
     }
@@ -66,5 +66,25 @@ public class CategoryServiceCategoryIntegrationTest extends BaseCategoryIntegrat
 
         log.info(categories.toString());
         Assertions.assertEquals(true, categories.isEmpty());
+    }
+
+    @Test
+    @DisplayName("[CategoryService] 부모 카테고리 수정 성공 테스트")
+    public void updateCategorySuccessTest() {
+        log.info("[CategoryService] 카테고리 수정 성공 테스트");
+
+        Optional<Category> optionalCategory = categoryRepository.findById(categoryId1);
+        Category category = optionalCategory.get();
+
+        log.info("수정 전: " + category.toString());
+        category.setName("enekelx1");
+
+        log.info("수정 후: " + categoryRepository.findById(categoryId1).toString());
+    }
+
+    @Test
+    @DisplayName("[CategoryService] 부모 카테고리 수정 실패 테스트")
+    public void updateCategoryFailTest() {
+
     }
 }

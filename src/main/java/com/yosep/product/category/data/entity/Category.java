@@ -10,6 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @ToString(exclude = "parentCategory")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
@@ -19,6 +20,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
+    @Setter(value = AccessLevel.PRIVATE)
     private Long id;
 
     @Column(name = "category_name", length = 50, nullable = false)

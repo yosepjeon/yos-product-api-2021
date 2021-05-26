@@ -1,11 +1,9 @@
 package com.yosep.product.product.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.yosep.product.category.data.entity.Category;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,14 +13,16 @@ import java.util.List;
 @Entity
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "DTYPE")
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+//@DiscriminatorColumn(name = "DTYPE")
+@Builder
 @EqualsAndHashCode(of="productId")
 @Table(name = "yos_product")
-public abstract class Product {
+//public abstract class Product {
+public class Product {
     @Id
     @Column(length = 100)
+    @Setter(value = AccessLevel.PRIVATE)
     private String productId = "";
 
     @Column(length = 50)
@@ -37,6 +37,7 @@ public abstract class Product {
     @Column
     private String productDetail;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;

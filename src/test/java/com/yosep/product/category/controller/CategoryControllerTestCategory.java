@@ -57,7 +57,7 @@ public class CategoryControllerTestCategory extends BaseCategoryIntegrationTest 
         log.info("카테고리 컨트롤러 조회 테스트");
 
         mockMvc
-                .perform(get("/categories/" + categoryId)
+                .perform(get("/categories/" + categoryId3)
                         .accept(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())

@@ -31,18 +31,17 @@ public class CategoryQueryDslCategoryIntegrationTest extends BaseCategoryIntegra
         category.setName("create-test1");
 
         Category createdCategory = categoryRepository.save(category);
-        categoryId = createdCategory.getId();
+        categoryId3 = createdCategory.getId();
 
         Category category2 = new Category();
         category2.setName("create-test1");
 
         Category createdCategory2 = categoryRepository.save(category2);
 
-
-        log.info("parentId = " + categoryId);
+        log.info("parentId = " + categoryId3);
         log.info("자식 카테고리 생성");
         for (int i = 0; i < 5; i++) {
-            CategoryDtoForCreation categoryDtoForCreation = new CategoryDtoForCreation("create-category-test" + i, categoryId);
+            CategoryDtoForCreation categoryDtoForCreation = new CategoryDtoForCreation("create-category-test" + i, categoryId3);
             Optional<Category> result = categoryService.createCategory(categoryDtoForCreation);
         }
     }

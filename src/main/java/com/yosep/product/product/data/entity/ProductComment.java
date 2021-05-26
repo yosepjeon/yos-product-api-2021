@@ -13,7 +13,6 @@ import java.util.List;
 @Table(name="yos_product_comment")
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of="id")

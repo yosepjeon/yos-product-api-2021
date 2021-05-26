@@ -1,8 +1,11 @@
 package com.yosep.product.common;
 
+import com.yosep.product.product.data.entity.Product;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
@@ -12,9 +15,12 @@ import java.util.UUID;
 public class CommonTest extends BaseUnitTest{
 
     @Test
-    @DisplayName("")
-    public void createIdTest() {
+    @DisplayName("Rand Value Test")
+    public void createRandomValueTest() throws NoSuchAlgorithmException {
+        SecureRandom rand = SecureRandom.getInstance("SHA1PRNG");
+        long value = (long) (rand.nextDouble() * 100000);
 
+        log.info("" + value);
     }
 
     @Test
@@ -26,8 +32,8 @@ public class CommonTest extends BaseUnitTest{
     }
 
     @Test
-    public void la() {
+    public void localDateTest() {
         LocalDateTime currentTime = LocalDateTime.now();
-        System.out.println(currentTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        System.out.println(currentTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")));
     }
 }
