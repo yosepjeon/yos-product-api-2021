@@ -6,9 +6,8 @@ import com.yosep.product.category.data.dto.request.CategoryDtoForUpdate;
 import com.yosep.product.category.data.dto.response.SelectedCategoryDto;
 import com.yosep.product.category.data.entity.Category;
 import com.yosep.product.category.data.repository.CategoryRepository;
-import com.yosep.product.category.data.repository.CategoryRepositoryQueryDsl;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
@@ -24,22 +23,15 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
-    private final CategoryRepositoryQueryDsl categoryRepositoryQueryDsl;
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public CategoryService(CategoryRepository categoryRepository, CategoryRepositoryQueryDsl categoryRepositoryQueryDsl, ModelMapper modelMapper) {
-        this.categoryRepository = categoryRepository;
-        this.categoryRepositoryQueryDsl = categoryRepositoryQueryDsl;
-        this.modelMapper = modelMapper;
-    }
 
     /*
      * 카테고리 생성
      * Logic:
-     * 1. ModelMapper를 이용하여 CategoryDto를 category Entity로 변환
+     * 1. CategoryDto를 category Entity로 변환
      * if-1. 생성하려는 category가 부모 카테고리라면 바로 생성
      * if-2. 생성하려는 category가 자식 카테고리지만 부모 카테고리가우 원래 없었거나, 알 수 없는 문제로 사라졌을 경우 바로 생성
      * if-3. 생성하려는 category가 자식 카테고리면서 부모 카테고리가 존재하는 경우
@@ -74,7 +66,7 @@ public class CategoryService {
      * 1-2. 카테고리가 존재하면 List에 담아서 반환
      */
     public Optional<CollectionModel<EntityModel<SelectedCategoryDto>>> readCategoriesByParentIsNullForUpdate() {
-        Optional<List<Category>> categoryEntities = categoryRepositoryQueryDsl.findAllByParentIsNull();
+        Optional<List<Category>> categoryEntities = categoryRepository.findAllByParentIsNull();
 
         if (categoryEntities.isEmpty()) {
             return Optional.empty();
@@ -102,7 +94,7 @@ public class CategoryService {
      * 1-2. 카테고리가 존재하면 List에 담아서 반환
      */
     public Optional<List<SelectedCategoryDto>> readCategoriesByParentIsNull() {
-        Optional<List<Category>> categoryEntities = categoryRepositoryQueryDsl.findAllByParentIsNull();
+        Optional<List<Category>> categoryEntities = categoryRepository.findAllByParentIsNull();
 
         if (categoryEntities.isEmpty()) {
             return Optional.empty();
@@ -169,7 +161,7 @@ public class CategoryService {
         Optional<Category> optionalCategory = categoryRepository.findById(categoryDto.getId());
 
         if (optionalCategory.isEmpty()) {
-            
+
         } else {
             Category category = optionalCategory.get();
             category.setName(categoryDto.getName());

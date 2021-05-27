@@ -1,6 +1,8 @@
 package com.yosep.product.product.data.repository;
 
 import com.yosep.product.category.data.entity.Category;
+import com.yosep.product.category.data.repository.CategoryRepository;
+import com.yosep.product.category.service.CategoryService;
 import com.yosep.product.common.BaseProductIntegrationTest;
 import com.yosep.product.product.data.entity.ProductTest;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +16,10 @@ public class ProductRepositoryCategoryIntegrationTest extends BaseProductIntegra
     private final ProductTestRepository productTestRepository;
 
     @Autowired
-    public ProductRepositoryCategoryIntegrationTest(ProductTestRepository productTestRepository) {
+    public ProductRepositoryCategoryIntegrationTest(CategoryService categoryService, CategoryRepository categoryRepository, ProductTestRepository productTestRepository, ProductRepository productRepository) {
+        this.categoryService = categoryService;
+        this.categoryRepository = categoryRepository;
+        this.productRepository = productRepository;
         this.productTestRepository = productTestRepository;
     }
 
@@ -29,9 +34,6 @@ public class ProductRepositoryCategoryIntegrationTest extends BaseProductIntegra
     @Test
     @DisplayName("특정 카테고리에 상품 저장 테스트")
     public void 특정_카테고리에_상품_저장_테스트() {
-        Category category = Category.builder()
-                .id(childCategoryId1)
-//                .name()
-                .build();
+//        Category category = categoryRepository
     }
 }

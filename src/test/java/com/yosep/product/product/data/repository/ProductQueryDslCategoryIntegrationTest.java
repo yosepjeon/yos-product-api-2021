@@ -1,7 +1,6 @@
 package com.yosep.product.product.data.repository;
 
 import com.yosep.product.category.data.repository.CategoryRepository;
-import com.yosep.product.category.data.repository.CategoryRepositoryQueryDsl;
 import com.yosep.product.category.service.CategoryService;
 import com.yosep.product.common.BaseProductIntegrationTest;
 import com.yosep.product.product.data.entity.Product;

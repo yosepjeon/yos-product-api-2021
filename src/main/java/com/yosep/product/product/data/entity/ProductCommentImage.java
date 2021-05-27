@@ -1,6 +1,7 @@
 package com.yosep.product.product.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.yosep.product.common.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of="id")
 @Entity
 @ToString
-public class ProductCommentImage {
+public class ProductCommentImage extends BaseEntity {
     @Id
     @Column
     private String id;
@@ -24,10 +25,4 @@ public class ProductCommentImage {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
     private ProductComment productComment;
-
-    @Column(name="rdate")
-    private LocalDateTime rdate;
-
-    @Column(name="udate")
-    private LocalDateTime udate;
 }

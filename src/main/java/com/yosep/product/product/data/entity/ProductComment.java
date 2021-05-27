@@ -2,6 +2,7 @@ package com.yosep.product.product.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.yosep.product.common.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(of="id")
 @ToString
-public class ProductComment {
+public class ProductComment extends BaseEntity {
     @Id
     @Column(name="product_comment_id")
     private String id;
@@ -31,12 +32,6 @@ public class ProductComment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private ProductComment parentProductComment;
-
-    @Column
-    private LocalDateTime productCommentRdate;
-
-    @Column
-    private LocalDateTime productCommentUdate;
 
     @Column(name="description")
     private String comment;

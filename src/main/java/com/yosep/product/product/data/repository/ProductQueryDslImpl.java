@@ -5,6 +5,7 @@ import com.yosep.product.category.data.entity.QCategory;
 import com.yosep.product.product.data.entity.Product;
 import com.yosep.product.product.data.entity.QProduct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;

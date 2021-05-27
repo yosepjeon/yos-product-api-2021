@@ -2,6 +2,7 @@ package com.yosep.product.category.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.yosep.product.common.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,13 +11,13 @@ import java.util.List;
 
 @Getter
 @Setter
-@Builder
+//@Builder
 @ToString(exclude = "parentCategory")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @Entity
 @Table(name = "yos_product_category")
-public class Category {
+public class Category extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")

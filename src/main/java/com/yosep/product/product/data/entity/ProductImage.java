@@ -1,6 +1,7 @@
 package com.yosep.product.product.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.yosep.product.common.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ import static javax.persistence.FetchType.*;
 @EqualsAndHashCode(of="id")
 @Entity
 @ToString
-public class ProductImage {
+public class ProductImage extends BaseEntity {
     @Id
     @Column(length=300)
     private String id;
@@ -33,10 +34,4 @@ public class ProductImage {
 
     @Column(name="url",length=300,nullable=false)
     private String url;
-
-    @Column(name="rdate")
-    private LocalDateTime rdate;
-
-    @Column(name="udate")
-    private LocalDateTime udate;
 }

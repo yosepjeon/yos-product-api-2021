@@ -52,7 +52,6 @@ public abstract class BaseProductIntegrationTest {
         Category createdCategory1 = categoryRepository.save(category1);
         categoryId1 = createdCategory1.getId();
 
-
         log.info("parentId = " + categoryId1);
         log.info("자식 카테고리 생성");
         for (int i = 0; i < 5; i++) {

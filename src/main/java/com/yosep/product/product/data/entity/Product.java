@@ -3,6 +3,7 @@ package com.yosep.product.product.data.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.yosep.product.category.data.entity.Category;
+import com.yosep.product.common.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ import java.util.List;
 @EqualsAndHashCode(of="productId")
 @Table(name = "yos_product")
 //public abstract class Product {
-public class Product {
+public class Product extends BaseEntity {
     @Id
     @Column(length = 100)
     @Setter(value = AccessLevel.PRIVATE)
@@ -39,22 +40,21 @@ public class Product {
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
-
-    @Column
-    private LocalDateTime productRdate;
-
-    @Column
-    private LocalDateTime productUdate;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductImage> productImages = new ArrayList<>();
 
+//    무신사를 예를 들어 봤을때, 상품 정보를 텍스트는 없고 전부 이미지로 나타내는것 같음
+//    @JsonManagedReference
+//    @OneToMany(mappedBy="product",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+//    private List<ProductDescription> productDescriptions = new ArrayList<ProductDescription>();
+
     @JsonManagedReference
-    @OneToMany(mappedBy="product",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-    private List<ProductDescription> productDescriptions = new ArrayList<ProductDescription>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ProductDescriptionImage> productDescriptionImages = new ArrayList<>();
 
     @JsonManagedReference
     @OneToMany(mappedBy="product",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
