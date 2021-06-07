@@ -45,7 +45,7 @@ public class CategoryServiceCategoryIntegrationTest extends BaseCategoryIntegrat
     }
 
     @Test
-    @Rollback(value = false)
+//    @Rollback(value = false)
     @DisplayName("[CategoryService] 부모 카테고리 단위 자식 카테고리 그룹화하여 읽어오기 성공 테스트")
     public void readCategoriesByParentIsNullSuccessTest() {
         log.info("전체 카테고리를 읽어오되, 부모 카테고리로 그룹화된 자식 카테고리 읽어오기 성공 테스트");

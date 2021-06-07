@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -40,8 +41,10 @@ public class ProductQueryDslCategoryIntegrationTest extends BaseProductIntegrati
     @DisplayName("[ProductQueryDsl] 카테고리별 상품 조회 테스트")
     public void 카테고리별_상품_조회_테스트() {
         log.info("[ProductQueryDsl] 카테고리별 상품 조회 테스트");
-        Product product = Product.builder().productId("aa").build();
-        log.info(product.toString());
-//        productRepository.findAllByCategoryId();
+        Optional<List<Product>> optionalProducts = productRepository.findAllByCategoryId(childCategoryId1);
+        List<Product> products = optionalProducts.get();
+        products.forEach(product ->
+                log.info(product.toString())
+        );
     }
 }

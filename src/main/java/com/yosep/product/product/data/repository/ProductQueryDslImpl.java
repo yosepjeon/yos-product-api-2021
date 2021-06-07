@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 @RequiredArgsConstructor
 public class ProductQueryDslImpl implements ProductQueryDsl{
     private final JPAQueryFactory jpaQueryFactory;
@@ -20,11 +21,17 @@ public class ProductQueryDslImpl implements ProductQueryDsl{
         QCategory category = QCategory.category;
 
         Optional<List<Product>> products = Optional.of(jpaQueryFactory.selectFrom(product)
-                .join(category)
+                .innerJoin(category)
                 .on(product.category.id.eq(category.id))
+                .where(product.category.id.eq(categoryId))
                 .fetchJoin()
                 .fetch()
         );
+
+//        Optional<List<Product>> products = Optional.of(jpaQueryFactory.selectFrom(product)
+//                .where(product.category.id.eq(categoryId))
+//                .fetch()
+//        );
 
         return products;
     }

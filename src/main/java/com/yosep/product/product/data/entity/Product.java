@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 //@DiscriminatorColumn(name = "DTYPE")
 @Builder
@@ -59,4 +61,18 @@ public class Product extends BaseEntity {
     @JsonManagedReference
     @OneToMany(mappedBy="product",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private List<ProductImage> productProfileImageURLs = new ArrayList<ProductImage>();
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productId='" + productId + '\'' +
+                ", productName='" + productName + '\'' +
+                ", productPrice=" + productPrice +
+                ", stockQuantity=" + stockQuantity +
+                ", productDetail='" + productDetail + '\'' +
+                ", productImages=" + productImages +
+                ", productDescriptionImages=" + productDescriptionImages +
+                ", productProfileImageURLs=" + productProfileImageURLs +
+                '}';
+    }
 }

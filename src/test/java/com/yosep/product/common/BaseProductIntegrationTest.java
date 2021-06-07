@@ -88,14 +88,52 @@ public abstract class BaseProductIntegrationTest {
             childCategoryId3 = result.get().getId();
         }
 
+        Category childCategory1 = categoryRepository.findById(childCategoryId1).get();
+
+        log.info("상품 생성");
         for (int i = 0; i < 5; i++) {
             Product product = Product.builder()
-                    .productId("create-product-" + i)
+                    .productId("create-product-category1-" + i)
                     .productName("product" + i)
                     .productPrice((int) (rand.nextDouble() * 100000))
                     .stockQuantity((int) (rand.nextDouble() * 100))
                     .productDetail("")
+                    .category(childCategory1)
                     .build();
+
+            productRepository.save(product);
+        }
+
+        Category childCategory2 = categoryRepository.findById(childCategoryId2).get();
+
+        log.info("상품 생성");
+        for (int i = 0; i < 5; i++) {
+            Product product = Product.builder()
+                    .productId("create-product-category2-" + i)
+                    .productName("product" + i)
+                    .productPrice((int) (rand.nextDouble() * 100000))
+                    .stockQuantity((int) (rand.nextDouble() * 100))
+                    .productDetail("")
+                    .category(childCategory2)
+                    .build();
+
+            productRepository.save(product);
+        }
+
+        Category childCategory3 = categoryRepository.findById(childCategoryId3).get();
+
+        log.info("상품 생성");
+        for (int i = 0; i < 5; i++) {
+            Product product = Product.builder()
+                    .productId("create-product-category3-" + i)
+                    .productName("product" + i)
+                    .productPrice((int) (rand.nextDouble() * 100000))
+                    .stockQuantity((int) (rand.nextDouble() * 100))
+                    .productDetail("")
+                    .category(childCategory3)
+                    .build();
+
+            productRepository.save(product);
         }
     }
 
