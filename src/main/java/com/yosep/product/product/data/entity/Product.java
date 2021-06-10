@@ -2,6 +2,7 @@ package com.yosep.product.product.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.yosep.product.cart.data.entity.Cart;
 import com.yosep.product.category.data.entity.Category;
 import com.yosep.product.common.entity.BaseEntity;
 import lombok.*;
@@ -16,8 +17,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-//@DiscriminatorColumn(name = "DTYPE")
 @Builder
 @EqualsAndHashCode(of="productId")
 @Table(name = "yos_product")
@@ -39,6 +38,11 @@ public class Product extends BaseEntity {
 
     @Column
     private String productDetail;
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_id", nullable = false)
+    private Cart cart;
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
