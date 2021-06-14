@@ -8,7 +8,6 @@ import java.util.UUID;
 
 public class RandomIdGenerator {
     public static String createId() {
-
         String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
         String uuid = UUID.randomUUID().toString().substring(0, 18);
 

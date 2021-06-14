@@ -31,18 +31,18 @@ public class Product extends BaseEntity {
     private String productName = "";
 
     @Column(nullable = false)
-    private int productPrice = 0;
+    private long productPrice = 0;
 
     @Column(nullable = false)
-    private int stockQuantity = 0;
+    private long stockQuantity = 0;
 
     @Column
     private String productDetail;
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart_id", nullable = false)
-    private Cart cart;
+//    @JsonBackReference
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "cart_id", nullable = false)
+//    private Cart cart;
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)

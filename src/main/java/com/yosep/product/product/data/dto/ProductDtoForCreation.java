@@ -14,15 +14,15 @@ public class ProductDtoForCreation {
     private String productName = "";
 
     @Min(0)
-    private int productPrice = 0;
+    private long productPrice = 0;
 
     @Min(0)
-    private int stockQuantity = 0;
+    private long stockQuantity = 0;
 
     private String productDetail;
 
     @NotBlank
-    private String category;
+    private Long category;
 
     private List<MultipartFile> productImages;
 }

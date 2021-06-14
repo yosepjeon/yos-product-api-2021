@@ -41,6 +41,7 @@ public class ProductQueryDslCategoryIntegrationTest extends BaseProductIntegrati
     @DisplayName("[ProductQueryDsl] 카테고리별 상품 조회 테스트")
     public void 카테고리별_상품_조회_테스트() {
         log.info("[ProductQueryDsl] 카테고리별 상품 조회 테스트");
+        System.out.println("??? "+ childCategoryId1);
         Optional<List<Product>> optionalProducts = productRepository.findAllByCategoryId(childCategoryId1);
         List<Product> products = optionalProducts.get();
         products.forEach(product ->
