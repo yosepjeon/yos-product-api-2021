@@ -2,121 +2,242 @@ plugins {
 	id 'org.springframework.boot' version '2.4.5'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'org.asciidoctor.convert' version '1.5.8'
-	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+//	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 	id 'java'
 }
-
-group = 'com.yosep.product'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
 }
 
-ext {
-//	set('snippetsDir', file("build/generated-snippets"))
-	snippetsDir = file('build/generated-snippets')
-	set('springCloudVersion', "2020.0.2")
-}
+allprojects {
+	group = 'com.yosep.product'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = '11'
 
-dependencies {
-	// QueryDSL
-	implementation 'com.querydsl:querydsl-jpa'
+	repositories {
+		mavenCentral()
+	}
 
-	// Lombok
-	implementation "org.projectlombok:lombok"
-	annotationProcessor "org.projectlombok:lombok"
-	testImplementation "org.projectlombok:lombok"
-	testAnnotationProcessor "org.projectlombok:lombok"
+	apply plugin: 'java'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+//	apply plugin: 'com.ewerk.gradle.plugins.querydsl'
+	apply plugin: 'org.asciidoctor.convert'
 
-	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+	ext {
+		snippetsDir = file('build/generated-snippets')
+		set('springCloudVersion', "2020.0.2")
+	}
 
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	dependencies {
+		// QueryDSL
+		implementation 'com.querydsl:querydsl-jpa'
 
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+		// Lombok
+		implementation "org.projectlombok:lombok"
+		annotationProcessor "org.projectlombok:lombok"
+		testImplementation "org.projectlombok:lombok"
+		testAnnotationProcessor "org.projectlombok:lombok"
+
+		implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+
+		implementation 'org.springframework.boot:spring-boot-starter-validation'
+		implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+		implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 
 //	implementation 'org.springframework.boot:spring-boot-starter-security'
 
-	implementation 'org.springframework.boot:spring-boot-starter-amqp'
-	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
+		implementation 'org.springframework.boot:spring-boot-starter-amqp'
+		implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
 
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+		implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+		implementation 'org.springframework.cloud:spring-cloud-starter-config'
 
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.kafka:spring-kafka'
-	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.4.3'
-	implementation 'com.h2database:h2'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	implementation group: 'com.zaxxer', name: 'HikariCP', version: '4.0.3'
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		implementation 'org.springframework.kafka:spring-kafka'
+		implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+		implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.4.3'
+		implementation 'com.h2database:h2'
+		developmentOnly 'org.springframework.boot:spring-boot-devtools'
+		implementation group: 'com.zaxxer', name: 'HikariCP', version: '4.0.3'
 
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'io.projectreactor:reactor-test'
-	testImplementation 'org.springframework.kafka:spring-kafka-test'
-	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-	testImplementation 'org.springframework.security:spring-security-test'
-}
+		runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testImplementation 'io.projectreactor:reactor-test'
+		testImplementation 'org.springframework.kafka:spring-kafka-test'
+		testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+		testImplementation 'org.springframework.security:spring-security-test'
+	}
 
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	dependencyManagement {
+		imports {
+			mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		}
+	}
+
+//	def querydslDir = "$buildDir/generated/querydsl"
+//
+//	querydsl {
+//		jpa = true
+//		querydslSourcesDir = querydslDir
+//	}
+//
+//	sourceSets {
+//		main.java.srcDir querydslDir
+//	}
+//
+//	configurations {
+//		querydsl.extendsFrom compileClasspath
+//	}
+//
+//	compileQuerydsl {
+//		options.annotationProcessorPath = configurations.querydsl
+//	}
+
+	test {
+		outputs.dir snippetsDir
+		useJUnitPlatform()
+	}
+
+	asciidoctor {
+		inputs.dir snippetsDir
+		dependsOn test
+	}
+
+	asciidoctor.doFirst {
+		delete file('src/main/resources/docs')
+	}
+
+	task copyDocument(type: Copy) {
+		dependsOn asciidoctor
+
+		from file("build/asciidoc/html5/")
+		into file("src/main/resources/static/docs")
+
+	}
+
+	build{
+		dependsOn copyDocument
+	}
+
+	bootJar {
+		dependsOn asciidoctor
+		from ("build/asciidoc/html5") {
+			into 'static/docs'
+		}
 	}
 }
 
-def querydslDir = "$buildDir/generated/querydsl"
+//group = 'com.yosep.product'
+//version = '0.0.1-SNAPSHOT'
+//sourceCompatibility = '11'
+//
+//ext {
+//	snippetsDir = file('build/generated-snippets')
+//	set('springCloudVersion', "2020.0.2")
+//}
 
-querydsl {
-	jpa = true
-	querydslSourcesDir = querydslDir
-}
-
-sourceSets {
-	main.java.srcDir querydslDir
-}
-
-configurations {
-	querydsl.extendsFrom compileClasspath
-}
-
-compileQuerydsl {
-	options.annotationProcessorPath = configurations.querydsl
-}
-
-test {
-	outputs.dir snippetsDir
-	useJUnitPlatform()
-}
-
-asciidoctor {
-	inputs.dir snippetsDir
-	dependsOn test
-}
-
-asciidoctor.doFirst {
-	delete file('src/main/resources/docs')
-}
-
-task copyDocument(type: Copy) {
-	dependsOn asciidoctor
-
-	from file("build/asciidoc/html5/")
-	into file("src/main/resources/static/docs")
-
-}
-
-build{
-	dependsOn copyDocument
-}
-
-bootJar {
-	dependsOn asciidoctor
-	from ("build/asciidoc/html5") {
-		into 'static/docs'
-	}
-}
+//dependencies {
+//	// QueryDSL
+//	implementation 'com.querydsl:querydsl-jpa'
+//
+//	// Lombok
+//	implementation "org.projectlombok:lombok"
+//	annotationProcessor "org.projectlombok:lombok"
+//	testImplementation "org.projectlombok:lombok"
+//	testAnnotationProcessor "org.projectlombok:lombok"
+//
+//	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+//
+//	implementation 'org.springframework.boot:spring-boot-starter-validation'
+//	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+//
+//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+//	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+//
+////	implementation 'org.springframework.boot:spring-boot-starter-security'
+//
+//	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
+//
+//	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+//
+//	implementation 'org.springframework.boot:spring-boot-starter-web'
+//	implementation 'org.springframework.kafka:spring-kafka'
+//	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+//	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.4.3'
+//	implementation 'com.h2database:h2'
+//	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+//	implementation group: 'com.zaxxer', name: 'HikariCP', version: '4.0.3'
+//
+//	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+//	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//	testImplementation 'io.projectreactor:reactor-test'
+//	testImplementation 'org.springframework.kafka:spring-kafka-test'
+//	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+//	testImplementation 'org.springframework.security:spring-security-test'
+//}
+//
+//dependencyManagement {
+//	imports {
+//		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+//	}
+//}
+//
+//def querydslDir = "$buildDir/generated/querydsl"
+//
+//querydsl {
+//	jpa = true
+//	querydslSourcesDir = querydslDir
+//}
+//
+//sourceSets {
+//	main.java.srcDir querydslDir
+//}
+//
+//configurations {
+//	querydsl.extendsFrom compileClasspath
+//}
+//
+//compileQuerydsl {
+//	options.annotationProcessorPath = configurations.querydsl
+//}
+//
+//test {
+//	outputs.dir snippetsDir
+//	useJUnitPlatform()
+//}
+//
+//asciidoctor {
+//	inputs.dir snippetsDir
+//	dependsOn test
+//}
+//
+//asciidoctor.doFirst {
+//	delete file('src/main/resources/docs')
+//}
+//
+//task copyDocument(type: Copy) {
+//	dependsOn asciidoctor
+//
+//	from file("build/asciidoc/html5/")
+//	into file("src/main/resources/static/docs")
+//
+//}
+//
+//build{
+//	dependsOn copyDocument
+//}
+//
+//bootJar {
+//	dependsOn asciidoctor
+//	from ("build/asciidoc/html5") {
+//		into 'static/docs'
+//	}
+//}
