@@ -1,3 +1,6 @@
 rootProject.name = 'yos-product-orchestration-api-2021'
 include 'product-common'
 include 'product-admin-api'
+include 'product-customer-api'
+include 'product-common-reactive'
+

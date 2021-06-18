@@ -44,6 +44,7 @@ public class Product extends BaseEntity {
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
+    // nullable false로 다시 바꾸기 테스트용으로 true한거임
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
