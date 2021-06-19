@@ -12,7 +12,7 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
 @Component
 public class ProductHandler {
 
-    public Mono<ServerResponse> orderTest(ServerRequest serverRequest) {
+    public Mono<ServerResponse> productTest(ServerRequest serverRequest) {
         return ok().contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.create(objectMonoSink -> objectMonoSink.success("Test 입니다.")), String.class);
     }

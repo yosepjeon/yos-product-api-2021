@@ -19,7 +19,7 @@ public class ProductRouter {
     public RouterFunction<?> productFunction() {
 
         return route()
-                .GET("/", accept(MediaType.APPLICATION_JSON), productHandler::orderTest)
+                .GET("/", accept(MediaType.APPLICATION_JSON), productHandler::productTest)
                 .build();
     }
 }

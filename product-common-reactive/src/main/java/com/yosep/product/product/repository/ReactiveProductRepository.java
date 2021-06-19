@@ -1,7 +1,7 @@
 package com.yosep.product.product.repository;
 
-import com.yosep.product.product.entity.ProductForCreation;
+import com.yosep.product.product.entity.Product;
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
 
-public interface ReactiveProductRepository extends R2dbcRepository<ProductForCreation, String> {
+public interface ReactiveProductRepository extends R2dbcRepository<Product, String> {
 }
