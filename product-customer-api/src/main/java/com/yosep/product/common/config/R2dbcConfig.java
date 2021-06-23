@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration;
+import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.r2dbc.connection.R2dbcTransactionManager;
 import org.springframework.transaction.ReactiveTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -36,6 +37,11 @@ public class R2dbcConfig extends AbstractR2dbcConfiguration {
                 .username(userName)
                 .password(password)
                 .build());
+    }
+
+    @Bean
+    public R2dbcEntityTemplate r2dbcEntityTemplate() {
+        return new R2dbcEntityTemplate(connectionFactory());
     }
 
     @Bean

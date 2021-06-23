@@ -14,45 +14,11 @@ import java.time.LocalDateTime;
 @SpringBootTest
 @Slf4j
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class ReactiveProductRepositoryTest extends BaseProductRepositoryTest {
+public class ReactiveProductRepositoryUpdateTest extends BaseProductRepositoryTest {
 
     @Autowired
-    public ReactiveProductRepositoryTest(ReactiveProductRepository reactiveProductRepository) {
+    public ReactiveProductRepositoryUpdateTest(ReactiveProductRepository reactiveProductRepository) {
         this.reactiveProductRepository = reactiveProductRepository;
-    }
-
-    @Test
-    @DisplayName("[ReactiveProductRepository] 상품 조회 테스트")
-    public void 상품_조회_테스트() {
-        log.info("[ReactiveProductRepository] 상품 조회 테스트");
-
-        Product productForCreation = new Product(
-                "product-select-test0",
-                "product-select-test0",
-                3000L,
-                10L,
-                "detail",
-                1,
-                LocalDateTime.now(),
-                LocalDateTime.now()
-        );
-
-        productForCreation.setAsNew();
-
-        reactiveProductRepository.save(productForCreation)
-                .flatMap(createdProductForCreation -> {
-                    log.info("[생성 완료]");
-                    log.info(createdProductForCreation.toString());
-                    return reactiveProductRepository.findById(createdProductForCreation.getProductId());
-                })
-                .as(Transaction::withRollback)
-                .as(StepVerifier::create)
-                .assertNext(selectedProductForCreation -> {
-                    log.info("[Test 완료]");
-                    log.info(selectedProductForCreation.toString());
-                    Assertions.assertEquals(true, selectedProductForCreation != null);
-                })
-                .verifyComplete();
     }
 
     @Test

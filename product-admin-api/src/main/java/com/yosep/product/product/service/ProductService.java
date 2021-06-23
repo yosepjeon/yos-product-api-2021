@@ -2,13 +2,15 @@ package com.yosep.product.product.service;
 
 import com.yosep.product.jpa.category.data.repository.CategoryRepository;
 import com.yosep.product.jpa.common.logic.RandomIdGenerator;
-import com.yosep.product.jpa.product.data.dto.ProductDtoForCreation;
+import com.yosep.product.jpa.product.data.dto.request.ProductDtoForCreation;
 import com.yosep.product.jpa.product.data.entity.Product;
 import com.yosep.product.jpa.product.data.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -18,13 +20,21 @@ public class ProductService {
     private final CategoryRepository categoryRepository;
     private final ModelMapper modelMapper;
 
+    public void getProduct() {
+
+    }
+
+    public void getProductListByPage() {
+
+    }
+
     /*
-    * 상품 생성
-    * Logic:
-    * 1. productId를 생성하여 해당 ID의 상품이 있는지 검사
-    * 1-1. 상품 존재한다면 1번 반복.
-    * 1-2. 상품이 존재하지 않는다면 2번으로 이동.
-    * 2. 상품 생성 및 생성된 상품 엔티티 반환
+     * 상품 생성
+     * Logic:
+     * 1. productId를 생성하여 해당 ID의 상품이 있는지 검사
+     * 1-1. 상품 존재한다면 1번 반복.
+     * 1-2. 상품이 존재하지 않는다면 2번으로 이동.
+     * 2. 상품 생성 및 생성된 상품 엔티티 반환
      */
     @Transactional(readOnly = false)
     public Product createProduct(ProductDtoForCreation productDtoForCreation) {
@@ -32,10 +42,10 @@ public class ProductService {
         categoryRepository.findById(productDtoForCreation.getCategory());
 
         while (true) {
-            if(productRepository.existsById(productId)) {
+            if (productRepository.existsById(productId)) {
                 productId = RandomIdGenerator.createId();
                 continue;
-            }else {
+            } else {
                 Product product = Product.builder()
                         .productId(productId)
                         .productName(productDtoForCreation.getProductName())
@@ -45,10 +55,24 @@ public class ProductService {
                         .category(categoryRepository.findById(productDtoForCreation.getCategory()).get())
                         .build();
 
-                return productRepository.save(product);
+                Product createdProduct = productRepository.save(product);
+
+                return null;
             }
         }
     }
 
 
+
+    @Transactional(readOnly = false)
+    public void deleteProduct(String productId) {
+        productRepository.deleteById(productId);
+    }
+
+    @Transactional(readOnly = false)
+    public void deleteProducts(List<String> productIds) {
+        for (String productId : productIds) {
+            productRepository.deleteById(productId);
+        }
+    }
 }

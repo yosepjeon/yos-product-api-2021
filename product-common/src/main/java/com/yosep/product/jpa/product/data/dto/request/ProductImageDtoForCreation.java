@@ -1,4 +1,4 @@
-package com.yosep.product.jpa.product.data.dto;
+package com.yosep.product.jpa.product.data.dto.request;
 
 import lombok.Data;
 

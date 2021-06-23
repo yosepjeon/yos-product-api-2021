@@ -1,5 +1,6 @@
 package com.yosep.product.product.controller.handler;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.HandlerFunction;
@@ -10,6 +11,7 @@ import reactor.core.publisher.Mono;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
 @Component
+@RequiredArgsConstructor
 public class ProductHandler {
 
     public Mono<ServerResponse> productTest(ServerRequest serverRequest) {

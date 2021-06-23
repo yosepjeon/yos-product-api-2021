@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(of="productId")
+@EqualsAndHashCode(of = "productId")
 @Table(name = "yos_product")
 //public abstract class Product {
 public class Product extends BaseEntity {
@@ -25,7 +25,7 @@ public class Product extends BaseEntity {
     @Setter(value = AccessLevel.PRIVATE)
     private String productId = "";
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     private String productName = "";
 
     @Column(nullable = false)
@@ -36,11 +36,6 @@ public class Product extends BaseEntity {
 
     @Column
     private String productDetail;
-
-//    @JsonBackReference
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "cart_id", nullable = false)
-//    private Cart cart;
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
@@ -62,8 +57,35 @@ public class Product extends BaseEntity {
     private List<ProductDescriptionImage> productDescriptionImages = new ArrayList<>();
 
     @JsonManagedReference
-    @OneToMany(mappedBy="product",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductImage> productProfileImageURLs = new ArrayList<ProductImage>();
+
+//    public static Product create(
+//            ProductDtoForCreation productDtoForCreation,
+//            CategoryRepository categoryRepository,
+//            ProductRepository productRepository
+//    ) {
+//        String productId = RandomIdGenerator.createId();
+//        categoryRepository.findById(productDtoForCreation.getCategory());
+//
+//        while (true) {
+//            if (productRepository.existsById(productId)) {
+//                productId = RandomIdGenerator.createId();
+//                continue;
+//            } else {
+//                Product product = Product.builder()
+//                        .productId(productId)
+//                        .productName(productDtoForCreation.getProductName())
+//                        .productPrice(productDtoForCreation.getProductPrice())
+//                        .stockQuantity(productDtoForCreation.getStockQuantity())
+//                        .productDetail(productDtoForCreation.getProductDetail())
+//                        .category(categoryRepository.findById(productDtoForCreation.getCategory()).get())
+//                        .build();
+//
+//                return productRepository.save(product);
+//            }
+//        }
+//    }
 
     @Override
     public String toString() {
