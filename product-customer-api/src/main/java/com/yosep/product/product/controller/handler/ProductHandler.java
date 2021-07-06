@@ -18,4 +18,12 @@ public class ProductHandler {
         return ok().contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.create(objectMonoSink -> objectMonoSink.success("Test 입니다.")), String.class);
     }
+
+    public Mono<ServerResponse> processOrderSaga(ServerRequest serverRequest) {
+        return ok()
+                .build();
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .body();
+    }
+
 }

@@ -1,11 +1,15 @@
 package com.yosep.product.cart.service;
 
+import com.yosep.product.jpa.cart.data.dto.response.CreatedCartDto;
+import com.yosep.product.jpa.cart.data.dto.response.SelectedCartDto;
 import com.yosep.product.jpa.cart.data.entity.Cart;
 import com.yosep.product.jpa.cart.data.repository.CartRepository;
 import com.yosep.product.jpa.common.logic.RandomIdGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -22,23 +26,37 @@ public class CartService {
     * 2. 장바구니 생성 및 해당 엔티티 반환
      */
     @Transactional(readOnly = false)
-    public Cart createCart(String userId) {
-        String cartId = RandomIdGenerator.createId();
+    public CreatedCartDto createCart(String userId) {
+//        Optional<Cart> selectedOptionalCart = cartRepository.findByUserId(userId).isPresent()
+//        if(selectedOptionalCart.isEmpty()) {
+//            return new CreatedCartDto();
+//        }
+//
+//        String cartId = RandomIdGenerator.createId();
+//
+//        while(true) {
+//            if(cartRepository.existsById(cartId)) {
+//                cartId = RandomIdGenerator.createId();
+//                continue;
+//            }else {
+//                Cart cart = new Cart(cartId, userId);
+//
+//                return cartRepository.save(cart);
+//            }
+//        }
 
-        while(true) {
-            if(cartRepository.existsById(cartId)) {
-                cartId = RandomIdGenerator.createId();
-                continue;
-            }else {
-                Cart cart = new Cart(cartId, userId);
-
-                return cartRepository.save(cart);
-            }
-        }
+        return null;
     }
 
     public void readCartByUserId(String userId) {
+        Optional<Cart> selectedCart = cartRepository.findByUserId(userId);
 
+        SelectedCartDto selectedCartDto;
+        if(selectedCart.isEmpty()) {
+            selectedCartDto = new SelectedCartDto();
+        }else {
+            selectedCartDto = new SelectedCartDto(selectedCart.get());
+        }
     }
 
 //    @Transactional(readOnly = false)

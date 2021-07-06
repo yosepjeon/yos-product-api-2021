@@ -1,6 +1,6 @@
 package com.yosep.product.jpa.cart.data.entity;
 
-import com.yosep.product.jpa.cart.data.dto.CartProductDto;
+import com.yosep.product.jpa.cart.data.dto.request.CartProductDto;
 import com.yosep.product.jpa.cart.data.vo.CartProductVo;
 import com.yosep.product.jpa.common.exception.NotExistCartProductException;
 import com.yosep.product.jpa.product.data.entity.Product;

@@ -1,4 +1,4 @@
-package com.yosep.product.jpa.cart.data.dto;
+package com.yosep.product.jpa.cart.data.dto.request;
 
 import lombok.Getter;
 

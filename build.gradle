@@ -28,9 +28,13 @@ allprojects {
 	ext {
 		snippetsDir = file('build/generated-snippets')
 		set('springCloudVersion', "2020.0.2")
+		set('axonVersion', "4.5.2")
 	}
 
 	dependencies {
+		// axon
+		implementation group: 'org.axonframework', name: 'axon-spring-boot-starter', version: "$axonVersion"
+		implementation group: 'org.axonframework', name: 'axon-configuration', version: "$axonVersion"
 
 		implementation("org.springframework.hateoas:spring-hateoas") {
 			exclude(group:"org.apache.tomcat", module:"spring-boot-starter-tomcat")
@@ -47,6 +51,7 @@ allprojects {
 		implementation 'org.springframework.boot:spring-boot-starter-validation'
 		implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+		implementation group: "it.ozimov", name: "embedded-redis", version: "0.7.2"
 		implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 		implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 

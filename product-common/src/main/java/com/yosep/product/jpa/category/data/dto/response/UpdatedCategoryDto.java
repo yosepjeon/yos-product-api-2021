@@ -1,15 +1,18 @@
 package com.yosep.product.jpa.category.data.dto.response;
 
 import com.yosep.product.jpa.category.data.entity.Category;
-import lombok.Data;
 
-@Data
-public class UpdatedCategoryDto {
-    private final long id;
-    private final String name;
+public class UpdatedCategoryDto extends CategoryDto {
+
+    public UpdatedCategoryDto() {
+        super();
+    }
 
     public UpdatedCategoryDto(Category category) {
-        this.id = category.getId();
-        this.name = category.getName();
+        super(category);
+    }
+
+    public UpdatedCategoryDto(long id, String name) {
+        super(id, name);
     }
 }
