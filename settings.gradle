@@ -3,4 +3,6 @@ include 'product-common'
 include 'product-admin-api'
 include 'product-customer-api'
 include 'product-common-reactive'
+include 'product-query-api'
+include 'product-command-api'
 

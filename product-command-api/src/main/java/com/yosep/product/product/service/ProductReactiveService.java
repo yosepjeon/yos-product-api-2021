@@ -25,4 +25,8 @@ public class ProductReactiveService {
 //        reactiveProductRepository
         reactiveProductRepository.findAll();
     }
+
+    public void updateProductForSaga() {
+
+    }
 }
