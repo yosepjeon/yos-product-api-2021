@@ -5,6 +5,7 @@ import com.yosep.product.product.service.ProductTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,7 @@ public class ProductTestController {
         this.productTestService = productTestService;
     }
 
-    @RequestMapping("/rest-doc-test")
+    @GetMapping("/rest-doc-test")
     public ResponseEntity<EntityModel<ProductTest>> testRestDoc() {
         ProductTest productTest = productTestService.readProductTest("test");
         EntityModel<ProductTest> productTestResource = EntityModel.of(productTest);

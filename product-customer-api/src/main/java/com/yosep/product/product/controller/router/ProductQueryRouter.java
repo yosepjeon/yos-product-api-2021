@@ -14,10 +14,10 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @RequiredArgsConstructor
 public class ProductQueryRouter {
     private final ProductQueryHandler productQueryHandler;
-    private final String BASE_URL = "/product";
+    private final String BASE_URL = "/product-query";
 
     @Bean
-    public RouterFunction<?> productFunction() {
+    public RouterFunction<?> productTestQueryFunction() {
 
         return route()
                 .GET(BASE_URL + "/test", accept(MediaType.APPLICATION_JSON), productQueryHandler::productTest)

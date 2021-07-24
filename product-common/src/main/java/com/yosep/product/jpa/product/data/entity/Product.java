@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.yosep.product.jpa.category.data.entity.Category;
 import com.yosep.product.jpa.common.entity.BaseEntity;
+import com.yosep.product.jpa.common.exception.InvalidStockValueException;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +13,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -22,7 +22,6 @@ import java.util.List;
 public class Product extends BaseEntity {
     @Id
     @Column(length = 100)
-    @Setter(value = AccessLevel.PRIVATE)
     private String productId = "";
 
     @Column(length = 50, nullable = false)
@@ -35,13 +34,14 @@ public class Product extends BaseEntity {
     private long stockQuantity = 0;
 
     @Column
-    private String productDetail;
+    private String productDetail = "";
 
     @JsonBackReference
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     // nullable false로 다시 바꾸기 테스트용으로 true한거임
     @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+    private Category category = null;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -60,32 +60,11 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductImage> productProfileImageURLs = new ArrayList<ProductImage>();
 
-//    public static Product create(
-//            ProductDtoForCreation productDtoForCreation,
-//            CategoryRepository categoryRepository,
-//            ProductRepository productRepository
-//    ) {
-//        String productId = RandomIdGenerator.createId();
-//        categoryRepository.findById(productDtoForCreation.getCategory());
-//
-//        while (true) {
-//            if (productRepository.existsById(productId)) {
-//                productId = RandomIdGenerator.createId();
-//                continue;
-//            } else {
-//                Product product = Product.builder()
-//                        .productId(productId)
-//                        .productName(productDtoForCreation.getProductName())
-//                        .productPrice(productDtoForCreation.getProductPrice())
-//                        .stockQuantity(productDtoForCreation.getStockQuantity())
-//                        .productDetail(productDtoForCreation.getProductDetail())
-//                        .category(categoryRepository.findById(productDtoForCreation.getCategory()).get())
-//                        .build();
-//
-//                return productRepository.save(product);
-//            }
-//        }
-//    }
+    private void validateStock(long value) {
+        if(value < 0L) {
+            throw new InvalidStockValueException("재고는 0이상의 값을 입력해야합니다.");
+        }
+    }
 
     @Override
     public String toString() {

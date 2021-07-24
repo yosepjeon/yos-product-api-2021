@@ -28,13 +28,13 @@ import java.util.Optional;
 public abstract class BaseProductIntegrationTest {
     protected CategoryRepository categoryRepository;
     protected CategoryService categoryService;
-    protected long categoryId1;
-    protected long categoryId2;
-    protected long categoryId3;
+    protected ProductRepository productRepository;
+    protected long parentCategoryId1;
+    protected long parentCategoryId2;
+    protected long parentCategoryId3;
     protected long childCategoryId1;
     protected long childCategoryId2;
     protected long childCategoryId3;
-    protected ProductRepository productRepository;
 
     @BeforeEach
     public void drawLineByTestBefore() {
@@ -50,12 +50,12 @@ public abstract class BaseProductIntegrationTest {
         category1.setName("create-category-parent1");
 
         Category createdCategory1 = categoryRepository.save(category1);
-        categoryId1 = createdCategory1.getId();
+        parentCategoryId1 = createdCategory1.getId();
 
-        log.info("parentId = " + categoryId1);
+        log.info("parentId = " + parentCategoryId1);
         log.info("자식 카테고리 생성");
         for (int i = 0; i < 5; i++) {
-            CategoryDtoForCreation categoryDtoForCreation = new CategoryDtoForCreation("create-category1-child" + i, categoryId1);
+            CategoryDtoForCreation categoryDtoForCreation = new CategoryDtoForCreation("create-category1-child" + i, parentCategoryId1);
             Optional<Category> result = categoryService.createCategory(categoryDtoForCreation);
             childCategoryId1 = result.get().getId();
         }
@@ -64,12 +64,12 @@ public abstract class BaseProductIntegrationTest {
         category2.setName("create-category-parent2");
 
         Category createdCategory2 = categoryRepository.save(category2);
-        categoryId2 = createdCategory2.getId();
+        parentCategoryId2 = createdCategory2.getId();
 
-        log.info("parentId = " + categoryId2);
+        log.info("parentId = " + parentCategoryId2);
         log.info("자식 카테고리 생성");
         for (int i = 0; i < 5; i++) {
-            CategoryDtoForCreation categoryDtoForCreation = new CategoryDtoForCreation("create-category2-child" + i, categoryId2);
+            CategoryDtoForCreation categoryDtoForCreation = new CategoryDtoForCreation("create-category2-child" + i, parentCategoryId2);
             Optional<Category> result = categoryService.createCategory(categoryDtoForCreation);
             childCategoryId2 = result.get().getId();
         }
@@ -78,12 +78,12 @@ public abstract class BaseProductIntegrationTest {
         category3.setName("create-category-parent3");
 
         Category createdCategory3 = categoryRepository.save(category3);
-        categoryId3 = createdCategory3.getId();
+        parentCategoryId3 = createdCategory3.getId();
 
-        log.info("parentId = " + categoryId3);
+        log.info("parentId = " + parentCategoryId3);
         log.info("자식 카테고리 생성");
         for (int i = 0; i < 5; i++) {
-            CategoryDtoForCreation categoryDtoForCreation = new CategoryDtoForCreation("create-category3-child" + i, categoryId3);
+            CategoryDtoForCreation categoryDtoForCreation = new CategoryDtoForCreation("create-category3-child" + i, parentCategoryId3);
             Optional<Category> result = categoryService.createCategory(categoryDtoForCreation);
             childCategoryId3 = result.get().getId();
         }

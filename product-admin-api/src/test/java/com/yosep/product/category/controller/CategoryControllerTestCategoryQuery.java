@@ -21,12 +21,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @Slf4j
-public class CategoryControllerTestCategory extends BaseCategoryIntegrationTest {
+public class CategoryControllerTestCategoryQuery extends BaseCategoryIntegrationTest {
     private final MockMvc mockMvc;
     private final ObjectMapper objectMapper;
 
     @Autowired
-    public CategoryControllerTestCategory(MockMvc mockMvc, ObjectMapper objectMapper, CategoryRepository categoryRepository, CategoryService categoryService) {
+    public CategoryControllerTestCategoryQuery(MockMvc mockMvc, ObjectMapper objectMapper, CategoryRepository categoryRepository, CategoryService categoryService) {
         this.mockMvc = mockMvc;
         this.objectMapper = objectMapper;
         this.categoryRepository = categoryRepository;

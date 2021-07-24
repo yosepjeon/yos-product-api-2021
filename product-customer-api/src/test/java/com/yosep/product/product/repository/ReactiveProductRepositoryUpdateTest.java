@@ -28,7 +28,8 @@ public class ReactiveProductRepositoryUpdateTest extends BaseProductRepositoryTe
         final long[] prevStock = {-1};
 
         reactiveProductRepository.findById("product-select-test1")
-                .flatMap(selectedProduct -> {
+            .flatMap(selectedProduct -> {
+
                     log.info("[조회 완료]");
                     log.info(selectedProduct.toString());
                     prevStock[0] = selectedProduct.getStockQuantity();

@@ -14,7 +14,7 @@ import java.util.List;
 //@Builder
 @ToString(exclude = "parentCategory")
 @EqualsAndHashCode(of = "id")
-@NoArgsConstructor
+//@NoArgsConstructor
 @Entity
 @Table(name = "yos_product_category")
 public class Category extends BaseEntity {

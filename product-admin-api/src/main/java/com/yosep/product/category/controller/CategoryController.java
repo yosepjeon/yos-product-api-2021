@@ -16,7 +16,7 @@ import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
-@RequestMapping("/categories")
+@RequestMapping(value = "/categories")
 @RestController
 @RequiredArgsConstructor
 public class CategoryController {
