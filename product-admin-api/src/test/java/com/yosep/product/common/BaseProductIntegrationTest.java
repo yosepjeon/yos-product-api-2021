@@ -5,6 +5,7 @@ import com.yosep.product.jpa.category.data.dto.request.CategoryDtoForCreation;
 import com.yosep.product.jpa.category.data.entity.Category;
 import com.yosep.product.jpa.category.data.repository.CategoryRepository;
 import com.yosep.product.jpa.product.data.entity.Product;
+import com.yosep.product.jpa.product.data.entity.ProductDiscount;
 import com.yosep.product.jpa.product.data.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
@@ -99,6 +100,7 @@ public abstract class BaseProductIntegrationTest {
                     .stockQuantity((int) (rand.nextDouble() * 100))
                     .productDetail("")
                     .category(childCategory1)
+                    .productDiscount(new ProductDiscount())
                     .build();
 
             productRepository.save(product);
@@ -115,6 +117,7 @@ public abstract class BaseProductIntegrationTest {
                     .stockQuantity((int) (rand.nextDouble() * 100))
                     .productDetail("")
                     .category(childCategory2)
+                    .productDiscount(new ProductDiscount())
                     .build();
 
             productRepository.save(product);
@@ -131,6 +134,7 @@ public abstract class BaseProductIntegrationTest {
                     .stockQuantity((int) (rand.nextDouble() * 100))
                     .productDetail("")
                     .category(childCategory3)
+                    .productDiscount(new ProductDiscount())
                     .build();
 
             productRepository.save(product);

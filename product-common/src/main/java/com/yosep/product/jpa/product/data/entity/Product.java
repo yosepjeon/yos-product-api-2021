@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.yosep.product.jpa.category.data.entity.Category;
 import com.yosep.product.jpa.common.entity.BaseEntity;
 import com.yosep.product.jpa.common.exception.InvalidStockValueException;
+import com.yosep.product.jpa.common.exception.NotEqualProductPrice;
+import com.yosep.product.jpa.product.data.dto.request.OrderProductDtoForCreation;
 import lombok.*;
 
 import javax.persistence.*;
@@ -36,6 +38,9 @@ public class Product extends BaseEntity {
     @Column
     private String productDetail = "";
 
+    @Embedded
+    private ProductDiscount productDiscount = new ProductDiscount();
+
     @JsonBackReference
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
@@ -60,9 +65,61 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductImage> productProfileImageURLs = new ArrayList<ProductImage>();
 
+    public void increaseStock(long value) {
+        validateStock(value);
+
+        this.stockQuantity += value;
+    }
+
+    public void decreaseStock(long value) {
+        validateStock(value);
+        validateStock(this.stockQuantity - value);
+
+        this.stockQuantity -= value;
+    }
+
+    public void validatePrice(long productPrice) {
+        if(this.productPrice != caculateFinalPrice(productPrice)) {
+            throw new NotEqualProductPrice("해당 상품의 가격과 요청 데이터의 가격 값이 일치하지 않습니다.");
+        }
+    }
+
+    private long caculateFinalPrice(long productPrice) {
+        return productDiscount.calculateProductPrice(productPrice);
+    }
+
     private void validateStock(long value) {
         if(value < 0L) {
-            throw new InvalidStockValueException("재고는 0이상의 값을 입력해야합니다.");
+            throw new InvalidStockValueException("0이상의 결과값이어야합니다.");
+        }
+    }
+
+    public void decreaseStock(OrderProductDtoForCreation orderProductDtoForCreation) {
+        long value = orderProductDtoForCreation.getCount();
+
+        validateStock(orderProductDtoForCreation);
+        validateStock(this.stockQuantity - value);
+
+        this.stockQuantity -= value;
+    }
+
+    public void increaseStock(OrderProductDtoForCreation orderProductDtoForCreation) {
+        validateStock(orderProductDtoForCreation.getCount());
+
+        this.stockQuantity += orderProductDtoForCreation.getCount();
+    }
+
+    public void validatePrice(OrderProductDtoForCreation orderProductDtoForCreation) {
+        if(this.productPrice != orderProductDtoForCreation.getPrice()) {
+            orderProductDtoForCreation.setState("NotEqualProductPrice");
+            throw new NotEqualProductPrice("해당 상품의 가격과 요청 데이터의 가격 값이 일치하지 않습니다.");
+        }
+    }
+
+    private void validateStock(OrderProductDtoForCreation orderProductDtoForCreation) {
+        if(orderProductDtoForCreation.getCount() < 0L) {
+            orderProductDtoForCreation.setState("InvalidStockValueException");
+            throw new InvalidStockValueException("0이상의 결과값이어야합니다.");
         }
     }
 

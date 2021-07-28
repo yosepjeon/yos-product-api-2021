@@ -31,4 +31,16 @@ public class ProductMapStructTest {
 //
 //        Product product =  ProductMapper.INSTANCE.productDtoForCreationToProduct(productDtoForCreation);
     }
+
+    @Test
+    public void aa() {
+        long percent = 100L;
+        long discountPercent = 30L;
+        long value = 128000L;
+
+        log.info("" + value);
+        value = value * discountPercent / 100;
+
+        log.info("result: " + value);
+    }
 }

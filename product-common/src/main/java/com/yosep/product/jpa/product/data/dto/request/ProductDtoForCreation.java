@@ -1,6 +1,7 @@
 package com.yosep.product.jpa.product.data.dto.request;
 
 import com.yosep.product.jpa.product.data.entity.ProductDescriptionImage;
+import com.yosep.product.jpa.product.data.entity.ProductDiscount;
 import com.yosep.product.jpa.product.data.entity.ProductImage;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +38,8 @@ public class ProductDtoForCreation {
 
     //    @NotBlank
     public long category;
+
+    public ProductDiscount productDiscount;
 
     public List<MultipartFile> productImages = Collections.emptyList();
 

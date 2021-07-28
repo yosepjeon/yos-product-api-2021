@@ -55,6 +55,6 @@ public class ProductRepositoryCategoryIntegrationTest extends BaseProductIntegra
     @DisplayName("특정 카테고리에 상품 저장 테스트")
     public void 특정_카테고리에_상품_저장_테스트() {
 //        Category category = categoryRepository
-        productRepository.deleteAll();
+//        productRepository.deleteAll();
     }
 }
