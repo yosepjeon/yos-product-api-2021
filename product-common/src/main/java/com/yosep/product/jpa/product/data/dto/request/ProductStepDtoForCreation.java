@@ -20,4 +20,7 @@ public class ProductStepDtoForCreation {
 
     @NotEmpty
     private final List<@NotNull OrderProductDtoForCreation> orderProductDtos;
+
+    @NotEmpty
+    private String state = "READY";
 }

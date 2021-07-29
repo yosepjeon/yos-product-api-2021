@@ -2,6 +2,8 @@ package com.yosep.product.product.service;
 
 import com.yosep.product.jpa.category.data.entity.Category;
 import com.yosep.product.jpa.category.data.repository.CategoryRepository;
+import com.yosep.product.jpa.common.exception.InvalidStockValueException;
+import com.yosep.product.jpa.common.exception.NotEqualProductPrice;
 import com.yosep.product.jpa.common.exception.NotExistCategoryException;
 import com.yosep.product.jpa.common.exception.NotExistElementException;
 import com.yosep.product.jpa.common.logic.RandomIdGenerator;
@@ -16,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.LockModeType;
@@ -88,9 +91,14 @@ public class ProductService {
      * 6. 상품 재고를 변환한다.(재고 검증 실패시 RuntimeException 발생.)
      * ** 각각의 Exception 발생시 해당 Exception이름으로 상태 변환
      */
-    @Transactional(readOnly = false)
+    @Transactional(
+            readOnly = false,
+            rollbackFor = {NotExistElementException.class, RuntimeException.class, NotEqualProductPrice.class, InvalidStockValueException.class},
+          propagation = Propagation.REQUIRED
+//            propagation = Propagation.REQUIRES_NEW
+    )
     @Lock(value = LockModeType.PESSIMISTIC_WRITE)
-    public ProductStepDtoForCreation processProductStep(ProductStepDtoForCreation productStepDtoForCreation) throws RuntimeException {
+    public ProductStepDtoForCreation processProductStep(ProductStepDtoForCreation productStepDtoForCreation) throws NotExistElementException{
         List<OrderProductDtoForCreation> orderProductDtos = productStepDtoForCreation.getOrderProductDtos();
 
         for (OrderProductDtoForCreation orderProductDtoForCreation : orderProductDtos) {
@@ -99,12 +107,10 @@ public class ProductService {
 
             if (optionalSelectedProduct.isEmpty()) {
                 orderProductDtoForCreation.setState("NotExistElementException");
-                throw new NotExistElementException("해당 상품이 존재하지 않습니다.");
+                throw new NotExistElementException(orderProductDtoForCreation.getProductId() + " 해당 상품이 존재하지 않습니다.");
             }
 
             Product selectedProduct = optionalSelectedProduct.get();
-//            selectedProduct.validatePrice(orderProductDtoForCreation.getPrice());
-//            selectedProduct.decreaseStock(orderProductDtoForCreation.getCount());
 
             selectedProduct.validatePrice(orderProductDtoForCreation);
 
@@ -114,6 +120,13 @@ public class ProductService {
         }
 
         return productStepDtoForCreation;
+    }
+
+    /*
+     *
+     */
+    public void revertProductStep() {
+
     }
 
     @Transactional(readOnly = false)

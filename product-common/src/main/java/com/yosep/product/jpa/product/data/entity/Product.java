@@ -45,7 +45,7 @@ public class Product extends BaseEntity {
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     // nullable false로 다시 바꾸기 테스트용으로 true한거임
-    @JoinColumn(name = "category_id", nullable = false)
+    @JoinColumn(name = "category_id", nullable = true)
     private Category category = null;
 
     @JsonManagedReference
@@ -98,7 +98,6 @@ public class Product extends BaseEntity {
         long value = orderProductDtoForCreation.getCount();
 
         validateStock(orderProductDtoForCreation);
-        validateStock(this.stockQuantity - value);
 
         this.stockQuantity -= value;
     }
@@ -117,7 +116,7 @@ public class Product extends BaseEntity {
     }
 
     private void validateStock(OrderProductDtoForCreation orderProductDtoForCreation) {
-        if(orderProductDtoForCreation.getCount() < 0L) {
+        if(orderProductDtoForCreation.getCount() < 0L || this.stockQuantity - orderProductDtoForCreation.getCount() < 0L) {
             orderProductDtoForCreation.setState("InvalidStockValueException");
             throw new InvalidStockValueException("0이상의 결과값이어야합니다.");
         }

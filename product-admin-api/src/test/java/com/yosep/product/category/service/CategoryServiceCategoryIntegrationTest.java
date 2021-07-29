@@ -83,8 +83,10 @@ public class CategoryServiceCategoryIntegrationTest extends BaseCategoryIntegrat
     }
 
     @Test
+    @Rollback(value = false)
     @DisplayName("[CategoryService] 부모 카테고리 수정 실패 테스트")
     public void updateCategoryFailTest() {
-
+        categoryRepository.deleteAll();
+        log.info("!!");
     }
 }
