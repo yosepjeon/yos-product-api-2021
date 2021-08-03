@@ -1,9 +1,6 @@
 package com.yosep.product.jpa.product.data.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -22,5 +19,6 @@ public class ProductStepDtoForCreation {
     private final List<@NotNull OrderProductDtoForCreation> orderProductDtos;
 
     @NotEmpty
-    private String state = "READY";
+    @Setter
+    String state = "READY";
 }

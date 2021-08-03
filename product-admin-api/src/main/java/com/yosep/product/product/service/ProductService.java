@@ -94,11 +94,11 @@ public class ProductService {
     @Transactional(
             readOnly = false,
             rollbackFor = {NotExistElementException.class, RuntimeException.class, NotEqualProductPrice.class, InvalidStockValueException.class},
-          propagation = Propagation.REQUIRED
+            propagation = Propagation.REQUIRED
 //            propagation = Propagation.REQUIRES_NEW
     )
     @Lock(value = LockModeType.PESSIMISTIC_WRITE)
-    public ProductStepDtoForCreation processProductStep(ProductStepDtoForCreation productStepDtoForCreation) throws NotExistElementException{
+    public ProductStepDtoForCreation processProductStep(ProductStepDtoForCreation productStepDtoForCreation) {
         List<OrderProductDtoForCreation> orderProductDtos = productStepDtoForCreation.getOrderProductDtos();
 
         for (OrderProductDtoForCreation orderProductDtoForCreation : orderProductDtos) {
@@ -123,9 +123,16 @@ public class ProductService {
     }
 
     /*
-     *
+     * SAGA 상품 스텝 Revert
      */
-    public void revertProductStep() {
+    @Transactional(
+            readOnly = false,
+            rollbackFor = {NotExistElementException.class, RuntimeException.class, NotEqualProductPrice.class, InvalidStockValueException.class},
+            propagation = Propagation.REQUIRED
+//            propagation = Propagation.REQUIRES_NEW
+    )
+    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
+    public void revertProductStep(ProductStepDtoForCreation productStepDtoForCreation) {
 
     }
 
