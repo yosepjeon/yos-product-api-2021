@@ -52,7 +52,16 @@ public class ProductController {
             return ResponseEntity.badRequest().body(errors);
         }
 
-        return ResponseEntity.ok(productStepDtoForCreation);
+        try {
+            productStepDtoForCreation = productService.processProductStep(productStepDtoForCreation);
+            productStepDtoForCreation.setState("COMP");
+
+            return ResponseEntity.ok(productStepDtoForCreation);
+        } catch (RuntimeException runtimeException) {
+            productStepDtoForCreation.setState(runtimeException.getClass().getSimpleName());
+
+            return ResponseEntity.ok(productStepDtoForCreation);
+        }
     }
 
 }

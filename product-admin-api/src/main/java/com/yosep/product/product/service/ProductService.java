@@ -116,7 +116,7 @@ public class ProductService {
 
             selectedProduct.decreaseStock(orderProductDtoForCreation);
 
-            orderProductDtoForCreation.setState("COMPLEMTE");
+            orderProductDtoForCreation.setState("COMP");
         }
 
         return productStepDtoForCreation;
