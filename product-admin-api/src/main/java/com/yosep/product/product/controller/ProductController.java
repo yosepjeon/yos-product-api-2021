@@ -55,10 +55,13 @@ public class ProductController {
         try {
             productStepDtoForCreation = productService.processProductStep(productStepDtoForCreation);
             productStepDtoForCreation.setState("COMP");
+            System.out.println(productStepDtoForCreation.toString());
 
             return ResponseEntity.ok(productStepDtoForCreation);
         } catch (RuntimeException runtimeException) {
-            productStepDtoForCreation.setState(runtimeException.getClass().getSimpleName());
+            productStepDtoForCreation = productService.validateProducts(productStepDtoForCreation);
+            productStepDtoForCreation.setState("FAIL");
+            System.out.println(productStepDtoForCreation.toString());
 
             return ResponseEntity.ok(productStepDtoForCreation);
         }

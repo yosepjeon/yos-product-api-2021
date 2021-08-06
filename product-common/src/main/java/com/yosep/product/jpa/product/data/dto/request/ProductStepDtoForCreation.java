@@ -1,6 +1,8 @@
 package com.yosep.product.jpa.product.data.dto.request;
 
+import com.yosep.product.jpa.product.data.dto.response.CreatedProductDto;
 import lombok.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -11,7 +13,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @ToString
-public class ProductStepDtoForCreation {
+public class ProductStepDtoForCreation extends RepresentationModel<ProductStepDtoForCreation> {
     @Min(0)
     private final long totalPrice;
 
@@ -20,5 +22,5 @@ public class ProductStepDtoForCreation {
 
     @NotEmpty
     @Setter
-    String state = "READY";
+    String state;
 }

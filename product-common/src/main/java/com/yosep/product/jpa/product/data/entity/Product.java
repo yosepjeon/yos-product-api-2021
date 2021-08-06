@@ -108,10 +108,22 @@ public class Product extends BaseEntity {
         this.stockQuantity += orderProductDtoForCreation.getCount();
     }
 
+    public void validatePriceNotPublishException(OrderProductDtoForCreation orderProductDtoForCreation) {
+        if(orderProductDtoForCreation.getCount() < 0L || this.stockQuantity - orderProductDtoForCreation.getCount() < 0L) {
+            orderProductDtoForCreation.setState("InvalidStockValueException");
+        }
+    }
+
     public void validatePrice(OrderProductDtoForCreation orderProductDtoForCreation) {
         if(this.productPrice != orderProductDtoForCreation.getPrice()) {
             orderProductDtoForCreation.setState("NotEqualProductPrice");
             throw new NotEqualProductPrice("해당 상품의 가격과 요청 데이터의 가격 값이 일치하지 않습니다.");
+        }
+    }
+
+    public void validateStockNotPublishException(OrderProductDtoForCreation orderProductDtoForCreation) {
+        if(orderProductDtoForCreation.getCount() < 0L || this.stockQuantity - orderProductDtoForCreation.getCount() < 0L) {
+            orderProductDtoForCreation.setState("InvalidStockValueException");
         }
     }
 

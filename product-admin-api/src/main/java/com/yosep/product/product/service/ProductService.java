@@ -79,6 +79,29 @@ public class ProductService {
         }
     }
 
+    public ProductStepDtoForCreation validateProducts(ProductStepDtoForCreation productStepDtoForCreation) {
+        List<OrderProductDtoForCreation> orderProductDtoForCreations = productStepDtoForCreation.getOrderProductDtos();
+
+        for (OrderProductDtoForCreation orderProductDtoForCreation : orderProductDtoForCreations) {
+            if (!orderProductDtoForCreation.getState().equals("READY")) {
+                continue;
+            }
+
+            Optional<Product> optionalSelectedProduct = productRepository.findById(orderProductDtoForCreation.getProductId());
+
+            if(optionalSelectedProduct.isEmpty()) {
+                orderProductDtoForCreation.setState("NotExistElementException");
+                continue;
+            }
+
+            Product selectedProduct = optionalSelectedProduct.get();
+            selectedProduct.validateStockNotPublishException(orderProductDtoForCreation);
+            selectedProduct.validatePriceNotPublishException(orderProductDtoForCreation);
+        }
+
+        return productStepDtoForCreation;
+    }
+
     /*
      * SAGA 상품 스텝 진행
      * Logic:
