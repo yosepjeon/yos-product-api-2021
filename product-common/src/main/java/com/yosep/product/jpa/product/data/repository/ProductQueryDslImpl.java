@@ -16,7 +16,7 @@ public class ProductQueryDslImpl implements ProductQueryDsl{
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Optional<List<Product>> findAllByCategoryId(Long categoryId) {
+    public Optional<List<Product>> findAllByCategoryId(String categoryId) {
         QProduct product = QProduct.product;
         QCategory category = QCategory.category;
 

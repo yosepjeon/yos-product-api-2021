@@ -23,7 +23,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping("/{category-id}")
-    public ResponseEntity readCategory(@PathVariable("category-id") long categoryId) {
+    public ResponseEntity readCategory(@PathVariable("category-id") String categoryId) {
         Optional<SelectedCategoryDto> optionalReadedCategoryDto = categoryService.readCategoryById(categoryId);
 
         EntityModel<Optional<SelectedCategoryDto>> readedCategoryDto;

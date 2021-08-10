@@ -31,12 +31,18 @@ public abstract class BaseProductIntegrationTest {
     protected CategoryRepository categoryRepository;
     protected CategoryService categoryService;
     protected ProductRepository productRepository;
-    protected long parentCategoryId1;
-    protected long parentCategoryId2;
-    protected long parentCategoryId3;
-    protected long childCategoryId1;
-    protected long childCategoryId2;
-    protected long childCategoryId3;
+    //    protected long parentCategoryId1;
+//    protected long parentCategoryId2;
+//    protected long parentCategoryId3;
+//    protected long childCategoryId1;
+//    protected long childCategoryId2;
+//    protected long childCategoryId3;
+    protected String parentCategoryId1;
+    protected String parentCategoryId2;
+    protected String parentCategoryId3;
+    protected String childCategoryId1;
+    protected String childCategoryId2;
+    protected String childCategoryId3;
 
     @BeforeEach
     public void drawLineByTestBefore() {
@@ -49,6 +55,7 @@ public abstract class BaseProductIntegrationTest {
         double value = rand.nextDouble();
 
         Category category1 = new Category();
+        category1.setId("create-category-parent1");
         category1.setName("create-category-parent1");
 
         Category createdCategory1 = categoryRepository.save(category1);
@@ -63,6 +70,7 @@ public abstract class BaseProductIntegrationTest {
         }
 
         Category category2 = new Category();
+        category2.setId("create-category-parent2");
         category2.setName("create-category-parent2");
 
         Category createdCategory2 = categoryRepository.save(category2);
@@ -77,6 +85,7 @@ public abstract class BaseProductIntegrationTest {
         }
 
         Category category3 = new Category();
+        category3.setId("create-category-parent3");
         category3.setName("create-category-parent3");
 
         Category createdCategory3 = categoryRepository.save(category3);

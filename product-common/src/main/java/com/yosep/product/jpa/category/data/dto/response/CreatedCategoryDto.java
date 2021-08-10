@@ -7,7 +7,7 @@ public class CreatedCategoryDto extends CategoryDto {
         super();
     }
 
-    public CreatedCategoryDto(long id, String name) {
+    public CreatedCategoryDto(String id, String name) {
         super(id, name);
     }
 

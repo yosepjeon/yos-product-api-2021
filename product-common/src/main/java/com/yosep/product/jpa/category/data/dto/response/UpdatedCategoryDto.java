@@ -12,7 +12,7 @@ public class UpdatedCategoryDto extends CategoryDto {
         super(category);
     }
 
-    public UpdatedCategoryDto(long id, String name) {
+    public UpdatedCategoryDto(String id, String name) {
         super(id, name);
     }
 }

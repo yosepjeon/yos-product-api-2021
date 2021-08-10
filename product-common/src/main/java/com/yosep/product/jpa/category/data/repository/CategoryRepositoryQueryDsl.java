@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface CategoryRepositoryQueryDsl {
     Optional<List<SelectedCategoryDto>> findByName(String name);
-    Optional<List<SelectedCategoryDto>> findAllByParentIsNotNull(Long id);
+    Optional<List<SelectedCategoryDto>> findAllByParentIsNotNull(String id);
     Optional<List<Category>> findAllByParentIsNull();
 }

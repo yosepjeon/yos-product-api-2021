@@ -79,7 +79,10 @@ public class ProductService {
         }
     }
 
-    public ProductStepDtoForCreation validateProducts(ProductStepDtoForCreation productStepDtoForCreation) {
+    /*
+    * Saga Step 실패 후 전체 상품 검증
+     */
+    public ProductStepDtoForCreation validateSagaProductDtos(ProductStepDtoForCreation productStepDtoForCreation) {
         List<OrderProductDtoForCreation> orderProductDtoForCreations = productStepDtoForCreation.getOrderProductDtos();
 
         for (OrderProductDtoForCreation orderProductDtoForCreation : orderProductDtoForCreations) {

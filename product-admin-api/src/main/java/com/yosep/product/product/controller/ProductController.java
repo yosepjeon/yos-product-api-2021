@@ -59,7 +59,7 @@ public class ProductController {
 
             return ResponseEntity.ok(productStepDtoForCreation);
         } catch (RuntimeException runtimeException) {
-            productStepDtoForCreation = productService.validateProducts(productStepDtoForCreation);
+            productStepDtoForCreation = productService.validateSagaProductDtos(productStepDtoForCreation);
             productStepDtoForCreation.setState("FAIL");
             System.out.println(productStepDtoForCreation.toString());
 

@@ -9,11 +9,11 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class CategoryDtoForUpdate {
     @NotNull
-    private long id;
+    private String id;
 
     @NotNull
     private String name;
 
     @NotNull
-    private long parentId;
+    private String parentId;
 }

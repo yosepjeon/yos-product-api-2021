@@ -12,12 +12,12 @@ import org.springframework.hateoas.RepresentationModel;
 @AllArgsConstructor
 @EqualsAndHashCode
 public abstract class CategoryDto extends RepresentationModel<CategoryDto> {
-    private final long id;
+    private final String id;
 
     private final String name;
 
     public CategoryDto() {
-        this.id = -1;
+        this.id = "";
         this.name = "";
     }
 

@@ -15,7 +15,7 @@ public class SelectedCategoryDto extends CategoryDto {
     }
 
     @Builder
-    public SelectedCategoryDto(long id, String name, List<Category> childs) {
+    public SelectedCategoryDto(String id, String name, List<Category> childs) {
         super(id, name);
 
         if (childs.isEmpty()) {

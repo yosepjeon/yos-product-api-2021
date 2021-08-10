@@ -131,7 +131,7 @@ public class CategoryService {
      * 2. 읽어온 Category Entity를 ReadedCategoryDto로 변환
      * 3. 반환
      */
-    public Optional<SelectedCategoryDto> readCategoryById(Long id) {
+    public Optional<SelectedCategoryDto> readCategoryById(String id) {
         Optional<Category> result = categoryRepository.findById(id);
 
         if (result.isEmpty()) {

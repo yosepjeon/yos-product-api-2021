@@ -37,7 +37,7 @@ public class ProductDtoForCreation {
     public String productDetail = "";
 
     //    @NotBlank
-    public long category;
+    public String category;
 
     public ProductDiscount productDiscount;
 
@@ -47,7 +47,7 @@ public class ProductDtoForCreation {
 
     public List<ProductImage> productProfileImageURLs = Collections.emptyList();
 
-    public ProductDtoForCreation(String productName, int productPrice, int stockQuantity, String productDetail, long category, List<MultipartFile> productImages) {
+    public ProductDtoForCreation(String productName, int productPrice, int stockQuantity, String productDetail, String category, List<MultipartFile> productImages) {
         this.productName = productName;
         this.productPrice = productPrice;
         this.stockQuantity = stockQuantity;
