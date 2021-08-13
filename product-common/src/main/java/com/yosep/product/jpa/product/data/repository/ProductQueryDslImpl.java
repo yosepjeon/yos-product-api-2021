@@ -22,8 +22,8 @@ public class ProductQueryDslImpl implements ProductQueryDsl{
 
         Optional<List<Product>> products = Optional.of(jpaQueryFactory.selectFrom(product)
                 .innerJoin(category)
-                .on(product.category.id.eq(category.id))
-                .where(product.category.id.eq(categoryId))
+                .on(product.category.categoryId.eq(category.categoryId))
+                .where(product.category.categoryId.eq(categoryId))
                 .fetchJoin()
                 .fetch()
         );

@@ -42,6 +42,7 @@ public class CategoryService {
     @Transactional(readOnly = false)
     public Optional<Category> createCategory(CategoryDtoForCreation categoryDtoForCreation) {
         Category category = new Category();
+        category.setCategoryId(categoryDtoForCreation.getName());
         category.setName(categoryDtoForCreation.getName());
 
         if (categoryDtoForCreation.getParentId() == null) {
@@ -75,7 +76,7 @@ public class CategoryService {
 
             categoryEntities.get().forEach(c -> {
                 EntityModel<SelectedCategoryDto> entityModel = EntityModel.of(new SelectedCategoryDto(c));
-                entityModel.add(linkTo(methodOn(CategoryController.class).readCategory(c.getId())).withRel("get-category"));
+                entityModel.add(linkTo(methodOn(CategoryController.class).readCategory(c.getCategoryId())).withRel("get-category"));
 
                 categoryDtos.add(entityModel);
             });
@@ -178,8 +179,13 @@ public class CategoryService {
         }
     }
 
-    public void deleteCategory() {
+    @Transactional(readOnly = false)
+    public void deleteCategoryById(String categoryId) {
+        if(categoryRepository.findById(categoryId).isEmpty()) {
+            return;
+        }
 
+        categoryRepository.deleteById(categoryId);
     }
 
     public void deleteAllCategories() {

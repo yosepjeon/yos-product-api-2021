@@ -31,8 +31,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity readProducts() {
-        return null;
+    public ResponseEntity checkIsPresentProduct(@RequestParam(value = "id") String productId) {
+        return ResponseEntity.ok(productService.checkIsPresentProduct(productId));
     }
 
     @GetMapping("/{category-id}")

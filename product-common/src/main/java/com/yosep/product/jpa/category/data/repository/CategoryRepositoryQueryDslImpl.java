@@ -33,7 +33,7 @@ public class CategoryRepositoryQueryDslImpl implements CategoryRepositoryQueryDs
     @Override
     public Optional<List<SelectedCategoryDto>> findAllByParentIsNotNull(String id) {
         List<Category> categoryEntities = jpaQueryFactory.selectFrom(category)
-                .where(category.parentCategory.id.eq(id))
+                .where(category.parentCategory.categoryId.eq(id))
                 .fetch();
 
         List<SelectedCategoryDto> categories = categoryEntities.stream()

@@ -33,6 +33,10 @@ public class ProductService {
     private final CategoryRepository categoryRepository;
     private final ModelMapper modelMapper;
 
+    public boolean checkIsPresentProduct(String productId) {
+        return productRepository.findById(productId).isPresent();
+    }
+
     public void getProduct() {
 
     }
@@ -175,6 +179,10 @@ public class ProductService {
      */
     @Transactional(readOnly = false)
     public void deleteProduct(String productId) {
+        if(productRepository.findById(productId).isEmpty()) {
+            return;
+        }
+
         productRepository.deleteById(productId);
     }
 

@@ -1,7 +1,6 @@
 package com.yosep.product.product.service;
 
 import com.yosep.product.category.service.CategoryService;
-import com.yosep.product.common.BaseProductIntegrationTest;
 import com.yosep.product.jpa.category.data.dto.request.CategoryDtoForCreation;
 import com.yosep.product.jpa.category.data.entity.Category;
 import com.yosep.product.jpa.category.data.repository.CategoryRepository;
@@ -19,10 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.annotation.Propagation;
 
-import javax.transaction.Transactional;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.*;
@@ -35,12 +31,12 @@ public class ProductServiceTest {
     private final CategoryRepository categoryRepository;
     private final CategoryService categoryService;
     private final ProductRepository productRepository;
-    private long parentCategoryId1;
-    private long parentCategoryId2;
-    private long parentCategoryId3;
-    private long childCategoryId1;
-    private long childCategoryId2;
-    private long childCategoryId3;
+    private String parentCategoryId1;
+    private String parentCategoryId2;
+    private String parentCategoryId3;
+    private String childCategoryId1;
+    private String childCategoryId2;
+    private String childCategoryId3;
 
     @BeforeEach
     public void drawLineByTestBefore() {
@@ -53,45 +49,48 @@ public class ProductServiceTest {
         double value = rand.nextDouble();
 
         Category category1 = new Category();
+        category1.setCategoryId("create-category-parent1");
         category1.setName("create-category-parent1");
 
         Category createdCategory1 = categoryRepository.save(category1);
-        parentCategoryId1 = createdCategory1.getId();
+        parentCategoryId1 = createdCategory1.getCategoryId();
 
         log.info("parentId = " + parentCategoryId1);
         log.info("자식 카테고리 생성");
         for (int i = 0; i < 5; i++) {
             CategoryDtoForCreation categoryDtoForCreation = new CategoryDtoForCreation("create-category1-child" + i, parentCategoryId1);
             Optional<Category> result = categoryService.createCategory(categoryDtoForCreation);
-            childCategoryId1 = result.get().getId();
+            childCategoryId1 = result.get().getCategoryId();
         }
 
         Category category2 = new Category();
+        category2.setCategoryId("create-category-parent2");
         category2.setName("create-category-parent2");
 
         Category createdCategory2 = categoryRepository.save(category2);
-        parentCategoryId2 = createdCategory2.getId();
+        parentCategoryId2 = createdCategory2.getCategoryId();
 
         log.info("parentId = " + parentCategoryId2);
         log.info("자식 카테고리 생성");
         for (int i = 0; i < 5; i++) {
             CategoryDtoForCreation categoryDtoForCreation = new CategoryDtoForCreation("create-category2-child" + i, parentCategoryId2);
             Optional<Category> result = categoryService.createCategory(categoryDtoForCreation);
-            childCategoryId2 = result.get().getId();
+            childCategoryId2 = result.get().getCategoryId();
         }
 
         Category category3 = new Category();
+        category3.setCategoryId("create-category-parent3");
         category3.setName("create-category-parent3");
 
         Category createdCategory3 = categoryRepository.save(category3);
-        parentCategoryId3 = createdCategory3.getId();
+        parentCategoryId3 = createdCategory3.getCategoryId();
 
         log.info("parentId = " + parentCategoryId3);
         log.info("자식 카테고리 생성");
         for (int i = 0; i < 5; i++) {
             CategoryDtoForCreation categoryDtoForCreation = new CategoryDtoForCreation("create-category3-child" + i, parentCategoryId3);
             Optional<Category> result = categoryService.createCategory(categoryDtoForCreation);
-            childCategoryId3 = result.get().getId();
+            childCategoryId3 = result.get().getCategoryId();
         }
 
         Category childCategory1 = categoryRepository.findById(childCategoryId1).get();
@@ -170,7 +169,7 @@ public class ProductServiceTest {
                 100000,
                 100,
                 "[Product Service] 상품 생성 테스트",
-                0,
+                "test",
                 Collections.emptyList()
         );
 

@@ -22,7 +22,7 @@ public abstract class CategoryDto extends RepresentationModel<CategoryDto> {
     }
 
     public CategoryDto(Category category) {
-        this.id = category.getId();
+        this.id = category.getCategoryId();
         this.name = category.getName();
     }
 }

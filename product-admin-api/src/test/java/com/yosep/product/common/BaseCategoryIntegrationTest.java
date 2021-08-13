@@ -24,9 +24,9 @@ import java.util.Optional;
 public abstract class BaseCategoryIntegrationTest {
     protected CategoryRepository categoryRepository;
     protected CategoryService categoryService;
-    protected long categoryId1;
-    protected long categoryId2;
-    protected long categoryId3;
+    protected String categoryId1;
+    protected String categoryId2;
+    protected String categoryId3;
 
     @BeforeEach
     public void drawLineByTestBefore() {
@@ -36,10 +36,11 @@ public abstract class BaseCategoryIntegrationTest {
     @BeforeEach
     public void createParentAndChildsCategories() {
         Category category1 = new Category();
+        category1.setCategoryId("create-category-parent1");
         category1.setName("create-category-parent1");
 
         Category createdCategory1 = categoryRepository.save(category1);
-        categoryId1 = createdCategory1.getId();
+        categoryId1 = createdCategory1.getCategoryId();
 
 
         log.info("parentId = " + categoryId1);
@@ -50,10 +51,11 @@ public abstract class BaseCategoryIntegrationTest {
         }
 
         Category category2 = new Category();
+        category2.setCategoryId("create-category-parent2");
         category2.setName("create-category-parent2");
 
         Category createdCategory2 = categoryRepository.save(category2);
-        categoryId2 = createdCategory2.getId();
+        categoryId2 = createdCategory2.getCategoryId();
 
         log.info("parentId = " + categoryId2);
         log.info("자식 카테고리 생성");
@@ -63,10 +65,11 @@ public abstract class BaseCategoryIntegrationTest {
         }
 
         Category category3 = new Category();
+        category3.setCategoryId("create-category-parent3");
         category3.setName("create-category-parent3");
 
         Category createdCategory3 = categoryRepository.save(category3);
-        categoryId3 = createdCategory3.getId();
+        categoryId3 = createdCategory3.getCategoryId();
 
         log.info("parentId = " + categoryId3);
         log.info("자식 카테고리 생성");

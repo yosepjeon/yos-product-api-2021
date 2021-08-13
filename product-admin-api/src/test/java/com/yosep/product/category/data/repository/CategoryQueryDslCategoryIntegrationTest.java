@@ -28,12 +28,14 @@ public class CategoryQueryDslCategoryIntegrationTest extends BaseCategoryIntegra
     @BeforeEach
     public void setUp() {
         Category category = new Category();
+        category.setCategoryId("create-test1");
         category.setName("create-test1");
 
         Category createdCategory = categoryRepository.save(category);
-        categoryId3 = createdCategory.getId();
+        categoryId3 = createdCategory.getCategoryId();
 
         Category category2 = new Category();
+        category2.setCategoryId("create-test2");
         category2.setName("create-test1");
 
         Category createdCategory2 = categoryRepository.save(category2);

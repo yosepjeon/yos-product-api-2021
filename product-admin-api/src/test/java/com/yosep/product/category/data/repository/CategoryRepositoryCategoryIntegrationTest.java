@@ -29,6 +29,7 @@ public class CategoryRepositoryCategoryIntegrationTest extends BaseCategoryInteg
 //                .name("create-test1")
 //                .build();
         Category category = new Category();
+        category.setCategoryId("create-test1");
         category.setName("create-test1");
 
         Category createdCategory = categoryRepository.save(category);
@@ -52,7 +53,7 @@ public class CategoryRepositoryCategoryIntegrationTest extends BaseCategoryInteg
     @DisplayName("[CategoryRepository] 카테고리 조회 실패 테스트")
     public void readCategoryFailTest() {
         log.info("카테고리 조회 실패 테스트");
-        Optional<Category> resultById = categoryRepository.findById(Long.valueOf(-1));
+        Optional<Category> resultById = categoryRepository.findById("empty");
 
         log.info(resultById.toString());
         Assertions.assertEquals(false, resultById.isPresent());

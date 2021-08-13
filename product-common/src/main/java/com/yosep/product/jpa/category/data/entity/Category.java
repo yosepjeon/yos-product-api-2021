@@ -18,14 +18,9 @@ import java.util.List;
 @Entity
 @Table(name = "yos_product_category")
 public class Category extends BaseEntity {
-    //    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "category_id")
-//    @Setter(value = AccessLevel.PRIVATE)
-//    private Long id;
     @Id
-    @Column(name = "category_id")
-    private String id;
+    @Column
+    private String categoryId;
 
     @Column(name = "category_name", length = 50, nullable = false)
     private String name;
