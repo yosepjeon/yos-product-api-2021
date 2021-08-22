@@ -29,6 +29,9 @@ public class Product extends BaseEntity {
     @Column(length = 50, nullable = false)
     private String productName = "";
 
+    @Column(length = 100, nullable = false)
+    private String companyCode = "";
+
     @Column(nullable = false)
     private long productPrice = 0;
 

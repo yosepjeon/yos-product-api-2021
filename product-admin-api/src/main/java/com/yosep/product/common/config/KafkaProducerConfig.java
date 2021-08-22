@@ -1,8 +1,7 @@
 package com.yosep.product.common.config;
 
-import com.yosep.product.product.mq.ProductToCouponSender;
+import com.yosep.product.product.mq.producer.ProductToCouponProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,7 +38,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProductToCouponSender getProductToCouponSender(KafkaTemplate<Integer, String> template) {
-        return new ProductToCouponSender(template);
+    public ProductToCouponProducer getProductToCouponSender(KafkaTemplate<Integer, String> template) {
+        return new ProductToCouponProducer(template);
     }
 }

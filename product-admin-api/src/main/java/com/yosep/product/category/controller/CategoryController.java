@@ -48,7 +48,7 @@ public class CategoryController {
 
     @GetMapping
     public void readAllCategories() {
-
+        
     }
 
     @PostMapping

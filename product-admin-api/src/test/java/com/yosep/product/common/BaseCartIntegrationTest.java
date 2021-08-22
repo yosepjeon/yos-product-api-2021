@@ -1,6 +1,7 @@
 package com.yosep.product.common;
 
-import com.yosep.product.cart.service.CartService;
+import com.yosep.product.cart.service.CartCommandService;
+import com.yosep.product.cart.service.CartQueryService;
 import com.yosep.product.jpa.cart.data.entity.Cart;
 import com.yosep.product.jpa.cart.data.repository.CartRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -20,12 +21,13 @@ import org.springframework.transaction.annotation.Transactional;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public abstract class BaseCartIntegrationTest {
     protected CartRepository cartRepository;
-    protected CartService cartService;
+    protected CartCommandService cartCommandService;
+    protected CartQueryService cartQueryService;
 
     @BeforeEach
     public void setTestCart() {
-        String userId = "test-user1";
-        String cartId = "cart-test-1";
+        String userId = "cart-test-user1";
+        String cartId = userId;
 
         Cart cart = new Cart(cartId, userId);
 

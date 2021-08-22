@@ -1,15 +1,17 @@
-package com.yosep.product.product.mq;
+package com.yosep.product.product.mq.producer;
 
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ExecutionException;
 
-public class ProductToCouponSender {
+@Component
+public class ProductToCouponProducer {
     private final String topic1 = "exam";
 
     private final KafkaTemplate<Integer, String> template;
 
-    public ProductToCouponSender(KafkaTemplate<Integer, String> template) {
+    public ProductToCouponProducer(KafkaTemplate<Integer, String> template) {
         this.template = template;
     }
 

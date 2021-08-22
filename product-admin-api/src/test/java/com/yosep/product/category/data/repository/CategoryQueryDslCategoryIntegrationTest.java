@@ -78,14 +78,14 @@ public class CategoryQueryDslCategoryIntegrationTest extends BaseCategoryIntegra
         log.info(categorieDtos.toString());
     }
 
-    @Test
-    @DisplayName("[CategoryQueryDsl] 카테고리가 Empty일 때 부모-자식 카테고리 가져오기 테스트")
-    public void readCategoryByParentIsNullFailTest() {
-        categoryRepository.deleteAll();
-        Optional<List<Category>> categorieDtos = categoryRepository.findAllByParentIsNull();
-
-        log.info(categorieDtos.toString());
-    }
+//    @Test
+//    @DisplayName("[CategoryQueryDsl] 카테고리가 Empty일 때 부모-자식 카테고리 가져오기 테스트")
+//    public void readCategoryByParentIsNullFailTest() {
+//        categoryRepository.deleteAll();
+//        Optional<List<Category>> categorieDtos = categoryRepository.findAllByParentIsNull();
+//
+//        log.info(categorieDtos.toString());
+//    }
 
     @Test
     @DisplayName("[CategoryQueryDsl] 자식이 가리키는 부모ID를 통해 카테고리 가져오기 성공 테스트")
@@ -95,12 +95,12 @@ public class CategoryQueryDslCategoryIntegrationTest extends BaseCategoryIntegra
         log.info(categorieDtos.toString());
     }
 
-    @Test
-    @DisplayName("[CategoryQueryDsl] 카테고리가 Empty일 때 자식이 가리키는 부모ID를 통해 카테고리 가져오기 성공 테스트")
-    public void readCategoryByParentIsNotNullFailTest() {
-        categoryRepository.deleteAll();
-        Optional<List<Category>> categorieDtos = categoryRepository.findAllByParentIsNull();
-
-        log.info(categorieDtos.toString());
-    }
+//    @Test
+//    @DisplayName("[CategoryQueryDsl] 카테고리가 Empty일 때 자식이 가리키는 부모ID를 통해 카테고리 가져오기 성공 테스트")
+//    public void readCategoryByParentIsNotNullFailTest() {
+//        categoryRepository.deleteAll();
+//        Optional<List<Category>> categorieDtos = categoryRepository.findAllByParentIsNull();
+//
+//        log.info(categorieDtos.toString());
+//    }
 }

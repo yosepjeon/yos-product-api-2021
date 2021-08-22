@@ -130,6 +130,7 @@ public class ProductService {
     @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     public ProductStepDtoForCreation processProductStep(ProductStepDtoForCreation productStepDtoForCreation) {
         List<OrderProductDtoForCreation> orderProductDtos = productStepDtoForCreation.getOrderProductDtos();
+        productStepDtoForCreation.setState("PENDING");
 
         for (OrderProductDtoForCreation orderProductDtoForCreation : orderProductDtos) {
             orderProductDtoForCreation.setState("PENDING");
@@ -137,6 +138,7 @@ public class ProductService {
 
             if (optionalSelectedProduct.isEmpty()) {
                 orderProductDtoForCreation.setState("NotExistElementException");
+                productStepDtoForCreation.setState("EXCEPTION");
                 throw new NotExistElementException(orderProductDtoForCreation.getProductId() + " 해당 상품이 존재하지 않습니다.");
             }
 
@@ -149,6 +151,10 @@ public class ProductService {
             orderProductDtoForCreation.setState("COMP");
         }
 
+        if(productStepDtoForCreation.getState().equals("PENDING")) {
+            productStepDtoForCreation.setState("COMP");
+        }
+
         return productStepDtoForCreation;
     }
 
@@ -159,17 +165,43 @@ public class ProductService {
             readOnly = false,
             rollbackFor = {NotExistElementException.class, RuntimeException.class, NotEqualProductPrice.class, InvalidStockValueException.class},
             propagation = Propagation.REQUIRED
-//            propagation = Propagation.REQUIRES_NEW
     )
     @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     public void revertProductStep(ProductStepDtoForCreation productStepDtoForCreation) {
+        List<OrderProductDtoForCreation> orderProductDtos = productStepDtoForCreation.getOrderProductDtos();
+        productStepDtoForCreation.setState("PENDING");
+
+        for(OrderProductDtoForCreation orderProductDtoForCreation : orderProductDtos) {
+            orderProductDtoForCreation.setState("PENDING");
+            Optional<Product> optionalSelectedProduct = productRepository.findById(orderProductDtoForCreation.getProductId());
+
+            if (optionalSelectedProduct.isEmpty()) {
+                orderProductDtoForCreation.setState("NotExistElementException");
+                productStepDtoForCreation.setState("EXCEPTION");
+                continue;
+            }
+
+            Product selectedProduct = optionalSelectedProduct.get();
+            selectedProduct.increaseStock(orderProductDtoForCreation);
+
+            orderProductDtoForCreation.setState("REVERTED");
+        }
+
+        if(productStepDtoForCreation.getState().equals("PENDING")) {
+            productStepDtoForCreation.setState("COMP");
+        }
+    }
+
+    @Transactional(readOnly = false)
+    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
+    public void setProductStock() {
 
     }
 
     @Transactional(readOnly = false)
     @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     public void increaseProductStock() {
-
+        
     }
 
     /*

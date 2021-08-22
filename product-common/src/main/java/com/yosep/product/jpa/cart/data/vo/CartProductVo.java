@@ -5,16 +5,13 @@ import com.yosep.product.jpa.common.exception.InvalidStockValueException;
 import com.yosep.product.jpa.product.data.entity.Product;
 import lombok.Getter;
 
-import javax.persistence.Embeddable;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Embeddable
 @Getter
 public class CartProductVo {
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 

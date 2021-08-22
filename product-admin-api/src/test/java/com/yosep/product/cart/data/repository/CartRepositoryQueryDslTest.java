@@ -1,6 +1,7 @@
 package com.yosep.product.cart.data.repository;
 
-import com.yosep.product.cart.service.CartService;
+import com.yosep.product.cart.service.CartCommandService;
+import com.yosep.product.cart.service.CartQueryService;
 import com.yosep.product.common.BaseCartIntegrationTest;
 import com.yosep.product.jpa.cart.data.entity.Cart;
 import com.yosep.product.jpa.cart.data.repository.CartRepository;
@@ -15,34 +16,22 @@ import java.util.Optional;
 @Slf4j
 public class CartRepositoryQueryDslTest extends BaseCartIntegrationTest {
     @Autowired
-    public CartRepositoryQueryDslTest(CartRepository cartRepository, CartService cartService) {
+    public CartRepositoryQueryDslTest(CartRepository cartRepository, CartCommandService cartCommandService, CartQueryService cartQueryService) {
         this.cartRepository = cartRepository;
-        this.cartService = cartService;
+        this.cartQueryService = cartQueryService;
+        this.cartCommandService = cartCommandService;
     }
 
     @Test
-    @DisplayName("[CartQueryDsl] 장바구니 생성 성공 테스트")
-    public void createCartSuccessTest() {
-        String userId = "test1";
-        String cartId = "cart-test1";
+    @DisplayName("[CartQuerydsl] 장바구니 조회 성공 테스트")
+    public void 장바구니_조회_성공_테스트() {
+        log.info("[CartQuerydsl] 장바구니 조회 성공 테스트");
+        Optional<Cart> optionalCart = cartRepository.findByUserId("test-user1");
 
-        Cart cart = new Cart(cartId, userId);
-
-        Cart createdCart = cartRepository.save(cart);
-
-        Assertions.assertEquals(true, createdCart.getCartId().equals(cartId));
-        Assertions.assertEquals(true, createdCart.getUserId().equals(userId));
-        Assertions.assertEquals(true, createdCart.getCartProducts().isEmpty());
-    }
-
-    @Test
-    @DisplayName("[CartQueryDsl] 장바구니 생성 실패 테스트")
-    public void createCartFailTest() {
-        String userId = "test1";
-
-        Optional<Cart> optionalCart = cartRepository.findByUserId(userId);
-
-        Assertions.assertEquals(true, optionalCart.isEmpty());
+        Assertions.assertEquals(true, optionalCart.isPresent());
+        Cart selectedCart = optionalCart.get();
+        Assertions.assertEquals("test-user1", selectedCart.getCartId());
+        Assertions.assertEquals("test-user1", selectedCart.getUserId());
     }
 
 

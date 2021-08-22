@@ -28,6 +28,9 @@ public class ProductDtoForCreation {
     @NotBlank
     public String productName = "";
 
+    @NotBlank
+    private String companyCode = "";
+
     @Min(0)
     public long productPrice = 0;
 
