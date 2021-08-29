@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 
 @RestController
@@ -59,6 +58,7 @@ public class ProductController {
 
             return ResponseEntity.ok(productStepDtoForCreation);
         } catch (RuntimeException runtimeException) {
+            productStepDtoForCreation.setState("EXCEPTION");
             productStepDtoForCreation = productService.validateSagaProductDtos(productStepDtoForCreation);
             productStepDtoForCreation.setState("FAIL");
             System.out.println(productStepDtoForCreation.toString());

@@ -84,7 +84,7 @@ public class ProductService {
     }
 
     /*
-    * Saga Step 실패 후 전체 상품 검증
+     * Saga Step 실패 후 전체 상품 검증
      */
     public ProductStepDtoForCreation validateSagaProductDtos(ProductStepDtoForCreation productStepDtoForCreation) {
         List<OrderProductDtoForCreation> orderProductDtoForCreations = productStepDtoForCreation.getOrderProductDtos();
@@ -96,7 +96,7 @@ public class ProductService {
 
             Optional<Product> optionalSelectedProduct = productRepository.findById(orderProductDtoForCreation.getProductId());
 
-            if(optionalSelectedProduct.isEmpty()) {
+            if (optionalSelectedProduct.isEmpty()) {
                 orderProductDtoForCreation.setState("NotExistElementException");
                 continue;
             }
@@ -151,7 +151,46 @@ public class ProductService {
             orderProductDtoForCreation.setState("COMP");
         }
 
-        if(productStepDtoForCreation.getState().equals("PENDING")) {
+        if (productStepDtoForCreation.getState().equals("PENDING")) {
+            productStepDtoForCreation.setState("COMP");
+        }
+
+        return productStepDtoForCreation;
+    }
+
+    @Transactional(
+            readOnly = false,
+            rollbackFor = {NotExistElementException.class, RuntimeException.class, NotEqualProductPrice.class, InvalidStockValueException.class},
+            propagation = Propagation.REQUIRED
+//            propagation = Propagation.REQUIRES_NEW
+    )
+    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
+    public ProductStepDtoForCreation processProductStepUseStream(ProductStepDtoForCreation productStepDtoForCreation) {
+        List<OrderProductDtoForCreation> orderProductDtos = productStepDtoForCreation.getOrderProductDtos();
+        productStepDtoForCreation.setState("PENDING");
+
+//        orderProductDtos.stream();
+
+        for (OrderProductDtoForCreation orderProductDtoForCreation : orderProductDtos) {
+            orderProductDtoForCreation.setState("PENDING");
+            Optional<Product> optionalSelectedProduct = productRepository.findById(orderProductDtoForCreation.getProductId());
+
+            if (optionalSelectedProduct.isEmpty()) {
+                orderProductDtoForCreation.setState("NotExistElementException");
+                productStepDtoForCreation.setState("EXCEPTION");
+                throw new NotExistElementException(orderProductDtoForCreation.getProductId() + " 해당 상품이 존재하지 않습니다.");
+            }
+
+            Product selectedProduct = optionalSelectedProduct.get();
+
+            selectedProduct.validatePrice(orderProductDtoForCreation);
+
+            selectedProduct.decreaseStock(orderProductDtoForCreation);
+
+            orderProductDtoForCreation.setState("COMP");
+        }
+
+        if (productStepDtoForCreation.getState().equals("PENDING")) {
             productStepDtoForCreation.setState("COMP");
         }
 
@@ -171,7 +210,7 @@ public class ProductService {
         List<OrderProductDtoForCreation> orderProductDtos = productStepDtoForCreation.getOrderProductDtos();
         productStepDtoForCreation.setState("PENDING");
 
-        for(OrderProductDtoForCreation orderProductDtoForCreation : orderProductDtos) {
+        for (OrderProductDtoForCreation orderProductDtoForCreation : orderProductDtos) {
             orderProductDtoForCreation.setState("PENDING");
             Optional<Product> optionalSelectedProduct = productRepository.findById(orderProductDtoForCreation.getProductId());
 
@@ -187,7 +226,7 @@ public class ProductService {
             orderProductDtoForCreation.setState("REVERTED");
         }
 
-        if(productStepDtoForCreation.getState().equals("PENDING")) {
+        if (productStepDtoForCreation.getState().equals("PENDING")) {
             productStepDtoForCreation.setState("COMP");
         }
     }
@@ -201,7 +240,7 @@ public class ProductService {
     @Transactional(readOnly = false)
     @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     public void increaseProductStock() {
-        
+
     }
 
     /*
@@ -211,7 +250,7 @@ public class ProductService {
      */
     @Transactional(readOnly = false)
     public void deleteProduct(String productId) {
-        if(productRepository.findById(productId).isEmpty()) {
+        if (productRepository.findById(productId).isEmpty()) {
             return;
         }
 
