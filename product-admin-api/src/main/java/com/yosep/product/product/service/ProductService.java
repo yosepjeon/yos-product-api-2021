@@ -205,7 +205,8 @@ public class ProductService {
             rollbackFor = {NotExistElementException.class, RuntimeException.class, NotEqualProductPrice.class, InvalidStockValueException.class},
             propagation = Propagation.REQUIRED
     )
-    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
+//    재고를 증가시킬때는 딱히 필요없지 않을까...? 고민 요망
+//    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     public void revertProductStep(ProductStepDtoForCreation productStepDtoForCreation) {
         List<OrderProductDtoForCreation> orderProductDtos = productStepDtoForCreation.getOrderProductDtos();
         productStepDtoForCreation.setState("PENDING");
@@ -215,8 +216,10 @@ public class ProductService {
             Optional<Product> optionalSelectedProduct = productRepository.findById(orderProductDtoForCreation.getProductId());
 
             if (optionalSelectedProduct.isEmpty()) {
-                orderProductDtoForCreation.setState("NotExistElementException");
-                productStepDtoForCreation.setState("EXCEPTION");
+                // revert 로직에서 해당 물건이 존재하지 않아도 크게 문제될 부분을 없을듯
+                orderProductDtoForCreation.setState(NotExistElementException.class.getSimpleName());
+
+//                productStepDtoForCreation.setState(NotExistElementException.class.getSimpleName());
                 continue;
             }
 
@@ -226,9 +229,7 @@ public class ProductService {
             orderProductDtoForCreation.setState("REVERTED");
         }
 
-        if (productStepDtoForCreation.getState().equals("PENDING")) {
-            productStepDtoForCreation.setState("COMP");
-        }
+        productStepDtoForCreation.setState("COMP");
     }
 
     @Transactional(readOnly = false)

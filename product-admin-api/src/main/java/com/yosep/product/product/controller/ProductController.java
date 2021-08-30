@@ -67,4 +67,25 @@ public class ProductController {
         }
     }
 
+    @PostMapping("/order-saga-revert")
+    public ResponseEntity revertOrderToProductSaga(@RequestBody @Valid ProductStepDtoForCreation productStepDtoForCreation, Errors errors) {
+        if(errors.hasErrors()) {
+            return ResponseEntity.badRequest().body(errors);
+        }
+
+        try {
+            productStepDtoForCreation = productService.processProductStep(productStepDtoForCreation);
+            productStepDtoForCreation.setState("COMP");
+            System.out.println(productStepDtoForCreation.toString());
+
+            return ResponseEntity.ok(productStepDtoForCreation);
+        } catch (RuntimeException runtimeException) {
+            productStepDtoForCreation.setState("EXCEPTION");
+            productStepDtoForCreation = productService.validateSagaProductDtos(productStepDtoForCreation);
+            productStepDtoForCreation.setState("FAIL");
+            System.out.println(productStepDtoForCreation.toString());
+
+            return ResponseEntity.ok(productStepDtoForCreation);
+        }
+    }
 }
