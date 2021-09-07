@@ -12,8 +12,12 @@ import com.yosep.product.jpa.product.data.dto.request.ProductDtoForCreation;
 import com.yosep.product.jpa.product.data.dto.request.ProductStepDtoForCreation;
 import com.yosep.product.jpa.product.data.dto.response.CreatedProductDto;
 import com.yosep.product.jpa.product.data.entity.Product;
+import com.yosep.product.jpa.product.data.entity.ProductEvent;
+import com.yosep.product.jpa.product.data.entity.RevertProductStepEvent;
 import com.yosep.product.jpa.product.data.mapper.product.ProductMapper;
+import com.yosep.product.jpa.product.data.repository.ProductEventRepository;
 import com.yosep.product.jpa.product.data.repository.ProductRepository;
+import com.yosep.product.jpa.product.data.vo.EventType;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.Lock;
@@ -30,6 +34,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final ProductEventRepository productEventRepository;
     private final CategoryRepository categoryRepository;
     private final ModelMapper modelMapper;
 
@@ -207,9 +212,14 @@ public class ProductService {
     )
 //    재고를 증가시킬때는 딱히 필요없지 않을까...? 고민 요망
 //    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
-    public void revertProductStep(ProductStepDtoForCreation productStepDtoForCreation) {
-        List<OrderProductDtoForCreation> orderProductDtos = productStepDtoForCreation.getOrderProductDtos();
-        productStepDtoForCreation.setState("PENDING");
+    public void revertProductStep(com.yosep.product.jpa.product.data.event.RevertProductStepEvent revertProductStepEvent) {
+        if(productEventRepository.existsById(revertProductStepEvent.getEventId())) {
+            return;
+        }
+
+        productEventRepository.save(new ProductEvent(revertProductStepEvent.getEventId(), EventType.REVERT_ORDER_PRODUCT));
+
+        List<OrderProductDtoForCreation> orderProductDtos = revertProductStepEvent.getOrderProductDtos();
 
         for (OrderProductDtoForCreation orderProductDtoForCreation : orderProductDtos) {
             orderProductDtoForCreation.setState("PENDING");
@@ -229,7 +239,6 @@ public class ProductService {
             orderProductDtoForCreation.setState("REVERTED");
         }
 
-        productStepDtoForCreation.setState("COMP");
     }
 
     @Transactional(readOnly = false)
