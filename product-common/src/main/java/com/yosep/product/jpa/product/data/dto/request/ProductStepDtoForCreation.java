@@ -14,6 +14,9 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class ProductStepDtoForCreation extends RepresentationModel<ProductStepDtoForCreation> {
+    @NotEmpty
+    private String orderId;
+
     @Min(0)
     private final long totalPrice;
 

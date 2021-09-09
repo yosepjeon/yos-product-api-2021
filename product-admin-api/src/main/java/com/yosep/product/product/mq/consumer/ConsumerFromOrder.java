@@ -17,10 +17,9 @@ public class ConsumerFromOrder {
     @KafkaListener(topics = {"revert-product-step"}, groupId = "revert-product-step-0")
     public void processRevertProductEvent(String message) throws JsonProcessingException {
         RevertProductStepEvent revertProductStepEvent = objectMapper.readValue(message, RevertProductStepEvent.class);
-        productService.revertProductStep(revertProductStepEvent);
 
         System.out.println(revertProductStepEvent.toString());
-
+        productService.revertProductStep(revertProductStepEvent);
     }
 
 

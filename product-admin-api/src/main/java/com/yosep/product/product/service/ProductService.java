@@ -13,7 +13,7 @@ import com.yosep.product.jpa.product.data.dto.request.ProductStepDtoForCreation;
 import com.yosep.product.jpa.product.data.dto.response.CreatedProductDto;
 import com.yosep.product.jpa.product.data.entity.Product;
 import com.yosep.product.jpa.product.data.entity.ProductEvent;
-import com.yosep.product.jpa.product.data.entity.RevertProductStepEvent;
+import com.yosep.product.jpa.product.data.event.RevertProductStepEvent;
 import com.yosep.product.jpa.product.data.mapper.product.ProductMapper;
 import com.yosep.product.jpa.product.data.repository.ProductEventRepository;
 import com.yosep.product.jpa.product.data.repository.ProductRepository;
@@ -212,12 +212,13 @@ public class ProductService {
     )
 //    재고를 증가시킬때는 딱히 필요없지 않을까...? 고민 요망
 //    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
-    public void revertProductStep(com.yosep.product.jpa.product.data.event.RevertProductStepEvent revertProductStepEvent) {
-        if(productEventRepository.existsById(revertProductStepEvent.getEventId())) {
-            return;
-        }
+    public void revertProductStep(RevertProductStepEvent revertProductStepEvent) {
+        ProductEvent productEvent = new ProductEvent(
+                revertProductStepEvent.getEventId(),
+                EventType.REVERT_ORDER_PRODUCT
+        );
 
-        productEventRepository.save(new ProductEvent(revertProductStepEvent.getEventId(), EventType.REVERT_ORDER_PRODUCT));
+        productEventRepository.save(productEvent);
 
         List<OrderProductDtoForCreation> orderProductDtos = revertProductStepEvent.getOrderProductDtos();
 
