@@ -6,7 +6,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Getter
-@Builder
 @AllArgsConstructor
 @ToString
 public class OrderProductDtoForCreation {

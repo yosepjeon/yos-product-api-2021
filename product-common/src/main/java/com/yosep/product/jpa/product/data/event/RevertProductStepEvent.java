@@ -7,10 +7,8 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 @ToString
-@Builder
 public class RevertProductStepEvent {
-    private String eventId;
-    private List<OrderProductDtoForCreation> orderProductDtos;
+    private final String eventId;
+    private final List<OrderProductDtoForCreation> orderProductDtos;
 }

@@ -18,6 +18,7 @@ public class ConsumerFromOrder {
     public void processRevertProductEvent(String message) throws JsonProcessingException {
         RevertProductStepEvent revertProductStepEvent = objectMapper.readValue(message, RevertProductStepEvent.class);
 
+        System.out.println("!!!!");
         System.out.println(revertProductStepEvent.toString());
         productService.revertProductStep(revertProductStepEvent);
     }
