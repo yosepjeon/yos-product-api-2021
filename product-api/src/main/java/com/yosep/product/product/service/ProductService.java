@@ -17,6 +17,7 @@ import com.yosep.product.jpa.product.data.event.RevertProductStepEvent;
 import com.yosep.product.jpa.product.data.mapper.product.ProductMapper;
 import com.yosep.product.jpa.product.data.repository.ProductEventRepository;
 import com.yosep.product.jpa.product.data.repository.ProductRepository;
+import com.yosep.product.jpa.product.data.vo.EventId;
 import com.yosep.product.jpa.product.data.vo.EventType;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -134,6 +135,15 @@ public class ProductService {
     )
     @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     public ProductStepDtoForCreation processProductStep(ProductStepDtoForCreation productStepDtoForCreation) {
+        ProductEvent productEvent = new ProductEvent(
+                new EventId(
+                        productStepDtoForCreation.getOrderId(),
+                        EventType.PROCESS_ORDER_PRODUCT
+                )
+        );
+
+        productEventRepository.save(productEvent);
+
         List<OrderProductDtoForCreation> orderProductDtos = productStepDtoForCreation.getOrderProductDtos();
         productStepDtoForCreation.setState("PENDING");
 
@@ -171,6 +181,15 @@ public class ProductService {
     )
     @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     public ProductStepDtoForCreation processProductStepUseStream(ProductStepDtoForCreation productStepDtoForCreation) {
+        ProductEvent productEvent = new ProductEvent(
+                new EventId(
+                        productStepDtoForCreation.getOrderId(),
+                        EventType.PROCESS_ORDER_PRODUCT
+                )
+        );
+
+        productEventRepository.save(productEvent);
+
         List<OrderProductDtoForCreation> orderProductDtos = productStepDtoForCreation.getOrderProductDtos();
         productStepDtoForCreation.setState("PENDING");
 
@@ -214,8 +233,10 @@ public class ProductService {
 //    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     public void revertProductStep(RevertProductStepEvent revertProductStepEvent) {
         ProductEvent productEvent = new ProductEvent(
-                revertProductStepEvent.getEventId(),
-                EventType.REVERT_ORDER_PRODUCT
+                new EventId(
+                        revertProductStepEvent.getEventId(),
+                        EventType.REVERT_ORDER_PRODUCT
+                )
         );
 
         productEventRepository.save(productEvent);
