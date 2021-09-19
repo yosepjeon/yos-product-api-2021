@@ -131,23 +131,22 @@ public class ProductService {
             readOnly = false,
             rollbackFor = {NotExistElementException.class, RuntimeException.class, NotEqualProductPrice.class, InvalidStockValueException.class},
             propagation = Propagation.REQUIRED
-//            propagation = Propagation.REQUIRES_NEW
     )
     @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     public ProductStepDtoForCreation processProductStep(ProductStepDtoForCreation productStepDtoForCreation) {
-        ProductEvent productEvent = new ProductEvent(
-                new EventId(
-                        productStepDtoForCreation.getOrderId(),
-                        EventType.PROCESS_ORDER_PRODUCT
-                )
+        EventId id = new EventId(
+                productStepDtoForCreation.getOrderId(),
+                EventType.PROCESS_ORDER_PRODUCT
         );
+
+        ProductEvent productEvent = new ProductEvent(id);
 
         productEventRepository.save(productEvent);
 
         List<OrderProductDtoForCreation> orderProductDtos = productStepDtoForCreation.getOrderProductDtos();
         productStepDtoForCreation.setState("PENDING");
 
-        for (OrderProductDtoForCreation orderProductDtoForCreation : orderProductDtos) {
+        orderProductDtos.forEach((OrderProductDtoForCreation orderProductDtoForCreation) -> {
             orderProductDtoForCreation.setState("PENDING");
             Optional<Product> optionalSelectedProduct = productRepository.findById(orderProductDtoForCreation.getProductId());
 
@@ -164,7 +163,7 @@ public class ProductService {
             selectedProduct.decreaseStock(orderProductDtoForCreation);
 
             orderProductDtoForCreation.setState("COMP");
-        }
+        });
 
         if (productStepDtoForCreation.getState().equals("PENDING")) {
             productStepDtoForCreation.setState("COMP");

@@ -2,7 +2,6 @@ package com.yosep.product.jpa.product.data.entity;
 
 import com.yosep.product.jpa.common.entity.BaseEntity;
 import com.yosep.product.jpa.product.data.vo.EventId;
-import com.yosep.product.jpa.product.data.vo.EventType;
 import lombok.*;
 import org.springframework.data.domain.Persistable;
 
@@ -15,12 +14,6 @@ import javax.persistence.*;
 @EqualsAndHashCode(of = "eventId")
 @Table(name = "yos_product_event")
 public class ProductEvent extends BaseEntity implements Persistable<EventId> {
-//    @Id
-//    @Column(length = 100)
-//    private String eventId;
-//
-//    @Enumerated(EnumType.STRING)
-//    private EventType eventType;
 
     @EmbeddedId
     private final EventId eventId;
@@ -35,19 +28,3 @@ public class ProductEvent extends BaseEntity implements Persistable<EventId> {
         return this.getCreatedDate() == null;
     }
 }
-
-//@Entity
-//@Table(name = "yos_coupon_event")
-//class CouponEvent (
-//        @EmbeddedId
-//        private val eventId: EventId
-//) :BaseEntity(), Persistable<EventId> {
-//
-//        override fun getId(): EventId? {
-//        return this.eventId
-//        }
-//
-//        override fun isNew(): Boolean {
-//        return createdDate == null
-//        }
-//        }

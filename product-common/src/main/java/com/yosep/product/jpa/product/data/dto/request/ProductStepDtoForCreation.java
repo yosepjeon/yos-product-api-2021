@@ -17,8 +17,8 @@ public class ProductStepDtoForCreation extends RepresentationModel<ProductStepDt
     @NotEmpty
     private String orderId;
 
-    @Min(0)
-    private final long totalPrice;
+//    @Min(0)
+//    private final long totalPrice;
 
     @NotEmpty
     private final List<@NotNull OrderProductDtoForCreation> orderProductDtos;
