@@ -1,4 +1,4 @@
-package com.yosep.product.jpa.product.data.dto.response;
+package com.yosep.product.jpa.product.data.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -28,7 +28,7 @@ public class SelectedProductDto extends RepresentationModel<SelectedProductDto> 
     private final long stockQuantity;
 
     private final String productDetai;
-    
+
     private Category category;
 
     private List<ProductImage> productImages = Collections.emptyList();

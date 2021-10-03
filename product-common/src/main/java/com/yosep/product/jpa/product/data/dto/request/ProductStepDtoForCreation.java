@@ -1,6 +1,6 @@
 package com.yosep.product.jpa.product.data.dto.request;
 
-import com.yosep.product.jpa.product.data.dto.response.CreatedProductDto;
+import com.yosep.product.jpa.product.data.dto.CreatedProductDto;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 

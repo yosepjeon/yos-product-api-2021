@@ -16,22 +16,15 @@ public class ProductQueryDslImpl implements ProductQueryDsl{
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Optional<List<Product>> findAllByCategoryId(String categoryId) {
+    public Optional<List<Product>> findAllByCategory(String categoryId) {
         QProduct product = QProduct.product;
         QCategory category = QCategory.category;
 
         Optional<List<Product>> products = Optional.of(jpaQueryFactory.selectFrom(product)
-                .innerJoin(category)
-                .on(product.category.categoryId.eq(category.categoryId))
+                .innerJoin(category).on(category.categoryId.eq(product.category.categoryId)).fetchJoin()
                 .where(product.category.categoryId.eq(categoryId))
-                .fetchJoin()
                 .fetch()
         );
-
-//        Optional<List<Product>> products = Optional.of(jpaQueryFactory.selectFrom(product)
-//                .where(product.category.id.eq(categoryId))
-//                .fetch()
-//        );
 
         return products;
     }

@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.Optional;
 
 import static com.yosep.product.jpa.cart.data.entity.QCart.cart;
-
+import static com.yosep.product.jpa.product.data.entity.QProduct.product;
 
 @RequiredArgsConstructor
 public class CartRepositoryQueryDslImpl implements CartRepositoryQueryDsl{
@@ -16,6 +16,8 @@ public class CartRepositoryQueryDslImpl implements CartRepositoryQueryDsl{
     @Override
     public Optional<Cart> findByUserId(String userId) {
         Cart cartEntity = jpaQueryFactory.selectFrom(cart)
+                .distinct()
+                .leftJoin(product).fetchJoin()
                 .where(cart.userId.eq(userId))
                 .fetchOne();
 

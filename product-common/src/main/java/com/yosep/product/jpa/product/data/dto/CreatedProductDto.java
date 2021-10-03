@@ -1,4 +1,4 @@
-package com.yosep.product.jpa.product.data.dto.response;
+package com.yosep.product.jpa.product.data.dto;
 
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;

@@ -1,11 +1,9 @@
-package com.yosep.product.jpa.cart.data.dto.response;
+package com.yosep.product.jpa.cart.data.dto;
 
 import com.yosep.product.jpa.cart.data.entity.Cart;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-
-import java.util.Map;
 
 @Getter
 @ToString

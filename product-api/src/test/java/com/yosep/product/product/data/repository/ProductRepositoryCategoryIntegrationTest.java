@@ -10,7 +10,6 @@ import com.yosep.product.jpa.product.data.repository.ProductTestRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +43,7 @@ public class ProductRepositoryCategoryIntegrationTest extends BaseProductIntegra
 //            log.info(p.getCategory().toString());
 //        });
 
-        List<Product> products = productRepository.findAllByCategoryId(childCategoryId1).get();
+        List<Product> products = productRepository.findAllByCategory(childCategoryId1).get();
 
         products.forEach(p -> {
             log.info(p.getProductId().toString());

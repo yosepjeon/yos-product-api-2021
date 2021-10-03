@@ -2,7 +2,7 @@ package com.yosep.product.cart.controller;
 
 import com.yosep.product.cart.service.CartCommandService;
 import com.yosep.product.cart.service.CartQueryService;
-import com.yosep.product.jpa.cart.data.dto.response.SelectedCartDto;
+import com.yosep.product.jpa.cart.data.dto.SelectedCartDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

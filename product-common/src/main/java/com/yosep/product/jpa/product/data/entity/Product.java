@@ -82,7 +82,7 @@ public class Product extends BaseEntity {
     }
 
     public void validatePrice(long productPrice) {
-        if(this.productPrice != caculateFinalPrice(productPrice)) {
+        if (this.productPrice != caculateFinalPrice(productPrice)) {
             throw new NotEqualProductPrice("해당 상품의 가격과 요청 데이터의 가격 값이 일치하지 않습니다.");
         }
     }
@@ -92,7 +92,7 @@ public class Product extends BaseEntity {
     }
 
     private void validateStock(long value) {
-        if(value < 0L) {
+        if (value < 0L) {
             throw new InvalidStockValueException("0이상의 결과값이어야합니다.");
         }
     }
@@ -112,26 +112,26 @@ public class Product extends BaseEntity {
     }
 
     public void validatePriceNotPublishException(OrderProductDtoForCreation orderProductDtoForCreation) {
-        if(orderProductDtoForCreation.getCount() < 0L || this.stockQuantity - orderProductDtoForCreation.getCount() < 0L) {
+        if (orderProductDtoForCreation.getCount() < 0L || this.stockQuantity - orderProductDtoForCreation.getCount() < 0L) {
             orderProductDtoForCreation.setState("InvalidStockValueException");
         }
     }
 
     public void validatePrice(OrderProductDtoForCreation orderProductDtoForCreation) {
-        if(this.productPrice != orderProductDtoForCreation.getPrice()) {
+        if (this.productPrice != orderProductDtoForCreation.getPrice()) {
             orderProductDtoForCreation.setState("NotEqualProductPrice");
             throw new NotEqualProductPrice("해당 상품의 가격과 요청 데이터의 가격 값이 일치하지 않습니다.");
         }
     }
 
     public void validateStockNotPublishException(OrderProductDtoForCreation orderProductDtoForCreation) {
-        if(orderProductDtoForCreation.getCount() < 0L || this.stockQuantity - orderProductDtoForCreation.getCount() < 0L) {
+        if (orderProductDtoForCreation.getCount() < 0L || this.stockQuantity - orderProductDtoForCreation.getCount() < 0L) {
             orderProductDtoForCreation.setState("InvalidStockValueException");
         }
     }
 
     private void validateStock(OrderProductDtoForCreation orderProductDtoForCreation) {
-        if(orderProductDtoForCreation.getCount() < 0L || this.stockQuantity - orderProductDtoForCreation.getCount() < 0L) {
+        if (orderProductDtoForCreation.getCount() < 0L || this.stockQuantity - orderProductDtoForCreation.getCount() < 0L) {
             orderProductDtoForCreation.setState("InvalidStockValueException");
             throw new InvalidStockValueException("0이상의 결과값이어야합니다.");
         }

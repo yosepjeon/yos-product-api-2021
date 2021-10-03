@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductQueryDsl {
-    Optional<List<Product>> findAllByCategoryId(String categoryId);
+    Optional<List<Product>> findAllByCategory(String categoryId);
 }

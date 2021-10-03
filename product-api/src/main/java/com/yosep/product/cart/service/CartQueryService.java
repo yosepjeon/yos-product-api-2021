@@ -1,6 +1,6 @@
 package com.yosep.product.cart.service;
 
-import com.yosep.product.jpa.cart.data.dto.response.SelectedCartDto;
+import com.yosep.product.jpa.cart.data.dto.SelectedCartDto;
 import com.yosep.product.jpa.cart.data.entity.Cart;
 import com.yosep.product.jpa.cart.data.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
