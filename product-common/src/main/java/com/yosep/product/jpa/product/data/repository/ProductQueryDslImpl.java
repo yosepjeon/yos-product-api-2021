@@ -2,6 +2,7 @@ package com.yosep.product.jpa.product.data.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.yosep.product.jpa.category.data.entity.QCategory;
+import com.yosep.product.jpa.common.entity.PageRequest;
 import com.yosep.product.jpa.product.data.entity.Product;
 import com.yosep.product.jpa.product.data.entity.QProduct;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +17,16 @@ public class ProductQueryDslImpl implements ProductQueryDsl{
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Optional<List<Product>> findAllByCategory(String categoryId) {
+    public Optional<List<Product>> findAllByCategory(PageRequest pageRequest, String categoryId) {
         QProduct product = QProduct.product;
         QCategory category = QCategory.category;
 
         Optional<List<Product>> products = Optional.of(jpaQueryFactory.selectFrom(product)
                 .innerJoin(category).on(category.categoryId.eq(product.category.categoryId)).fetchJoin()
                 .where(product.category.categoryId.eq(categoryId))
+                .orderBy(product.createdDate.asc())
+                .offset(pageRequest.getPage())
+                .limit(pageRequest.getSize())
                 .fetch()
         );
 
