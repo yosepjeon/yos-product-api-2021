@@ -1,5 +1,6 @@
 package com.yosep.product.product.controller;
 
+import com.yosep.product.jpa.common.entity.PageRequest;
 import com.yosep.product.jpa.product.data.dto.request.ProductStepDtoForCreation;
 import com.yosep.product.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class ProductController {
     }
 
     @GetMapping("/{category-id}")
-    public ResponseEntity readProductsByCategory() {
+    public ResponseEntity readProductsByCategory(final PageRequest pageRequest, @RequestParam("categoryId") String categoryId)  {
         return null;
     }
 
