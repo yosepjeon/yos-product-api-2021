@@ -18,7 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(of = "productId")
+//@EqualsAndHashCode(of = "productId")
+@EqualsAndHashCode
 @Table(name = "yos_product")
 //public abstract class Product {
 public class Product extends BaseEntity {
@@ -66,7 +67,7 @@ public class Product extends BaseEntity {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProductImage> productProfileImageURLs = new ArrayList<ProductImage>();
+    private List<ProductImage> productProfileImageURLs = new ArrayList<>();
 
     public void increaseStock(long value) {
         validateStock(value);

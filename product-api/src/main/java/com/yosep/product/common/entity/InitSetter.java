@@ -38,7 +38,7 @@ public class InitSetter implements CommandLineRunner {
     }
 
     private void setTestData() throws NoSuchAlgorithmException {
-
+        System.out.println("===================================================== Set =====================================================");
         SecureRandom rand = SecureRandom.getInstance("SHA1PRNG");
 
         Category category1 = new Category();
@@ -159,5 +159,7 @@ public class InitSetter implements CommandLineRunner {
         for (int i = 0; i < 5; i++) {
             categoryService.deleteCategoryById("test-category3-child" + i);
         }
+
+        System.out.println("===================================================== END SET =====================================================");
     }
 }

@@ -1,11 +1,13 @@
 package com.yosep.product.jpa.product.data.repository;
 
-import com.yosep.product.jpa.common.entity.PageRequest;
+import com.yosep.product.jpa.product.data.dto.SelectedProductDtoV2;
 import com.yosep.product.jpa.product.data.entity.Product;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ProductQueryDsl {
-    Optional<List<Product>> findAllByCategory(PageRequest pageRequest, String categoryId);
+    Optional<List<SelectedProductDtoV2>> findAllByCategory(PageRequest pageRequest, String categoryId);
+    Optional<List<Product>> findAllByCategory(String categoryId);
 }

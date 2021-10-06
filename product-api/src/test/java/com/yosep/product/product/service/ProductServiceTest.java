@@ -206,7 +206,6 @@ public class ProductServiceTest {
 
         ProductStepDtoForCreation productStepDtoForCreation = new ProductStepDtoForCreation(
                 "product-saga-order-test",
-                0,
                 orderProductDtos,
                 "READY"
         );
@@ -249,7 +248,6 @@ public class ProductServiceTest {
 
         ProductStepDtoForCreation productStepDtoForCreation = new ProductStepDtoForCreation(
                 "product-saga-order-test",
-                0,
                 orderProductDtos,
                 "READY"
         );
@@ -277,7 +275,6 @@ public class ProductServiceTest {
 
         ProductStepDtoForCreation productStepDtoForCreation = new ProductStepDtoForCreation(
                 "product-saga-order-test",
-                0,
                 orderProductDtos,
                 "READY"
         );
@@ -329,7 +326,6 @@ public class ProductServiceTest {
 
         ProductStepDtoForCreation productStepDtoForCreation = new ProductStepDtoForCreation(
                 "product-saga-order-test",
-                0,
                 orderProductDtos,
                 "READY"
         );
@@ -394,7 +390,6 @@ public class ProductServiceTest {
 
         ProductStepDtoForCreation productStepDtoForCreation = new ProductStepDtoForCreation(
                 "product-saga-order-test",
-                0,
                 orderProductDtos,
                 "READY"
         );
@@ -459,7 +454,6 @@ public class ProductServiceTest {
 
         ProductStepDtoForCreation productStepDtoForCreation = new ProductStepDtoForCreation(
                 "product-saga-order-test",
-                0,
                 orderProductDtos,
                 "READY"
         );

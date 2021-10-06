@@ -27,7 +27,7 @@ public class SelectedProductDto extends RepresentationModel<SelectedProductDto> 
 
     private final long stockQuantity;
 
-    private final String productDetai;
+    private final String productDetail;
 
     private Category category;
 

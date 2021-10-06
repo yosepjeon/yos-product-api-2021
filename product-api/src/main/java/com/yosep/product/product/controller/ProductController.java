@@ -2,6 +2,7 @@ package com.yosep.product.product.controller;
 
 import com.yosep.product.jpa.common.entity.PageRequest;
 import com.yosep.product.jpa.product.data.dto.request.ProductStepDtoForCreation;
+import com.yosep.product.product.service.ProductQueryService;
 import com.yosep.product.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,14 @@ import javax.validation.Valid;
 @Slf4j
 public class ProductController {
     private final ProductService productService;
+    private final ProductQueryService productQueryService;
+
+    @GetMapping("/aa")
+    public ResponseEntity test(final PageRequest pageRequest, @RequestParam("categoryId") String categoryId) {
+        productQueryService.readProductsByCategory(pageRequest, categoryId);
+
+        return ResponseEntity.ok("");
+    }
 
     @PostMapping("/test")
     public ResponseEntity test(@RequestBody ProductStepDtoForCreation productStepDtoForCreation) {
@@ -36,7 +45,7 @@ public class ProductController {
     }
 
     @GetMapping("/{category-id}")
-    public ResponseEntity readProductsByCategory(final PageRequest pageRequest, @RequestParam("categoryId") String categoryId)  {
+    public ResponseEntity readProductsByCategory(final PageRequest pageable, @RequestParam("categoryId") String categoryId)  {
         return null;
     }
 

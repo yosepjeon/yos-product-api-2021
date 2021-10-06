@@ -11,10 +11,11 @@ import java.util.List;
 
 @Getter
 @Setter
-//@Builder
-@ToString(exclude = "parentCategory")
-@EqualsAndHashCode(of = "id")
-//@NoArgsConstructor
+@Builder
+//@EqualsAndHashCode(of = "categoryId")
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "yos_product_category")
 public class Category extends BaseEntity {

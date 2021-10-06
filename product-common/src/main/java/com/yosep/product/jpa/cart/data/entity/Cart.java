@@ -14,7 +14,7 @@ import java.util.Map;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of="productId")
+@EqualsAndHashCode(of="cartId")
 @Table(name = "yos_cart")
 public class Cart {
     @Id

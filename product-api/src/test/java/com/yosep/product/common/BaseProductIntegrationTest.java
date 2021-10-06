@@ -151,6 +151,8 @@ public abstract class BaseProductIntegrationTest {
 
             productRepository.save(product);
         }
+
+        log.info("===================================================== 준비 완료 =====================================================");
     }
 
     @AfterEach

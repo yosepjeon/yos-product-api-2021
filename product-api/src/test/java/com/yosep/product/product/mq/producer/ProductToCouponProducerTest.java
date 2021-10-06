@@ -22,9 +22,9 @@ public class ProductToCouponProducerTest {
         this.productToCouponProducer = productToCouponProducer;
     }
 
-    @Test
-    @DisplayName("[Kafka Test]카프카 메시지 전송 테스트")
-    public void 카프카_메시지_전송_테스트() throws ExecutionException, InterruptedException {
-        productToCouponProducer.sendToCouponTest("!!!");
-    }
+//    @Test
+//    @DisplayName("[Kafka Test]카프카 메시지 전송 테스트")
+//    public void 카프카_메시지_전송_테스트() throws ExecutionException, InterruptedException {
+//        productToCouponProducer.sendToCouponTest("!!!");
+//    }
 }
