@@ -1,30 +1,29 @@
 package com.yosep.product.jpa.product.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.yosep.product.jpa.common.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
 
 @Builder
-@Table(name = "yos_product_comment_image")
+@Table(name="yos_product_profile_image")
 @AllArgsConstructor
 @NoArgsConstructor
-@DiscriminatorValue("PC")
+@DiscriminatorValue("PP")
 @Getter
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of="id")
 @Entity
 @ToString
-public class ProductCommentImage extends Image {
+public class ProductProfileImage extends Image{
 //    리팩토링 상속관계로
 //    @Id
 //    @Column
 //    private String id;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "comment_id")
-    private ProductComment productComment;
+    @ManyToOne
+    @JoinColumn(name="product_id")
+    private Product product;
 
 //    리팩토링 상속관계로
 //    @Column(name="url", length = 300, nullable = false)

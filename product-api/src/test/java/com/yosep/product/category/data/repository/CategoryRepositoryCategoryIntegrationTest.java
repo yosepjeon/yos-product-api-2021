@@ -29,12 +29,12 @@ public class CategoryRepositoryCategoryIntegrationTest extends BaseCategoryInteg
 //                .name("create-test1")
 //                .build();
         Category category = new Category();
-        category.setCategoryId("create-test1");
-        category.setName("create-test1");
+        category.setCategoryId("create-category-test1");
+        category.setName("create-category-test1");
 
         Category createdCategory = categoryRepository.save(category);
         log.info(createdCategory.toString());
-        Assertions.assertEquals(true, createdCategory.equals(category));
+        Assertions.assertEquals(true, createdCategory.getCategoryId().equals(category.getCategoryId()));
     }
 
     @Test

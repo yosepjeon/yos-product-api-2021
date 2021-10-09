@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface CartRepositoryQueryDsl {
     Optional<Cart> findByUserId(String userId);
+    Optional<Cart> findByUserIdV2(String userId);
 }

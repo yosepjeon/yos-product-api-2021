@@ -4,10 +4,7 @@ import com.yosep.product.jpa.product.data.dto.request.ProductDtoForCreation;
 import com.yosep.product.jpa.product.data.entity.Product;
 import com.yosep.product.jpa.product.data.mapper.product.ProductMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.Collections;
 
@@ -20,16 +17,23 @@ public class ProductMapStructTest {
     public void ProductDtoForCreation에서_Product_변환_테스트() {
         log.info("[Product Map Struct] ProductDtoForCreation에서 Product로 변환 테스트");
 
-//        ProductDtoForCreation productDtoForCreation = new ProductDtoForCreation(
-//                "test1",
-//                100000,
-//                100,
-//                "[Product Map Struct] ProductDtoForCreation에서 Product로 변환 테스트",
-//                0,
-//                Collections.emptyList()
-//        );
-//
-//        Product product =  ProductMapper.INSTANCE.productDtoForCreationToProduct(productDtoForCreation);
+        ProductDtoForCreation productDtoForCreation = new ProductDtoForCreation(
+                "test1",
+                100000,
+                100,
+                "[Product Map Struct] ProductDtoForCreation에서 Product로 변환 테스트",
+                "asd",
+                Collections.emptyList()
+        );
+
+        Product product =  ProductMapper.INSTANCE.productDtoForCreationToProduct(productDtoForCreation);
+
+        Assertions.assertEquals(true,productDtoForCreation.getProductId().equals(product.getProductId()));
+        Assertions.assertEquals(true,productDtoForCreation.getProductPrice() == (product.getProductPrice()));
+        Assertions.assertEquals(true, productDtoForCreation.getStockQuantity() == product.getStockQuantity());
+        Assertions.assertEquals(true, productDtoForCreation.getProductDetail().equals(product.getProductDetail()));
+        Assertions.assertEquals(true, product.getCategory() == null);
+        Assertions.assertEquals(true, productDtoForCreation.getProductProfileImageURLs().equals(product.getProductProfileImageURLs()));
     }
 
     @Test

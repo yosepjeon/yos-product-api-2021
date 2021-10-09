@@ -23,12 +23,12 @@ public class CartRepositoryQueryDslTest extends BaseCartIntegrationTest {
     }
 
     @Test
-    @DisplayName("[CartQuerydsl] 장바구니 조회 성공 테스트")
-    public void 장바구니_조회_성공_테스트() {
-        log.info("[CartQuerydsl] 장바구니 조회 성공 테스트");
+    @DisplayName("[CartQuerydsl] 장바구니 조회 유저가 없을경우 테스트")
+    public void 장바구니_조회_유저가_없을경우_테스트() {
+        log.info("[CartQuerydsl] 장바구니 조회 유저가 없을경우 테스트");
         Optional<Cart> optionalCart = cartRepository.findByUserId("test-user1");
 
-        Assertions.assertEquals(true, optionalCart.isPresent());
+        Assertions.assertEquals(false, optionalCart.isPresent());
         Cart selectedCart = optionalCart.get();
         Assertions.assertEquals("test-user1", selectedCart.getCartId());
         Assertions.assertEquals("test-user1", selectedCart.getUserId());

@@ -35,16 +35,19 @@ public class ProductComment extends BaseEntity {
     @Column(name="description")
     private String comment;
 
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parentProductComment", cascade = CascadeType.ALL)
-    private List<ProductComment> childs = new ArrayList<>();
+//    리팩토링 단방향으로
+//    @JsonManagedReference
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parentProductComment", cascade = CascadeType.ALL)
+//    private List<ProductComment> childs = new ArrayList<>();
 
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productComment", cascade = CascadeType.ALL)
-    private List<ProductCommentImage> commentImages = new ArrayList<>();
+//    리팩토링 단방향으로
+//    @JsonManagedReference
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productComment", cascade = CascadeType.ALL)
+//    private List<ProductCommentImage> commentImages = new ArrayList<>();
 
-    public void addChildComment(ProductComment child) {
-        this.childs.add(child);
-        child.setParentProductComment(this);
-    }
+//    리팩토링 단방향으로
+//    public void addChildComment(ProductComment child) {
+//        this.childs.add(child);
+//        child.setParentProductComment(this);
+//    }
 }

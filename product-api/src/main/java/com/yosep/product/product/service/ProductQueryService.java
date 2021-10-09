@@ -22,10 +22,17 @@ public class ProductQueryService {
     private final CategoryRepository categoryRepository;
     private final ModelMapper modelMapper;
 
+    public void readProductById(String productId) {
+//        productRepository.findById()
+    }
+
     public void readProductsByCategory(PageRequest pageable, String categoryId) {
         productRepository.findAllByCategory(pageable.of(), categoryId)
-                .orElse(Collections.emptyList());
-//                .forEach(p -> p.add(Link.of()));
+                .orElse(Collections.emptyList())
+                .forEach(p -> {
+                    p.add(Link.of("http://localhost:8001/products/"));
+                    p.add(Link.of(""));
+                });
 
 
     }

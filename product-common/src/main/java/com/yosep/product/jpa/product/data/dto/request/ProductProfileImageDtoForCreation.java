@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Builder
 @Data
-public class ProductImageDtoForCreation {
+public class ProductProfileImageDtoForCreation {
     private String id;
     private String url;
     private MultipartFile file;

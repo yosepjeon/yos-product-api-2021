@@ -14,43 +14,40 @@ import java.util.List;
 
 
 /*
-* ModelStruct에서 @Setter없이 @Builder로 사용하려면
-* DTO, Entity 두쪽다 @Builder있어야함
+ * ModelStruct에서 @Setter없이 @Builder로 사용하려면
+ * DTO, Entity 두쪽다 @Builder있어야함
  */
-@Getter
-@Setter
-@Builder
-@AllArgsConstructor
-@ToString
+//@Builder
+@Data
 public class ProductDtoForCreation {
-    public String productId = "";
+    private String productId = "";
 
     @NotBlank
-    public String productName = "";
+    private String productName = "";
 
     @NotBlank
     private String companyCode = "";
 
     @Min(0)
-    public long productPrice = 0;
+    private long productPrice = 0;
 
     @Min(0)
-    public long stockQuantity = 0;
+    private long stockQuantity = 0;
 
-    public String productDetail = "";
+    private String productDetail = "";
 
     //    @NotBlank
-    public String category;
+    private String category;
 
-    public ProductDiscount productDiscount;
+    private ProductDiscount productDiscount;
 
-    public List<MultipartFile> productImages = Collections.emptyList();
+    private List<ProductImageDtoForCreation> productImages = Collections.emptyList();
 
-    public List<ProductDescriptionImage> productDescriptionImages = Collections.emptyList();
+    private List<ProductDescriptionImageDtoForCreation> productDescriptionImages = Collections.emptyList();
 
-    public List<ProductImage> productProfileImageURLs = Collections.emptyList();
+    private List<ProductProfileImageDtoForCreation> productProfileImageURLs = Collections.emptyList();
 
-    public ProductDtoForCreation(String productName, int productPrice, int stockQuantity, String productDetail, String category, List<MultipartFile> productImages) {
+    public ProductDtoForCreation(String productName, int productPrice, int stockQuantity, String productDetail, String category, List<ProductImageDtoForCreation> productImages) {
         this.productName = productName;
         this.productPrice = productPrice;
         this.stockQuantity = stockQuantity;

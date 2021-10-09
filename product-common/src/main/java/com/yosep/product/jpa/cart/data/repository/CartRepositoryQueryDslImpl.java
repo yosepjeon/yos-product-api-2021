@@ -17,10 +17,14 @@ public class CartRepositoryQueryDslImpl implements CartRepositoryQueryDsl{
     public Optional<Cart> findByUserId(String userId) {
         Cart cartEntity = jpaQueryFactory.selectFrom(cart)
                 .distinct()
-                .leftJoin(product).fetchJoin()
                 .where(cart.userId.eq(userId))
                 .fetchOne();
 
         return cartEntity != null ? Optional.of(cartEntity) : Optional.empty();
+    }
+
+    @Override
+    public Optional<Cart> findByUserIdV2(String userId) {
+        return Optional.empty();
     }
 }

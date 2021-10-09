@@ -195,7 +195,7 @@ public class ProductServiceTest {
 
             OrderProductDtoForCreation orderProductDtoForCreation = new OrderProductDtoForCreation(
                     selectedProduct.getProductId(),
-                    2,
+                    1,
                     "READY",
                     selectedProduct.getProductPrice()
             );
@@ -205,7 +205,7 @@ public class ProductServiceTest {
         }
 
         ProductStepDtoForCreation productStepDtoForCreation = new ProductStepDtoForCreation(
-                "product-saga-order-test",
+                "product-saga-order-test-success",
                 orderProductDtos,
                 "READY"
         );
@@ -247,7 +247,7 @@ public class ProductServiceTest {
 
 
         ProductStepDtoForCreation productStepDtoForCreation = new ProductStepDtoForCreation(
-                "product-saga-order-test",
+                "product-saga-order-test-notexist",
                 orderProductDtos,
                 "READY"
         );
@@ -274,7 +274,7 @@ public class ProductServiceTest {
 
 
         ProductStepDtoForCreation productStepDtoForCreation = new ProductStepDtoForCreation(
-                "product-saga-order-test",
+                "product-saga-order-test-notequal",
                 orderProductDtos,
                 "READY"
         );
@@ -325,7 +325,7 @@ public class ProductServiceTest {
         log.info("saga process Exception 트랜잭션 발생시키기");
 
         ProductStepDtoForCreation productStepDtoForCreation = new ProductStepDtoForCreation(
-                "product-saga-order-test",
+                "product-saga-order-test-notexist-rollback",
                 orderProductDtos,
                 "READY"
         );
@@ -389,7 +389,7 @@ public class ProductServiceTest {
         log.info("saga process Exception 트랜잭션 발생시키기");
 
         ProductStepDtoForCreation productStepDtoForCreation = new ProductStepDtoForCreation(
-                "product-saga-order-test",
+                "product-saga-order-test-notequal-rollback",
                 orderProductDtos,
                 "READY"
         );
@@ -453,7 +453,7 @@ public class ProductServiceTest {
         log.info("saga process Exception 트랜잭션 발생시키기");
 
         ProductStepDtoForCreation productStepDtoForCreation = new ProductStepDtoForCreation(
-                "product-saga-order-test",
+                "product-saga-order-test-invalidstock",
                 orderProductDtos,
                 "READY"
         );
