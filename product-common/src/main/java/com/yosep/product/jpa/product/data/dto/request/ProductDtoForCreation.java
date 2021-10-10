@@ -45,7 +45,7 @@ public class ProductDtoForCreation {
 
     private List<ProductDescriptionImageDtoForCreation> productDescriptionImages = Collections.emptyList();
 
-    private List<ProductProfileImageDtoForCreation> productProfileImageURLs = Collections.emptyList();
+    private ProductProfileImageDtoForCreation thumbnail;
 
     public ProductDtoForCreation(String productName, int productPrice, int stockQuantity, String productDetail, String category, List<ProductImageDtoForCreation> productImages) {
         this.productName = productName;

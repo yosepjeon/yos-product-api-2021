@@ -1,6 +1,7 @@
 package com.yosep.product.jpa.product.data.dto;
 
 import com.yosep.product.jpa.category.data.dto.response.CategoryDto;
+import com.yosep.product.jpa.product.data.entity.ProductProfileImage;
 import lombok.*;
 
 import java.util.Collections;
@@ -17,5 +18,5 @@ public class SelectedProductDtoForDetailPage {
     private String productDetail;
     private CategoryDto categoryDto;
     private List<ProductImageDto> productImages = Collections.emptyList();
-//    private List<>
+//    private List<ProductProfileImage>
 }

@@ -29,9 +29,6 @@ public class CartRepositoryQueryDslTest extends BaseCartIntegrationTest {
         Optional<Cart> optionalCart = cartRepository.findByUserId("test-user1");
 
         Assertions.assertEquals(false, optionalCart.isPresent());
-        Cart selectedCart = optionalCart.get();
-        Assertions.assertEquals("test-user1", selectedCart.getCartId());
-        Assertions.assertEquals("test-user1", selectedCart.getUserId());
     }
 
 

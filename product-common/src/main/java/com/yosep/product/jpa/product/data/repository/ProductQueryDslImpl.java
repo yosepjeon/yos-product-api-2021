@@ -11,6 +11,7 @@ import com.yosep.product.jpa.product.data.dto.QSelectedProductDtoV2;
 import com.yosep.product.jpa.product.data.dto.SelectedProductDtoV2;
 import com.yosep.product.jpa.product.data.entity.Product;
 import com.yosep.product.jpa.product.data.entity.QProduct;
+import com.yosep.product.jpa.product.data.entity.QProductProfileImage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 import static com.yosep.product.jpa.product.data.entity.QProduct.product;
 import static com.yosep.product.jpa.product.data.entity.QProductImage.productImage;
+import static com.yosep.product.jpa.product.data.entity.QProductProfileImage.productProfileImage;
 
 @Repository
 @RequiredArgsConstructor
@@ -41,12 +43,15 @@ public class ProductQueryDslImpl implements ProductQueryDsl {
                                 product.productName,
                                 product.productPrice,
                                 product.stockQuantity,
-                                product.productDiscount
+                                product.productDiscount,
+                                product.thumbnail.id,
+                                product.thumbnail.url
                         )
                 )
                 .distinct()
                 .from(product)
                 .leftJoin(product.category, category)
+                .leftJoin(product.thumbnail, productProfileImage)
                 .where(product.category.categoryId.eq(categoryId))
                 .offset(pageRequest.getOffset())
                 .limit(pageRequest.getPageSize())
@@ -54,11 +59,9 @@ public class ProductQueryDslImpl implements ProductQueryDsl {
                 .fetch()
         );
 
-        List<String> productIds = toProductIds(products.orElse(Collections.emptyList()));
-
-        Map<String, List<ProductImageDto>> productImages = findProductImages(productIds);
-
-        products.orElse(Collections.emptyList()).forEach(p -> p.setProductImages(productImages.get(p.getProductId())));
+//        List<String> productIds = toProductIds(products.orElse(Collections.emptyList()));
+//        Map<String, List<ProductImageDto>> productImages = findProductImages(productIds);
+//        products.orElse(Collections.emptyList()).forEach(p -> p.setThumbnail(null));
 
         return products;
     }

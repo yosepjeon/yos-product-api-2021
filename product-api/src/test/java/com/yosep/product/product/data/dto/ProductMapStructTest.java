@@ -33,7 +33,6 @@ public class ProductMapStructTest {
         Assertions.assertEquals(true, productDtoForCreation.getStockQuantity() == product.getStockQuantity());
         Assertions.assertEquals(true, productDtoForCreation.getProductDetail().equals(product.getProductDetail()));
         Assertions.assertEquals(true, product.getCategory() == null);
-        Assertions.assertEquals(true, productDtoForCreation.getProductProfileImageURLs().equals(product.getProductProfileImageURLs()));
     }
 
     @Test

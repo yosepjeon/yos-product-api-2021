@@ -21,7 +21,7 @@ public class ProductProfileImage extends Image{
 //    private String id;
 
     @JsonBackReference
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="product_id")
     private Product product;
 

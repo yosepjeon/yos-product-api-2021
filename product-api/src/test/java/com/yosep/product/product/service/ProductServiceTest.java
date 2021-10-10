@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -182,6 +183,7 @@ public class ProductServiceTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("[Product Service] 주문 saga 상품 스텝 성공 테스트")
     public void 주문_saga_상품_스텝_성공_테스트() {
         log.info("[Product Service] 주문 saga 상품 스텝 성공 테스트");
