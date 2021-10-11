@@ -7,14 +7,12 @@ import com.yosep.product.jpa.cart.data.dto.QSelectedCartDto;
 import com.yosep.product.jpa.cart.data.dto.SelectedCartDto;
 import com.yosep.product.jpa.cart.data.dto.request.CartProductDto;
 import com.yosep.product.jpa.cart.data.entity.Cart;
-import com.yosep.product.jpa.cart.data.entity.QCart;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 import java.util.Optional;
 
 import static com.yosep.product.jpa.cart.data.entity.QCart.cart;
-import static com.yosep.product.jpa.product.data.entity.QProduct.product;
 
 @RequiredArgsConstructor
 public class CartRepositoryQueryDslImpl implements CartRepositoryQueryDsl {
