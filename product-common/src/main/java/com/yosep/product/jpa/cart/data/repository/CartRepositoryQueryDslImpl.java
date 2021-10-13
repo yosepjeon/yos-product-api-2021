@@ -1,6 +1,5 @@
 package com.yosep.product.jpa.cart.data.repository;
 
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.yosep.product.jpa.cart.data.dto.CartDto;
 import com.yosep.product.jpa.cart.data.dto.QSelectedCartDto;
