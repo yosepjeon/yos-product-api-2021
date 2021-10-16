@@ -1,22 +1,36 @@
 package com.yosep.product.jpa.product.data.dto;
 
-import com.yosep.product.jpa.category.data.dto.response.CategoryDto;
-import com.yosep.product.jpa.product.data.entity.ProductProfileImage;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
 
 import java.util.Collections;
 import java.util.List;
 
 @Data
-@Builder
 public class SelectedProductDtoForDetailPage {
-    private String productId;
-    private String productName;
-    private String companyCode;
-    private long productPrice;
-    private long stockQuantity;
-    private String productDetail;
-    private CategoryDto categoryDto;
-    private List<ProductImageDto> productImages = Collections.emptyList();
-//    private List<ProductProfileImage>
+    private final String productId;
+    private final String productName;
+    private final String companyCode;
+    private final long productPrice;
+    private final long stockQuantity;
+    private final String productDetail;
+    /*
+     * TODO: 리팩토링
+     * 컬렉션 -> 일급 컬렉션
+     */
+    private final List<SelectedProductImageDto> productImages;
+    private final List<SelectedProductCommentDto> comments;
+    private final List<SelectedProductDescriptionImageDto> descriptions;
+
+    public SelectedProductDtoForDetailPage(String productId, String productName, String companyCode, long productPrice, long stockQuantity, String productDetail, List<SelectedProductImageDto> productImages, List<SelectedProductCommentDto> comments, List<SelectedProductDescriptionImageDto> descriptions) {
+        this.productId = productId;
+        this.productName = productName;
+        this.companyCode = companyCode;
+        this.productPrice = productPrice;
+        this.stockQuantity = stockQuantity;
+        this.productDetail = productDetail;
+        this.productImages = Collections.unmodifiableList(productImages);
+        this.comments = Collections.unmodifiableList(comments);
+        this.descriptions = Collections.unmodifiableList(descriptions);
+    }
 }

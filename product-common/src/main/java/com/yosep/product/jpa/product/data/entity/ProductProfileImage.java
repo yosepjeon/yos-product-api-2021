@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @DiscriminatorValue("PP")
 @Getter
-@EqualsAndHashCode(of="id")
+@EqualsAndHashCode(of="id",callSuper = true)
 @Entity
 @ToString
 public class ProductProfileImage extends Image{

@@ -15,4 +15,8 @@ public abstract class Image extends BaseEntity {
 
     @Column(name="url",length=300,nullable=false)
     private String url;
+
+    public String getUrl() {
+        return url;
+    }
 }

@@ -15,7 +15,7 @@ import static javax.persistence.FetchType.*;
 @NoArgsConstructor
 @Getter
 @DiscriminatorValue("P")
-@EqualsAndHashCode(of="id")
+@EqualsAndHashCode(of="id",callSuper = true)
 @Entity
 @ToString
 public class ProductImage extends Image {

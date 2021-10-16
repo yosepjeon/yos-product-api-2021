@@ -18,20 +18,19 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//@EqualsAndHashCode(of = "productId")
 @EqualsAndHashCode
 @Table(name = "yos_product")
 //public abstract class Product {
 public class Product extends BaseEntity {
     @Id
     @Column(length = 100)
-    private String productId = "";
+    private String productId;
 
     @Column(length = 50, nullable = false)
-    private String productName = "";
+    private String productName;
 
     @Column(length = 100, nullable = false)
-    private String companyCode = "";
+    private String companyCode;
 
     @Column(nullable = false)
     private long productPrice = 0;
@@ -53,10 +52,6 @@ public class Product extends BaseEntity {
     private Category category = null;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProductImage> productImages = new ArrayList<>();
-
-    @JsonManagedReference
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private ProductProfileImage thumbnail;
 
@@ -65,10 +60,17 @@ public class Product extends BaseEntity {
 //    @OneToMany(mappedBy="product",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 //    private List<ProductDescription> productDescriptions = new ArrayList<ProductDescription>();
 
+//  리팩토링 단방향으로
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ProductImage> productImages = new ArrayList<>();
+
+//  리팩토링 단방향으로
     @JsonManagedReference
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductDescriptionImage> productDescriptionImages = new ArrayList<>();
 
+//  리팩토링 단방향으로
     @JsonManagedReference
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductComment> productComments = new ArrayList<>();

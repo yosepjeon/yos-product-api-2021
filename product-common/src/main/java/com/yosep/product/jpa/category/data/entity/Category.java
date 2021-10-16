@@ -12,8 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-//@EqualsAndHashCode(of = "categoryId")
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "categoryId")
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

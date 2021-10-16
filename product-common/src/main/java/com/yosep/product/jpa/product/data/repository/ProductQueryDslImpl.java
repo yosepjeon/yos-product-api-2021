@@ -6,12 +6,8 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.yosep.product.jpa.category.data.entity.QCategory;
 import com.yosep.product.jpa.common.util.QueryDslUtil;
-import com.yosep.product.jpa.product.data.dto.ProductImageDto;
-import com.yosep.product.jpa.product.data.dto.QSelectedProductDtoV2;
-import com.yosep.product.jpa.product.data.dto.SelectedProductDtoV2;
-import com.yosep.product.jpa.product.data.entity.Product;
-import com.yosep.product.jpa.product.data.entity.QProduct;
-import com.yosep.product.jpa.product.data.entity.QProductProfileImage;
+import com.yosep.product.jpa.product.data.dto.*;
+import com.yosep.product.jpa.product.data.entity.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -31,6 +27,92 @@ public class ProductQueryDslImpl implements ProductQueryDsl {
     private final JPAQueryFactory jpaQueryFactory;
     QProduct product = QProduct.product;
     QCategory category = QCategory.category;
+    QProductImage productImage = QProductImage.productImage;
+    QProductComment productComment = QProductComment.productComment;
+    QProductCommentImage productCommentImage = QProductCommentImage.productCommentImage;
+    QProductDescriptionImage productDescriptionImage = QProductDescriptionImage.productDescriptionImage;
+
+    @Override
+    public Optional<SelectedProductDtoForDetailPage> findByIdForDetailPage(String productId) {
+        Optional<Product> optionalProduct = Optional.of(jpaQueryFactory
+                .selectFrom(product)
+                .where(product.productId.eq(productId))
+                .fetchOne());
+
+        if (optionalProduct.isEmpty()) {
+            return Optional.empty();
+        }
+
+        List<SelectedProductImageDto> productImages = findSelectedProductImageDtos(productId);
+        List<SelectedProductCommentDto> comments = findSelectedProductCommentDtos(productId);
+        List<SelectedProductDescriptionImageDto> descriptions = findSelectedProductDescriptionImageDtos(productId);
+
+        Product seletedProduct = optionalProduct.get();
+        SelectedProductDtoForDetailPage result = new SelectedProductDtoForDetailPage(
+                seletedProduct.getProductId(),
+                seletedProduct.getProductName(),
+                seletedProduct.getCompanyCode(),
+                seletedProduct.getProductPrice(),
+                seletedProduct.getStockQuantity(),
+                seletedProduct.getProductDetail(),
+                productImages,
+                comments,
+                descriptions
+        );
+
+        return Optional.of(result);
+    }
+
+    private List<SelectedProductImageDto> findSelectedProductImageDtos(String productId) {
+        return jpaQueryFactory
+                .select(
+                        new QSelectedProductImageDto(
+                                productImage.url
+                        )
+                )
+                .distinct()
+                .from(productImage)
+                .leftJoin(productImage.product, product)
+                .where(productImage.product.productId.eq(productId))
+                .fetch();
+    }
+
+    private List<SelectedProductCommentDto> findSelectedProductCommentDtos(String productId) {
+        List<SelectedProductCommentDto> result = jpaQueryFactory
+                .selectFrom(productComment)
+                .distinct()
+                .leftJoin(productComment.product, product).fetchJoin()
+                .leftJoin(productComment.commentImages, productCommentImage).fetchJoin()
+                .where(productComment.product.productId.eq(productId))
+                .fetch()
+                .stream()
+                .map(c -> {
+                    List<SelectedProductCommentImageDto> images = c.getCommentImages().stream()
+                            .map(image -> new SelectedProductCommentImageDto(image.getUrl()))
+                            .collect(Collectors.toList());
+
+                    return new SelectedProductCommentDto(c.getId(), c.getComment(), images, c.getCreatedDate());
+                })
+                .collect(Collectors.toList());
+
+        return result.isEmpty() ? Collections.emptyList() : result;
+    }
+
+    private List<SelectedProductDescriptionImageDto> findSelectedProductDescriptionImageDtos(String productId) {
+        List<SelectedProductDescriptionImageDto> result = jpaQueryFactory
+                .select(
+                        new QSelectedProductDescriptionImageDto(
+                                productDescriptionImage.url
+                        )
+                )
+                .distinct()
+                .from(productDescriptionImage)
+                .leftJoin(productDescriptionImage.product, product).fetchJoin()
+                .where(productDescriptionImage.product.productId.eq(productId))
+                .fetch();
+
+        return result.isEmpty() ? Collections.emptyList() : result;
+    }
 
     @Override
     public Optional<List<SelectedProductDtoV2>> findAllByCategory(PageRequest pageRequest, String categoryId) {

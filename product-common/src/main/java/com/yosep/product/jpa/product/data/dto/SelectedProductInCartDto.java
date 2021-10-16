@@ -1,17 +1,12 @@
 package com.yosep.product.jpa.product.data.dto;
 
 import com.yosep.product.jpa.product.data.entity.ProductImage;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
-@Getter
-@Builder
+@Data
 @AllArgsConstructor
-@ToString
 public class SelectedProductInCartDto {
     private final String productName;
     private final long productPrice;

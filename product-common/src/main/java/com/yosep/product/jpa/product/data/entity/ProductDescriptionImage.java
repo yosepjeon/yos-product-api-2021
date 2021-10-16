@@ -14,7 +14,7 @@ import javax.persistence.*;
 @DiscriminatorValue("PD")
 @Getter
 @Setter
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "id",callSuper = true)
 @ToString
 public class ProductDescriptionImage extends Image {
 //    리팩토링 상속관계로

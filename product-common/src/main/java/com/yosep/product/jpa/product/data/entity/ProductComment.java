@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of="id")
+@EqualsAndHashCode
 @ToString
 public class ProductComment extends BaseEntity {
     @Id
@@ -41,9 +41,10 @@ public class ProductComment extends BaseEntity {
 //    private List<ProductComment> childs = new ArrayList<>();
 
 //    리팩토링 단방향으로
-//    @JsonManagedReference
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productComment", cascade = CascadeType.ALL)
-//    private List<ProductCommentImage> commentImages = new ArrayList<>();
+//    이건 OneToMany 구조가 좀더 편할거 같은데.. 일단 좀더 고민
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productComment", cascade = CascadeType.ALL)
+    private List<ProductCommentImage> commentImages = new ArrayList<>();
 
 //    리팩토링 단방향으로
 //    public void addChildComment(ProductComment child) {

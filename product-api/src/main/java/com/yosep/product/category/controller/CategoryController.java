@@ -58,7 +58,7 @@ public class CategoryController {
         CreatedCategoryDto createdCategoryDto = optionalCreatedCategory.isPresent() ? new CreatedCategoryDto(optionalCreatedCategory.get()) : new CreatedCategoryDto();
         EntityModel<CreatedCategoryDto> responseModel = EntityModel.of(createdCategoryDto);
         responseModel
-                .add(linkTo(CategoryController.class).slash(createdCategoryDto.getId()).withSelfRel());
+                .add(linkTo(CategoryController.class).slash(createdCategoryDto.getCategoryId()).withSelfRel());
 
         ResponseEntity<EntityModel<CreatedCategoryDto>> response = ResponseEntity.created(URI.create("/categories")).body(responseModel);
 

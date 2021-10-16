@@ -33,6 +33,6 @@ public class SelectedProductDtoV2 extends RepresentationModel<SelectedProductDto
         this.productPrice = productPrice;
         this.stockQuantity = stockQuantity;
         this.productDiscount = productDiscount;
-        this.thumbnail = new SelectedProductProfileImageDto(thumnailId, thumbnailUrl);
+        this.thumbnail = new SelectedProductProfileImageDto(thumbnailUrl);
     }
 }

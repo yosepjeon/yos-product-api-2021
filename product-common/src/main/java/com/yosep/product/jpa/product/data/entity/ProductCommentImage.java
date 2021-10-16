@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @DiscriminatorValue("PC")
 @Getter
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode
 @Entity
 @ToString
 public class ProductCommentImage extends Image {
