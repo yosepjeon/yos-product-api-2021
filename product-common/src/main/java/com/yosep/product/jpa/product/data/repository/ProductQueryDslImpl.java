@@ -11,14 +11,11 @@ import com.yosep.product.jpa.product.data.entity.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.querydsl.QuerydslUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.yosep.product.jpa.product.data.entity.QProduct.product;
-import static com.yosep.product.jpa.product.data.entity.QProductImage.productImage;
 import static com.yosep.product.jpa.product.data.entity.QProductProfileImage.productProfileImage;
 
 @Repository

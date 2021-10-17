@@ -5,9 +5,6 @@ import com.yosep.product.jpa.product.data.entity.ProductDiscount;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
-import java.util.Collections;
-import java.util.List;
-
 @Getter
 @Builder
 @AllArgsConstructor
