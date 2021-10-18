@@ -12,7 +12,6 @@ public class ConsumerFromUser {
 
     @KafkaListener(topics = {"create-cart"}, groupId = "create-cart-0")
     public void processCreateCartEvent(String userId) {
-//        System.out.println("cart 생성 이벤트 발생");
         cartCommandService.createCart(userId);
     }
 

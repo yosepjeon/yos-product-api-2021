@@ -3,11 +3,8 @@ package com.yosep.product.jpa.cart.data.dto;
 import com.querydsl.core.annotations.QueryProjection;
 import com.yosep.product.jpa.cart.data.entity.Cart;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
 
-
+@Data
 public class SelectedCartDto extends CartDto {
 
     public SelectedCartDto() {
